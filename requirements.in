@@ -1,0 +1,3 @@
+langchain
+fastapi
+uvicorn[standard]
