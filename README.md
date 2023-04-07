@@ -1,14 +1,33 @@
 # FastAPI Chat Application
 
-This is a simple FastAPI application with a single endpoint `/chat` that uses `StreamingResponse` to stream chat messages in real-time.
+This is a simple FastAPI application for langchain agents with `streaming=True`.
 
-## Project Structure
+## Setup Instructions
 
-- `.gitignore`: Specifies files and directories to be ignored by Git.
-- `README.md`: Provides an overview of the project.
-- `requirements.txt`: Lists the required Python packages and their versions.
-- `app/`: Contains the application code.
-  - `main.py`: Initializes the FastAPI application.
-  - `models.py`: Defines the data models used in the application.
-  - `routes.py`: Defines the API routes and their corresponding functions.
-  - `utils.py`: Contains utility functions used in the application.
+This project is built with Python 3.9. Clone this repository and follow the steps below to get started.
+
+### Create conda environment:
+
+```bash
+conda create -n fastapi-langchain python=3.9
+conda activate fastapi-langchain
+```
+
+You can choose any other environment manager of your choice.
+
+### Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+**Note**: The `requirements.txt` file is generated using `pip-tools`. If you want to add a new dependency, add it to `requirements.in` and run `pip-compile` to generate the `requirements.txt` file.
+
+## CI/CD
+
+This project uses `pre-commit` to run code linters before every commit. To install the pre-commit hooks, run the following commands:
+
+```bash
+pip install pre-commit
+pre-commit install
+```
