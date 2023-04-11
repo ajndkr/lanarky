@@ -23,6 +23,14 @@ pip install -r requirements.txt
 
 **Note**: The `requirements.txt` file is generated using `pip-tools`. If you want to add a new dependency, add it to `requirements.in` and run `pip-compile` to generate the `requirements.txt` file.
 
+## Usage
+
+### Run the application
+
+```bash
+uvicorn api.main:app --reload
+```
+
 ## CI/CD
 
 This project uses `pre-commit` to run code linters before every commit. To install the pre-commit hooks, run the following commands:
