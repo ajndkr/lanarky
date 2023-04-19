@@ -54,3 +54,8 @@ To install the pre-commit hooks, run the following commands:
 pip install pre-commit
 pre-commit install
 ```
+
+## Credits:
+
+- https://gist.github.com/ninely/88485b2e265d852d3feb8bd115065b1a
+- https://github.com/hwchase17/langchain/discussions/1706
