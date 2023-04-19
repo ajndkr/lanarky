@@ -1,10 +1,11 @@
 # FastAPI Chat Application
 
-This is a simple FastAPI application for langchain agents with `streaming=True`.
+This is a simple FastAPI application for streaming LLM chains.
 
 ## Setup Instructions
 
-This project is built with Python 3.9. Clone this repository and follow the steps below to get started.
+This project is built with Python 3.9. Clone this repository and follow the steps below
+to get started.
 
 ### Create conda environment:
 
@@ -21,7 +22,9 @@ You can choose any other environment manager of your choice.
 pip install -r requirements.txt
 ```
 
-**Note**: The `requirements.txt` file is generated using `pip-tools`. If you want to add a new dependency, add it to `requirements.in` and run `pip-compile` to generate the `requirements.txt` file.
+**Note**: The `requirements.txt` file is generated using `pip-tools`.
+If you want to add a new dependency, add it to `requirements.in` and run
+`pip-compile` to generate the `requirements.txt` file.
 
 ## Usage
 
@@ -31,9 +34,21 @@ pip install -r requirements.txt
 uvicorn api.main:app --reload
 ```
 
+### Sample cURL request
+
+```bash
+curl -N -X POST \
+-H "Accept: text/event-stream" -H "Content-Type: application/json" \
+-d '{"query": "write me a song about sparkling water"}' \
+http://localhost:8000/chat
+```
+
+![demo](assets/demo.gif)
+
 ## CI/CD
 
-This project uses `pre-commit` to run code linters before every commit. To install the pre-commit hooks, run the following commands:
+This project uses `pre-commit` to run code linters before every commit.
+To install the pre-commit hooks, run the following commands:
 
 ```bash
 pip install pre-commit
