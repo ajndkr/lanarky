@@ -26,7 +26,7 @@ def conversation_chain_dependency() -> Callable[[], ConversationChain]:
             llm=ChatOpenAI(
                 temperature=0,
                 streaming=True,
-                callback_manager=AsyncCallbackManager(),
+                callback_manager=AsyncCallbackManager([]),
             ),
             verbose=True,
         )
