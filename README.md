@@ -1,5 +1,8 @@
 # fastapi-async-langchain
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/fastapi-async-langchain/blob/main/LICENSE)
+[![PyPI version](https://badge.fury.io/py/fastapi-async-langchain.svg)](https://pypi.org/project/fastapi-async-langchain/)
+
 FastAPI async components for streaming LLM chains.
 
 ## Installation
