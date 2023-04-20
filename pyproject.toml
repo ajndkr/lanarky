@@ -1,2 +1,19 @@
+[tool.poetry]
+name = "fastapi-async-langchain"
+version = "0.1.0"
+description = "FastAPI async components for streaming LLM chains."
+authors = ["Ajinkya Indulkar <26824103+ajndkr@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "fastapi_async_langchain"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.95.1"
+langchain = "^0.0.144"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.ruff]
 ignore = ["E501"]

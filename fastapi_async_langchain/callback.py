@@ -1,14 +1,14 @@
-from typing import Any, Optional
+from typing import Any
 
 from langchain.callbacks.base import AsyncCallbackHandler
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from starlette.types import Send
 
 
 class AsyncFastApiStreamingCallback(AsyncCallbackHandler, BaseModel):
     """Async Callback handler for FastAPI StreamingResponse."""
 
-    send: Optional[Send] = None
+    send: Send = Field(...)
 
     @property
     def always_verbose(self) -> bool:

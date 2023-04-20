@@ -1,61 +1,37 @@
-# FastAPI Chat Application
+# fastapi-async-langchain
 
-This is a simple FastAPI application for streaming LLM chains.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/fastapi-async-langchain/blob/main/LICENSE)
+[![PyPI version](https://badge.fury.io/py/fastapi-async-langchain.svg)](https://pypi.org/project/fastapi-async-langchain/)
 
-## Setup Instructions
+FastAPI async components for streaming LLM chains.
 
-This project is built with Python 3.9. Clone this repository and follow the steps below
-to get started.
+## Installation
 
-### Create conda environment:
-
-```bash
-conda create -n fastapi-langchain python=3.9
-conda activate fastapi-langchain
-```
-
-You can choose any other environment manager of your choice.
-
-### Install dependencies:
+The library is available on PyPI and can be installed via `pip`.
 
 ```bash
-pip install -r requirements.txt
+pip install fastapi-async-langchain
 ```
 
-**Note**: The `requirements.txt` file is generated using `pip-tools`.
-If you want to add a new dependency, add it to `requirements.in` and run
-`pip-compile` to generate the `requirements.txt` file.
+## Demo Example
 
-## Usage
+See [Demo](demo/README.md) for setup instructions and usage of the demo FastAPI application.
 
-### Run the application
+## Contributing
 
-```bash
-uvicorn api.main:app --reload
-```
+[![Code check](https://github.com/ajndkr/fastapi-async-langchain/actions/workflows/code-check.yaml/badge.svg)](https://github.com/ajndkr/fastapi-async-langchain/actions/workflows/code-check.yaml)
+[![Publish](https://github.com/ajndkr/fastapi-async-langchain/actions/workflows/publish.yaml/badge.svg)](https://github.com/ajndkr/fastapi-async-langchain/actions/workflows/publish.yaml)
 
-### Sample cURL request
+Contributions are more than welcome! If you have an idea for a new feature or want to help improve fastapi-async-langchain, please create an issue or submit a pull request
+on [GitHub](https://github.com/ajndkr/fastapi-async-langchain).
 
-```bash
-curl -N -X POST \
--H "Accept: text/event-stream" -H "Content-Type: application/json" \
--d '{"query": "write me a song about sparkling water"}' \
-http://localhost:8000/chat
-```
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information.
 
-![demo](assets/demo.gif)
+## License
 
-## CI/CD
-
-This project uses `pre-commit` to run code linters before every commit.
-To install the pre-commit hooks, run the following commands:
-
-```bash
-pip install pre-commit
-pre-commit install
-```
+The library is released under the [MIT License](https://github.com/ajndkr/fastapi-async-langchain/blob/main/LICENSE).
 
 ## Credits:
 
-- https://gist.github.com/ninely/88485b2e265d852d3feb8bd115065b1a
+- [ninely/main.py](https://gist.github.com/ninely/88485b2e265d852d3feb8bd115065b1a)
 - https://github.com/hwchase17/langchain/discussions/1706
