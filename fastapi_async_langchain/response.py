@@ -1,3 +1,4 @@
+from functools import partial
 from typing import Any, Dict, Union
 
 from fastapi.responses import StreamingResponse
@@ -32,7 +33,7 @@ class LangchainStreamingResponse(StreamingResponse):
                 chain.llm.callback_manager.add_handler(
                     AsyncFastApiStreamingCallback(send=send)
                 )
-                await chain.arun(inputs)
+                return await chain.arun(inputs)
 
             return wrapper
 
@@ -52,9 +53,10 @@ class LangchainStreamingResponse(StreamingResponse):
                 token = token.encode(self.charset)
             await send({"type": "http.response.body", "body": token, "more_body": True})
 
-        # suggested in https://github.com/hwchase17/langchain/discussions/1706#discussioncomment-5576099
         try:
-            await self.chain_wrapper_fn(send_token)
+            outputs = await self.chain_wrapper_fn(send_token)
+            if self.background is not None:
+                self.background = partial(self.background, outputs)
         except Exception as e:
             await send(
                 {
