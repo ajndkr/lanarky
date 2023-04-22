@@ -63,5 +63,6 @@ class LangchainStreamingResponse(StreamingResponse):
                     "more_body": False,
                 }
             )
+            return
 
         await send({"type": "http.response.body", "body": b"", "more_body": False})
