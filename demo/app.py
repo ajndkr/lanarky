@@ -41,7 +41,7 @@ conversation_chain = conversation_chain_dependency()
 async def chat(
     request: Request,
     chain: ConversationChain = Depends(conversation_chain),
-):
+) -> LangchainStreamingResponse:
     return LangchainStreamingResponse(
         chain, request.query, media_type="text/event-stream"
     )
