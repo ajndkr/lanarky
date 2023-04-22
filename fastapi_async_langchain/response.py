@@ -25,6 +25,10 @@ class LangchainStreamingResponse(StreamingResponse):
                     raise TypeError(
                         "llm.callback_manager must be an instance of AsyncCallbackManager"
                     )
+                for handler in chain.llm.callback_manager.handlers:
+                    if isinstance(handler, AsyncFastApiStreamingCallback):
+                        chain.llm.callback_manager.remove_handler(handler)
+                        break
                 chain.llm.callback_manager.add_handler(
                     AsyncFastApiStreamingCallback(send=send)
                 )
@@ -59,5 +63,6 @@ class LangchainStreamingResponse(StreamingResponse):
                     "more_body": False,
                 }
             )
+            return
 
         await send({"type": "http.response.body", "body": b"", "more_body": False})
