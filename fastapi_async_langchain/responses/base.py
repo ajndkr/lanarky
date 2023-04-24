@@ -1,8 +1,8 @@
-from functools import partial
-from typing import Any, Dict, Union
+from typing import Any, Dict, Optional, Union
 
 from fastapi.responses import StreamingResponse
 from langchain.chains.base import Chain
+from starlette.background import BackgroundTask
 from starlette.types import Send
 
 
@@ -13,9 +13,10 @@ class BaseLangchainStreamingResponse(StreamingResponse):
         self,
         chain: Chain,
         inputs: Union[Dict[str, Any], Any],
+        background: Optional[BackgroundTask] = None,
         **kwargs: Any,
     ) -> None:
-        super().__init__(content=iter(()), **kwargs)
+        super().__init__(content=iter(()), background=background, **kwargs)
 
         self.chain_wrapper_fn = self.chain_wrapper_fn(chain, inputs)
 
@@ -36,7 +37,7 @@ class BaseLangchainStreamingResponse(StreamingResponse):
         try:
             outputs = await self.chain_wrapper_fn(send_token)
             if self.background is not None:
-                self.background = partial(self.background, outputs)
+                self.background.kwargs["outputs"] = outputs
         except Exception as e:
             await send(
                 {
