@@ -8,7 +8,7 @@ from langchain.callbacks import AsyncCallbackManager
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
-from fastapi_async_langchain.response import LangchainStreamingResponse
+from fastapi_async_langchain.responses import LLMChainStreamingResponse
 
 load_dotenv()
 
@@ -41,7 +41,7 @@ conversation_chain = conversation_chain_dependency()
 async def chat(
     request: Request,
     chain: ConversationChain = Depends(conversation_chain),
-) -> LangchainStreamingResponse:
-    return LangchainStreamingResponse(
+) -> LLMChainStreamingResponse:
+    return LLMChainStreamingResponse(
         chain, request.query, media_type="text/event-stream"
     )
