@@ -4,8 +4,8 @@ from langchain.callbacks import AsyncCallbackManager
 from langchain.chains.retrieval_qa.base import BaseRetrievalQA
 from starlette.types import Send
 
-from fastapi_async_langchain.callback import AsyncFastApiStreamingCallback
-from fastapi_async_langchain.responses.base import BaseLangchainStreamingResponse
+from ..callback import AsyncFastApiStreamingCallback
+from .base import BaseLangchainStreamingResponse
 
 
 class RetrievalQAStreamingResponse(BaseLangchainStreamingResponse):
