@@ -1,4 +1,4 @@
 from .base import AsyncFastApiStreamingCallback
-from .retrieval_qa import AsyncFastApiStreamingRetrievalQACallback
+from .retrieval_qa import RetrievalQAFastApiStreamingCallback
 
-__all__ = ["AsyncFastApiStreamingCallback", "AsyncFastApiStreamingRetrievalQACallback"]
+__all__ = ["AsyncFastApiStreamingCallback", "RetrievalQAFastApiStreamingCallback"]

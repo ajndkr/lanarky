@@ -1,7 +1,7 @@
 from typing import Any, Dict
 from .base import AsyncFastApiStreamingCallback
 
-class AsyncFastApiStreamingRetrievalQACallback(AsyncFastApiStreamingCallback):
+class RetrievalQAFastApiStreamingCallback(AsyncFastApiStreamingCallback):
     """Async Callback handler for FastAPI StreamingResponse to RetrievalQA."""
 
     async def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
