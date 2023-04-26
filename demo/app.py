@@ -45,3 +45,5 @@ async def chat(
     return LLMChainStreamingResponse(
         chain, request.query, media_type="text/event-stream"
     )
+
+# @app.post("/retrieve-qa")
