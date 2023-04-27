@@ -40,3 +40,13 @@ http://localhost:8000/chat
 ```
 
 ![demo](../assets/demo.gif)
+
+
+### Sample cURL request for retrieval qa with sources
+
+```bash
+curl -N -X POST \
+-H "Accept: text/event-stream" -H "Content-Type: application/json" \
+-d '{"query": "Give me list of text splitters available with code samples" }' \
+http://localhost:8000/retrieval-qa-with-sources
+```
