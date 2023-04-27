@@ -41,7 +41,6 @@ http://localhost:8000/chat
 
 ![demo](../assets/demo.gif)
 
-
 ### Sample cURL request for retrieval qa with sources
 
 ```bash

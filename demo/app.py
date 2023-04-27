@@ -8,7 +8,10 @@ from langchain.callbacks import AsyncCallbackManager
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
-from fastapi_async_langchain.responses import LLMChainStreamingResponse, RetrievalQAStreamingResponse
+from fastapi_async_langchain.responses import (
+    LLMChainStreamingResponse,
+    RetrievalQAStreamingResponse,
+)
 
 load_dotenv()
 
@@ -46,32 +49,38 @@ async def chat(
         chain, request.query, media_type="text/event-stream"
     )
 
+
 def retrieval_qa_chain():
     from langchain.chains import RetrievalQAWithSourcesChain
     from langchain.chains.qa_with_sources import load_qa_with_sources_chain
     from langchain.chains.qa_with_sources.stuff_prompt import PROMPT as QA_PROMPT
-    from langchain.vectorstores import FAISS
     from langchain.embeddings import OpenAIEmbeddings
+    from langchain.vectorstores import FAISS
 
     callback_manager = AsyncCallbackManager([])
-    vectorstore = FAISS.load_local(index_name="langchain-python", embeddings=OpenAIEmbeddings(), folder_path="demo/")
+    vectorstore = FAISS.load_local(
+        index_name="langchain-python",
+        embeddings=OpenAIEmbeddings(),
+        folder_path="demo/",
+    )
     retriever = vectorstore.as_retriever()
-    streaming_llm = ChatOpenAI(streaming=True, callback_manager=callback_manager, verbose=True, temperature=0)
-    doc_chain = load_qa_with_sources_chain(llm=streaming_llm,
-                                           chain_type="stuff",
-                                           prompt=QA_PROMPT)
-    return RetrievalQAWithSourcesChain(combine_documents_chain=doc_chain,
-                                       retriever=retriever,
-                                       callback_manager=callback_manager,
-                                       return_source_documents=True,
-                                       verbose=True)
+    streaming_llm = ChatOpenAI(
+        streaming=True, callback_manager=callback_manager, verbose=True, temperature=0
+    )
+    doc_chain = load_qa_with_sources_chain(
+        llm=streaming_llm, chain_type="stuff", prompt=QA_PROMPT
+    )
+    return RetrievalQAWithSourcesChain(
+        combine_documents_chain=doc_chain,
+        retriever=retriever,
+        callback_manager=callback_manager,
+        return_source_documents=True,
+        verbose=True,
+    )
+
 
 @app.post("/retrieval-qa-with-sources")
-async def retrieval_qa_with_sources(
-    request: Request
-) -> RetrievalQAStreamingResponse:
+async def retrieval_qa_with_sources(request: Request) -> RetrievalQAStreamingResponse:
     return RetrievalQAStreamingResponse(
-        chain=retrieval_qa_chain(),
-        inputs=request.query,
-        media_type="text/event-stream"
+        chain=retrieval_qa_chain(), inputs=request.query, media_type="text/event-stream"
     )
