@@ -5,8 +5,8 @@ from langchain.chains.retrieval_qa.base import BaseRetrievalQA
 from starlette.types import Send
 
 from ...callbacks import (
+    AsyncRetrievalQAStreamingCallback,
     AsyncStreamingResponseCallback,
-    RetrievalQAFastApiStreamingCallback,
 )
 from .base import BaseLangchainStreamingResponse
 
@@ -35,7 +35,7 @@ class RetrievalQAStreamingResponse(BaseLangchainStreamingResponse):
                     )
                     break
             chain.combine_documents_chain.llm_chain.llm.callback_manager.add_handler(
-                RetrievalQAFastApiStreamingCallback(send=send)
+                AsyncRetrievalQAStreamingCallback(send=send)
             )
             return await chain.acall(inputs)
 

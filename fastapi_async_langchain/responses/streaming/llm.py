@@ -4,7 +4,7 @@ from langchain import LLMChain
 from langchain.callbacks import AsyncCallbackManager
 from starlette.types import Send
 
-from ...callbacks import AsyncStreamingResponseCallback
+from ...callbacks import AsyncLLMChainStreamingCallback, AsyncStreamingResponseCallback
 from .base import BaseLangchainStreamingResponse
 
 
@@ -25,7 +25,7 @@ class LLMChainStreamingResponse(BaseLangchainStreamingResponse):
                     chain.llm.callback_manager.remove_handler(handler)
                     break
             chain.llm.callback_manager.add_handler(
-                AsyncStreamingResponseCallback(send=send)
+                AsyncLLMChainStreamingCallback(send=send)
             )
             return await chain.arun(inputs)
 
