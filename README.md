@@ -3,9 +3,15 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/fastapi-async-langchain/blob/main/LICENSE)
 [![PyPI version](https://badge.fury.io/py/fastapi-async-langchain.svg)](https://pypi.org/project/fastapi-async-langchain/)
 
-FastAPI async components for streaming LLM chains.
+Ship production-ready [LangChain](https://github.com/hwchase17/langchain) projects with [FastAPI](https://github.com/tiangolo/fastapi).
 
-## Installation
+## :rocket: Features
+
+- supports token streaming
+- supports multiple langchain `Chain` types (ongoing...)
+- simple gradio chatbot UI for fast prototyping
+
+## 💾 Installation
 
 The library is available on PyPI and can be installed via `pip`.
 
@@ -13,11 +19,13 @@ The library is available on PyPI and can be installed via `pip`.
 pip install fastapi-async-langchain
 ```
 
-## Demo Example
+## 🎯 Demo Examples
 
-See [Demo](demo/README.md) for setup instructions and usage of the demo FastAPI application.
+See [`examples/`](examples/README.md) for list of available demo examples.
 
-## Contributing
+![demo](assets/demo.gif)
+
+## 🤝 Contributing
 
 [![Code check](https://github.com/ajndkr/fastapi-async-langchain/actions/workflows/code-check.yaml/badge.svg)](https://github.com/ajndkr/fastapi-async-langchain/actions/workflows/code-check.yaml)
 [![Publish](https://github.com/ajndkr/fastapi-async-langchain/actions/workflows/publish.yaml/badge.svg)](https://github.com/ajndkr/fastapi-async-langchain/actions/workflows/publish.yaml)
@@ -27,7 +35,7 @@ on [GitHub](https://github.com/ajndkr/fastapi-async-langchain).
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information.
 
-## License
+## ⚖️ License
 
 The library is released under the [MIT License](https://github.com/ajndkr/fastapi-async-langchain/blob/main/LICENSE).
 

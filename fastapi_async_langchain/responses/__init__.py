@@ -1,4 +1,3 @@
-from .llm import LLMChainStreamingResponse
-from .retrieval_qa import RetrievalQAStreamingResponse
+from .streaming import LLMChainStreamingResponse, RetrievalQAStreamingResponse
 
 __all__ = ["LLMChainStreamingResponse", "RetrievalQAStreamingResponse"]

@@ -1,0 +1,6 @@
+langchain
+openai
+tiktoken
+gradio
+fastapi
+uvicorn[standard]

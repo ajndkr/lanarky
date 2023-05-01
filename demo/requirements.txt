@@ -1,6 +1,0 @@
-langchain
-openai
-fastapi
-uvicorn[standard]
-faiss-cpu
-tiktoken
