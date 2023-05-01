@@ -13,9 +13,11 @@ The library is available on PyPI and can be installed via `pip`.
 pip install fastapi-async-langchain
 ```
 
-## Demo Example
+## Demo Examples
 
-See [Demo](demo/README.md) for setup instructions and usage of the demo FastAPI application.
+See [`examples/`](examples/README.md) for list of available demo examples.
+
+![demo](assets/demo.gif)
 
 ## Contributing
 
