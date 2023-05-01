@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Awaitable, Callable, Dict, Optional, Union
 
 from fastapi.responses import StreamingResponse
 from langchain.chains.base import Chain
@@ -11,14 +11,13 @@ class BaseLangchainStreamingResponse(StreamingResponse):
 
     def __init__(
         self,
-        chain: Chain,
-        inputs: Union[Dict[str, Any], Any],
+        chain_executor: Callable[[Send], Awaitable[Any]],
         background: Optional[BackgroundTask] = None,
         **kwargs: Any,
     ) -> None:
         super().__init__(content=iter(()), background=background, **kwargs)
 
-        self.chain_wrapper_fn = self.chain_wrapper_fn(chain, inputs)
+        self.chain_executor = chain_executor
 
     async def stream_response(self, send: Send) -> None:
         await send(
@@ -35,7 +34,7 @@ class BaseLangchainStreamingResponse(StreamingResponse):
             await send({"type": "http.response.body", "body": token, "more_body": True})
 
         try:
-            outputs = await self.chain_wrapper_fn(send_token)
+            outputs = await self.chain_executor(send_token)
             if self.background is not None:
                 self.background.kwargs["outputs"] = outputs
         except Exception as e:
@@ -51,5 +50,23 @@ class BaseLangchainStreamingResponse(StreamingResponse):
         await send({"type": "http.response.body", "body": b"", "more_body": False})
 
     @staticmethod
-    def chain_wrapper_fn(chain: Chain, inputs: Union[Dict[str, Any], Any]):
+    def _create_chain_executor(
+        chain: Chain, inputs: Union[Dict[str, Any], Any]
+    ) -> Callable[[Send], Awaitable[Any]]:
         raise NotImplementedError
+
+    @classmethod
+    def from_chain(
+        cls,
+        chain: Chain,
+        inputs: Union[Dict[str, Any], Any],
+        background: Optional[BackgroundTask] = None,
+        **kwargs: Any,
+    ) -> "BaseLangchainStreamingResponse":
+        chain_executor = cls._create_chain_executor(chain, inputs)
+
+        return cls(
+            chain_executor=chain_executor,
+            background=background,
+            **kwargs,
+        )

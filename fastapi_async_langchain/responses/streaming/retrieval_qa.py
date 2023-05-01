@@ -1,10 +1,13 @@
-from typing import Any, Dict, Union
+from typing import Any, Awaitable, Callable, Dict, Union
 
 from langchain.callbacks import AsyncCallbackManager
 from langchain.chains.retrieval_qa.base import BaseRetrievalQA
 from starlette.types import Send
 
-from ..callbacks import RetrievalQAFastApiStreamingCallback
+from ...callbacks import (
+    AsyncStreamingResponseCallback,
+    RetrievalQAFastApiStreamingCallback,
+)
 from .base import BaseLangchainStreamingResponse
 
 
@@ -12,7 +15,9 @@ class RetrievalQAStreamingResponse(BaseLangchainStreamingResponse):
     """BaseLangchainStreamingResponse class wrapper for BaseRetrievalQA instances."""
 
     @staticmethod
-    def chain_wrapper_fn(chain: BaseRetrievalQA, inputs: Union[Dict[str, Any], Any]):
+    def _create_chain_executor(
+        chain: BaseRetrievalQA, inputs: Union[Dict[str, Any], Any]
+    ) -> Callable[[Send], Awaitable[Any]]:
         async def wrapper(send: Send):
             if not isinstance(
                 chain.combine_documents_chain.llm_chain.llm.callback_manager,
@@ -24,7 +29,7 @@ class RetrievalQAStreamingResponse(BaseLangchainStreamingResponse):
             for (
                 handler
             ) in chain.combine_documents_chain.llm_chain.llm.callback_manager.handlers:
-                if isinstance(handler, RetrievalQAFastApiStreamingCallback):
+                if isinstance(handler, AsyncStreamingResponseCallback):
                     chain.combine_documents_chain.llm_chain.llm.callback_manager.remove_handler(
                         handler
                     )
