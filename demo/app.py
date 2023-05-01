@@ -45,7 +45,7 @@ async def chat(
     request: Request,
     chain: ConversationChain = Depends(conversation_chain),
 ) -> LLMChainStreamingResponse:
-    return LLMChainStreamingResponse(
+    return LLMChainStreamingResponse.from_chain(
         chain, request.query, media_type="text/event-stream"
     )
 
@@ -81,6 +81,6 @@ def retrieval_qa_chain():
 
 @app.post("/retrieval-qa-with-sources")
 async def retrieval_qa_with_sources(request: Request) -> RetrievalQAStreamingResponse:
-    return RetrievalQAStreamingResponse(
+    return RetrievalQAStreamingResponse.from_chain(
         chain=retrieval_qa_chain(), inputs=request.query, media_type="text/event-stream"
     )
