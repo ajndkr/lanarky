@@ -1,6 +1,6 @@
-# FastAPI Demo Application
+# Conversation Chain Demo
 
-This is a simple FastAPI application for streaming LLM chains.
+This is a simple FastAPI application for streaming conversation chains.
 
 ## Setup Instructions
 
@@ -10,8 +10,8 @@ to get started.
 ### Create conda environment:
 
 ```bash
-conda create -n fastapi-async-langchain python=3.9 -y
-conda activate fastapi-async-langchain
+conda create -n conversation-chain-demo python=3.9 -y
+conda activate conversation-chain-demo
 ```
 
 You can choose any other environment manager of your choice.
@@ -39,13 +39,6 @@ curl -N -X POST \
 http://localhost:8000/chat
 ```
 
-![demo](../assets/demo.gif)
+### Gradio UI
 
-### Sample cURL request for retrieval qa with sources
-
-```bash
-curl -N -X POST \
--H "Accept: text/event-stream" -H "Content-Type: application/json" \
--d '{"query": "Give me list of text splitters available with code samples" }' \
-http://localhost:8000/retrieval-qa-with-sources
-```
+Open http://localhost:8000/gradio in your browser to access the Gradio UI.
