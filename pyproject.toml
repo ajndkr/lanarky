@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-async-langchain"
-version = "0.3.3"
+version = "0.4.0"
 description = "FastAPI async components for streaming LLM chains."
 authors = ["Ajinkya Indulkar <26824103+ajndkr@users.noreply.github.com>"]
 readme = "README.md"
