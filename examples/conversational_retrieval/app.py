@@ -18,7 +18,7 @@ from fastapi_async_langchain.websockets import (
 
 load_dotenv()
 
-app = mount_gradio_app(FastAPI(title="RetrievalQAWithSourcesChainDemo"))
+app = mount_gradio_app(FastAPI(title="ConversationalRetrievalChainDemo"))
 
 templates = Jinja2Templates(directory="templates")
 
