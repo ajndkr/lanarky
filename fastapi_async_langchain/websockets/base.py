@@ -5,7 +5,7 @@ Credits:
 """
 import logging
 from abc import abstractstaticmethod
-from typing import Any, Awaitable, Callable, Dict, Union
+from typing import Any, Awaitable, Callable
 
 from fastapi import WebSocket, WebSocketDisconnect
 from langchain.chains.base import Chain
@@ -21,8 +21,6 @@ class BaseLangchainWebsocketConnection(BaseModel):
     chain_executor: Callable[[], Awaitable[Any]] = Field(...)
 
     class Config:
-        """Configuration for this pydantic object."""
-
         arbitrary_types_allowed = True
 
     async def connect(self):
@@ -34,18 +32,22 @@ class BaseLangchainWebsocketConnection(BaseModel):
                     WebsocketResponse(
                         sender=Sender.HUMAN,
                         message=user_message,
-                        type=MessageType.STREAM,
+                        message_type=MessageType.STREAM,
                     ).dict()
                 )
                 await self.websocket.send_json(
                     WebsocketResponse(
-                        sender=Sender.BOT, message=Message.NULL, type=MessageType.START
+                        sender=Sender.BOT,
+                        message=Message.NULL,
+                        message_type=MessageType.START,
                     ).dict()
                 )
                 await self.chain_executor(user_message)
                 await self.websocket.send_json(
                     WebsocketResponse(
-                        sender=Sender.BOT, message=Message.NULL, type=MessageType.END
+                        sender=Sender.BOT,
+                        message=Message.NULL,
+                        message_type=MessageType.END,
                     ).dict()
                 )
             except WebSocketDisconnect:
@@ -55,14 +57,15 @@ class BaseLangchainWebsocketConnection(BaseModel):
                 logger.error(e)
                 await self.websocket.send_json(
                     WebsocketResponse(
-                        sender=Sender.BOT, message=Message.ERROR, type=MessageType.ERROR
+                        sender=Sender.BOT,
+                        message=Message.ERROR,
+                        message_type=MessageType.ERROR,
                     ).dict()
                 )
 
     @abstractstaticmethod
     def _create_chain_executor(
         chain: Chain,
-        inputs: Union[Dict[str, Any], Any],
         websocket: WebSocket,
         response: WebsocketResponse,
     ) -> Callable[[str], Awaitable[Any]]:
@@ -78,7 +81,7 @@ class BaseLangchainWebsocketConnection(BaseModel):
             chain,
             websocket,
             WebsocketResponse(
-                sender=Sender.BOT, message=Message.NULL, type=MessageType.STREAM
+                sender=Sender.BOT, message=Message.NULL, message_type=MessageType.STREAM
             ),
         )
 
