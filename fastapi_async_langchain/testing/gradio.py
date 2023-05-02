@@ -3,10 +3,7 @@ from typing import Any
 import requests
 from fastapi import FastAPI
 
-# FIXME: avoid hardcoding values
-GRADIO_PATH = "/gradio"
-CHAT_API_URL = "http://localhost:8000"
-DEFAULT_CHAT_ENDPOINT = "/chat"
+from .settings import get_settings
 
 
 def send_query(api_url: str, query: str, chat: list[Any], history: list[Any]):
@@ -37,7 +34,10 @@ def clear_chat():
 
 
 def mount_gradio_app(
-    app: FastAPI, path: str = GRADIO_PATH, chat_endpoint: str = DEFAULT_CHAT_ENDPOINT
+    app: FastAPI,
+    path: str = get_settings().gradio_path,
+    chat_endpoint: str = get_settings().api_endpoint,
+    title: str = get_settings().title,
 ):
     """Mounts a Gradio app on a FastAPI app."""
 
@@ -48,10 +48,10 @@ def mount_gradio_app(
             "Please install gradio to use this feature: pip install gradio"
         )
 
-    blocks = gr.Blocks()
+    blocks = gr.Blocks(title=title)
 
     with blocks:
-        gr.Markdown("<h3><center>Chatbot Playground</center></h3>")
+        gr.Markdown(f"<h3><center>{title}</center></h3>")
 
         with gr.Row():
             query = gr.Textbox(
@@ -63,7 +63,7 @@ def mount_gradio_app(
                 full_width=False
             )
 
-        api_url = gr.State(CHAT_API_URL + chat_endpoint)
+        api_url = gr.State(get_settings().api_url + chat_endpoint)
         chatbot = gr.Chatbot()
         history = gr.State()
 
