@@ -3,18 +3,20 @@ from typing import Callable
 
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Request, WebSocket
+from fastapi.templating import Jinja2Templates
 from langchain import ConversationChain
 from langchain.callbacks import AsyncCallbackManager
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
 from fastapi_async_langchain.responses import LLMChainStreamingResponse
-from fastapi_async_langchain.testing import get_ws_template, mount_gradio_app
+from fastapi_async_langchain.testing import mount_gradio_app
 from fastapi_async_langchain.websockets import LLMChainWebsocketConnection
 
 load_dotenv()
 
 app = mount_gradio_app(FastAPI(title="ConversationChainDemo"))
+templates = Jinja2Templates(directory="templates")
 
 
 class QueryRequest(BaseModel):
@@ -39,11 +41,6 @@ def conversation_chain_dependency() -> Callable[[], ConversationChain]:
 conversation_chain = conversation_chain_dependency()
 
 
-@app.get("/")
-async def get(request: Request):
-    return get_ws_template(request)
-
-
 @app.post("/chat")
 async def chat(
     request: QueryRequest,
@@ -54,9 +51,16 @@ async def chat(
     )
 
 
-@app.websocket("/chat_ws")
-async def websocket_endpoint(websocket: WebSocket):
+@app.get("/")
+async def get(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(
+    websocket: WebSocket, chain: ConversationChain = Depends(conversation_chain)
+):
     connection = LLMChainWebsocketConnection.from_chain(
-        chain=conversation_chain, websocket=websocket
+        chain=chain, websocket=websocket
     )
     await connection.connect()
