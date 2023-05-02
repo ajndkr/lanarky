@@ -1,3 +1,9 @@
+"""
+Credits:
+- https://gist.github.com/ninely/88485b2e265d852d3feb8bd115065b1a
+- https://github.com/hwchase17/langchain/discussions/1706
+"""
+from abc import abstractstaticmethod
 from typing import Any, Awaitable, Callable, Dict, Optional, Union
 
 from fastapi.responses import StreamingResponse
@@ -49,7 +55,7 @@ class BaseLangchainStreamingResponse(StreamingResponse):
 
         await send({"type": "http.response.body", "body": b"", "more_body": False})
 
-    @staticmethod
+    @abstractstaticmethod
     def _create_chain_executor(
         chain: Chain, inputs: Union[Dict[str, Any], Any]
     ) -> Callable[[Send], Awaitable[Any]]:
