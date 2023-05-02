@@ -28,7 +28,9 @@ class QueryRequest(BaseModel):
     history: list[list[str]] | None = []
 
 
-def retrieval_qa_chain_dependency() -> Callable[[], ConversationalRetrievalChain]:
+def conversational_retrieval_chain_dependency() -> (
+    Callable[[], ConversationalRetrievalChain]
+):
     @lru_cache(maxsize=1)
     def dependency() -> ConversationalRetrievalChain:
         from langchain.chains.conversational_retrieval.prompts import (
@@ -71,13 +73,13 @@ def retrieval_qa_chain_dependency() -> Callable[[], ConversationalRetrievalChain
     return dependency
 
 
-retrieval_qa_chain = retrieval_qa_chain_dependency()
+conversational_retrieval_chain = conversational_retrieval_chain_dependency()
 
 
 @app.post("/chat")
 async def chat(
     request: QueryRequest,
-    chain: ConversationalRetrievalChain = Depends(retrieval_qa_chain),
+    chain: ConversationalRetrievalChain = Depends(conversational_retrieval_chain),
 ) -> ConversationalRetrievalStreamingResponse:
     inputs = {
         "question": request.query,
@@ -96,7 +98,7 @@ async def get(request: Request):
 @app.websocket("/ws")
 async def websocket_endpoint(
     websocket: WebSocket,
-    chain: ConversationalRetrievalChain = Depends(retrieval_qa_chain),
+    chain: ConversationalRetrievalChain = Depends(conversational_retrieval_chain),
 ):
     connection = ConversationalRetrievalWebsocketConnection.from_chain(
         chain=chain, websocket=websocket
