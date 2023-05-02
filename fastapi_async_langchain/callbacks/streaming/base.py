@@ -15,10 +15,6 @@ class AsyncStreamingResponseCallback(AsyncCallbackHandler, BaseModel):
         """Whether to call verbose callbacks even if verbose is False."""
         return True
 
-    async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
-        """Run on new LLM token. Only available when streaming is enabled."""
-        await self.send(token)
-
 
 class AsyncLLMChainStreamingCallback(AsyncStreamingResponseCallback):
     """AsyncStreamingResponseCallback handler for LLMChain."""

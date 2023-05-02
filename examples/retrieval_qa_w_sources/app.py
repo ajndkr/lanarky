@@ -8,8 +8,8 @@ from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
-from fastapi_async_langchain.gradio import mount_gradio_app
 from fastapi_async_langchain.responses import RetrievalQAStreamingResponse
+from fastapi_async_langchain.testing import mount_gradio_app
 
 load_dotenv()
 
@@ -42,6 +42,7 @@ def retrieval_qa_chain_dependency() -> Callable[[], RetrievalQAWithSourcesChain]
             retriever=db.as_retriever(),
             return_source_documents=True,
             verbose=True,
+            callback_manager=AsyncCallbackManager([]),
         )
 
     return dependency

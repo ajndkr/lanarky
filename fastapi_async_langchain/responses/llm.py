@@ -4,7 +4,7 @@ from langchain import LLMChain
 from langchain.callbacks import AsyncCallbackManager
 from starlette.types import Send
 
-from ...callbacks import AsyncLLMChainStreamingCallback, AsyncStreamingResponseCallback
+from ..callbacks import AsyncLLMChainStreamingCallback, AsyncStreamingResponseCallback
 from .base import BaseLangchainStreamingResponse
 
 
