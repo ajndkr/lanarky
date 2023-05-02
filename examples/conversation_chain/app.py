@@ -8,8 +8,8 @@ from langchain.callbacks import AsyncCallbackManager
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
-from fastapi_async_langchain.gradio import mount_gradio_app
 from fastapi_async_langchain.responses import LLMChainStreamingResponse
+from fastapi_async_langchain.testing import mount_gradio_app
 
 load_dotenv()
 
