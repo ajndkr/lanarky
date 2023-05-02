@@ -4,3 +4,4 @@ tiktoken
 gradio
 fastapi
 uvicorn[standard]
+fastapi-async-langchain

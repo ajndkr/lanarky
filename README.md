@@ -7,7 +7,7 @@ Ship production-ready [LangChain](https://github.com/hwchase17/langchain) projec
 
 ## :rocket: Features
 
-- supports token streaming
+- supports token streaming over HTTP and Websocket
 - supports multiple langchain `Chain` types (ongoing...)
 - simple gradio chatbot UI for fast prototyping
 
@@ -38,8 +38,3 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information.
 ## ⚖️ License
 
 The library is released under the [MIT License](https://github.com/ajndkr/fastapi-async-langchain/blob/main/LICENSE).
-
-## Credits:
-
-- [ninely/main.py](https://gist.github.com/ninely/88485b2e265d852d3feb8bd115065b1a)
-- https://github.com/hwchase17/langchain/discussions/1706
