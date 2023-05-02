@@ -5,6 +5,7 @@ from langchain.chains.retrieval_qa.base import BaseRetrievalQA
 from starlette.types import Send
 
 from ...callbacks import (
+    AsyncLLMChainStreamingCallback,
     AsyncRetrievalQAStreamingCallback,
     AsyncStreamingResponseCallback,
 )
@@ -35,8 +36,21 @@ class RetrievalQAStreamingResponse(BaseLangchainStreamingResponse):
                     )
                     break
             chain.combine_documents_chain.llm_chain.llm.callback_manager.add_handler(
+                AsyncLLMChainStreamingCallback(send=send)
+            )
+
+            if not isinstance(chain.callback_manager, AsyncCallbackManager):
+                raise TypeError(
+                    "chain.callback_manager must be an instance of AsyncCallbackManager"
+                )
+            for handler in chain.callback_manager.handlers:
+                if isinstance(handler, AsyncStreamingResponseCallback):
+                    chain.callback_manager.remove_handler(handler)
+                    break
+            chain.callback_manager.add_handler(
                 AsyncRetrievalQAStreamingCallback(send=send)
             )
+
             return await chain.acall(inputs)
 
         return wrapper
