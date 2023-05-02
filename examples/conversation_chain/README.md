@@ -42,3 +42,7 @@ http://localhost:8000/chat
 ### Gradio UI
 
 Open http://localhost:8000/gradio in your browser to access the Gradio UI.
+
+### Websocket Testing
+
+Open http://localhost:8000 in your browser to access the chatbot UI with websocket support.

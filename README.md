@@ -7,7 +7,7 @@ Ship production-ready [LangChain](https://github.com/hwchase17/langchain) projec
 
 ## :rocket: Features
 
-- supports token streaming
+- supports token streaming over HTTP and Websocket
 - supports multiple langchain `Chain` types (ongoing...)
 - simple gradio chatbot UI for fast prototyping
 
