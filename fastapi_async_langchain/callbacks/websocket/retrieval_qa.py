@@ -12,7 +12,12 @@ class AsyncRetrievalQAWebsocketCallback(AsyncWebsocketCallback):
     async def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
         if outputs["source_documents"] is not None:
-            await self.send("\n\nSOURCE DOCUMENTS: \n")
+            await self.websocket.send_json(
+                {
+                    **self.response.dict(),
+                    **{"message": "\n\nSOURCE DOCUMENTS: \n"},
+                }
+            )
             for document in outputs["source_documents"]:
                 source_document = self.source_document_template.format(
                     page_content=document.page_content,
