@@ -4,14 +4,17 @@ from fastapi import WebSocket
 from langchain.callbacks.base import AsyncCallbackHandler
 from pydantic import BaseModel, Field
 
-from ...websockets import Response
+from ...schemas import WebsocketResponse
 
 
 class AsyncWebsocketCallback(AsyncCallbackHandler, BaseModel):
     """Async Callback handler for FastAPI websocket connection."""
 
     websocket: WebSocket = Field(...)
-    response: Response = Field(...)
+    response: WebsocketResponse = Field(...)
+
+    class Config:
+        arbitrary_types_allowed = True
 
     @property
     def always_verbose(self) -> bool:

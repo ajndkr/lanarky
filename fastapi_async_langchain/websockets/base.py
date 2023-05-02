@@ -5,41 +5,15 @@ Credits:
 """
 import logging
 from abc import abstractstaticmethod
-from enum import Enum
 from typing import Any, Awaitable, Callable, Dict, Union
 
 from fastapi import WebSocket, WebSocketDisconnect
 from langchain.chains.base import Chain
 from pydantic import BaseModel, Field
 
+from ..schemas import Message, MessageType, Sender, WebsocketResponse
+
 logger = logging.getLogger(__name__)
-
-
-class Sender(str, Enum):
-    BOT = "bot"
-    HUMAN = "human"
-
-
-class Message(str, Enum):
-    NULL = ""
-    ERROR = "Sorry, something went wrong. Try again."
-
-
-class MessageType(str, Enum):
-    START = "start"
-    STREAM = "stream"
-    END = "end"
-    ERROR = "error"
-    INFO = "info"
-
-
-class Response(BaseModel):
-    sender: Sender
-    message: Union[Message, str]
-    message_type: MessageType
-
-    class Config:
-        use_enum_values = True
 
 
 class BaseLangchainWebsocketConnection(BaseModel):
@@ -57,20 +31,20 @@ class BaseLangchainWebsocketConnection(BaseModel):
             try:
                 user_message = await self.websocket.receive_text()
                 await self.websocket.send_json(
-                    Response(
+                    WebsocketResponse(
                         sender=Sender.HUMAN,
                         message=user_message,
                         type=MessageType.STREAM,
                     ).dict()
                 )
                 await self.websocket.send_json(
-                    Response(
+                    WebsocketResponse(
                         sender=Sender.BOT, message=Message.NULL, type=MessageType.START
                     ).dict()
                 )
                 await self.chain_executor(user_message)
                 await self.websocket.send_json(
-                    Response(
+                    WebsocketResponse(
                         sender=Sender.BOT, message=Message.NULL, type=MessageType.END
                     ).dict()
                 )
@@ -80,7 +54,7 @@ class BaseLangchainWebsocketConnection(BaseModel):
             except Exception as e:
                 logger.error(e)
                 await self.websocket.send_json(
-                    Response(
+                    WebsocketResponse(
                         sender=Sender.BOT, message=Message.ERROR, type=MessageType.ERROR
                     ).dict()
                 )
@@ -90,7 +64,7 @@ class BaseLangchainWebsocketConnection(BaseModel):
         chain: Chain,
         inputs: Union[Dict[str, Any], Any],
         websocket: WebSocket,
-        response: Response,
+        response: WebsocketResponse,
     ) -> Callable[[str], Awaitable[Any]]:
         raise NotImplementedError
 
@@ -103,7 +77,9 @@ class BaseLangchainWebsocketConnection(BaseModel):
         chain_executor = cls._create_chain_executor(
             chain,
             websocket,
-            Response(sender=Sender.BOT, message=Message.NULL, type=MessageType.STREAM),
+            WebsocketResponse(
+                sender=Sender.BOT, message=Message.NULL, type=MessageType.STREAM
+            ),
         )
 
         return cls(

@@ -5,7 +5,8 @@ from langchain import LLMChain
 from langchain.callbacks import AsyncCallbackManager
 
 from ..callbacks import AsyncLLMChainWebsocketCallback, AsyncWebsocketCallback
-from .base import BaseLangchainWebsocketConnection, Response
+from ..schemas import WebsocketResponse
+from .base import BaseLangchainWebsocketConnection
 
 
 class LLMChainWebsocketConnection(BaseLangchainWebsocketConnection):
@@ -15,7 +16,7 @@ class LLMChainWebsocketConnection(BaseLangchainWebsocketConnection):
     def _create_chain_executor(
         chain: LLMChain,
         websocket: WebSocket,
-        response: Response,
+        response: WebsocketResponse,
     ) -> Callable[[], Awaitable[Any]]:
         async def wrapper(user_message: str):
             if not isinstance(chain.llm.callback_manager, AsyncCallbackManager):

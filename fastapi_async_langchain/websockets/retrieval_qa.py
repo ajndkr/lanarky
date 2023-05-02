@@ -9,7 +9,8 @@ from ..callbacks import (
     AsyncRetrievalQAWebsocketCallback,
     AsyncWebsocketCallback,
 )
-from .base import BaseLangchainWebsocketConnection, Response
+from ..schemas import WebsocketResponse
+from .base import BaseLangchainWebsocketConnection
 
 
 class RetrievalQAWebsocketConnection(BaseLangchainWebsocketConnection):
@@ -19,7 +20,7 @@ class RetrievalQAWebsocketConnection(BaseLangchainWebsocketConnection):
     def _create_chain_executor(
         chain: BaseRetrievalQA,
         websocket: WebSocket,
-        response: Response,
+        response: WebsocketResponse,
     ) -> Callable[[], Awaitable[Any]]:
         async def wrapper(user_message: str):
             if not isinstance(
