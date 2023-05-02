@@ -4,7 +4,7 @@ from langchain.callbacks import AsyncCallbackManager
 from langchain.chains.retrieval_qa.base import BaseRetrievalQA
 from starlette.types import Send
 
-from ...callbacks import (
+from ..callbacks import (
     AsyncLLMChainStreamingCallback,
     AsyncRetrievalQAStreamingCallback,
     AsyncStreamingResponseCallback,
