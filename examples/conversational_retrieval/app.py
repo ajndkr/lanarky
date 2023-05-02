@@ -38,7 +38,7 @@ def retrieval_qa_chain_dependency() -> Callable[[], ConversationalRetrievalChain
         from langchain.vectorstores import FAISS
 
         db = FAISS.load_local(
-            folder_path="vector_stores/",
+            folder_path="../vector_stores/",
             index_name="langchain-python",
             embeddings=OpenAIEmbeddings(),
         )
