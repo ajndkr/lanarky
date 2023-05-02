@@ -11,6 +11,10 @@ class Settings(BaseSettings):
     api_endpoint: str = "/chat"
     gradio_path: str = "/gradio"
 
+    # jinja2 template settings
+    websocket_url: str = "ws://localhost:8000"
+    websocket_endpoint: str = "/chat_ws"
+
     class Config:
         env_file = ".env"
 
