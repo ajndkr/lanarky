@@ -12,8 +12,11 @@ from starlette.background import BackgroundTask
 from starlette.types import Send
 
 
+import asyncio
+
+
 class BaseLangchainStreamingResponse(StreamingResponse):
-    """Base StreamingResponse class wrapper for langchain chains."""
+    """StreamingResponse class wrapper for LLM chains."""
 
     def __init__(
         self,
@@ -22,8 +25,9 @@ class BaseLangchainStreamingResponse(StreamingResponse):
         **kwargs: Any,
     ) -> None:
         super().__init__(content=iter(()), background=background, **kwargs)
-
         self.chain_executor = chain_executor
+        self.send_lock = asyncio.Lock()
+        self.done = False
 
     async def stream_response(self, send: Send) -> None:
         await send(
@@ -37,38 +41,45 @@ class BaseLangchainStreamingResponse(StreamingResponse):
         async def send_token(token: Union[str, bytes]):
             if not isinstance(token, bytes):
                 token = token.encode(self.charset)
-            await send({"type": "http.response.body", "body": token, "more_body": True})
+            async with self.send_lock:
+                if not self.done:
+                    await send({"type": "http.response.body", "body": token, "more_body": True})
 
         try:
             outputs = await self.chain_executor(send_token)
             if self.background is not None:
                 self.background.kwargs["outputs"] = outputs
         except Exception as e:
-            await send(
-                {
-                    "type": "http.response.body",
-                    "body": str(e).encode(self.charset),
-                    "more_body": False,
-                }
-            )
+            async with self.send_lock:
+                if not self.done:
+                    await send(
+                        {
+                            "type": "http.response.body",
+                            "body": str(e).encode(self.charset),
+                            "more_body": False,
+                        }
+                    )
             return
 
-        await send({"type": "http.response.body", "body": b"", "more_body": False})
+        async with self.send_lock:
+            if not self.done:
+                await send({"type": "http.response.body", "body": b"", "more_body": False})
+                self.done = True
 
-    @abstractstaticmethod
+    @staticmethod
     def _create_chain_executor(
-        chain: Chain, inputs: Union[Dict[str, Any], Any]
+        chain: "LLMChain", inputs: Union[Dict[str, Any], Any]
     ) -> Callable[[Send], Awaitable[Any]]:
         raise NotImplementedError
 
     @classmethod
     def from_chain(
         cls,
-        chain: Chain,
+        chain: "LLMChain",
         inputs: Union[Dict[str, Any], Any],
         background: Optional[BackgroundTask] = None,
         **kwargs: Any,
-    ) -> "BaseLangchainStreamingResponse":
+    ) -> "LLMChainStreamingResponse":
         chain_executor = cls._create_chain_executor(chain, inputs)
 
         return cls(
@@ -76,3 +87,6 @@ class BaseLangchainStreamingResponse(StreamingResponse):
             background=background,
             **kwargs,
         )
+
+    def is_done(self) -> bool:
+        return self.done
