@@ -68,7 +68,7 @@ class BaseLangchainWebsocketConnection(BaseModel):
                         sender=Sender.BOT, message=Message.NULL, type=MessageType.START
                     ).dict()
                 )
-                await self.chain_executor()
+                await self.chain_executor(user_message)
                 await self.websocket.send_json(
                     Response(
                         sender=Sender.BOT, message=Message.NULL, type=MessageType.END
@@ -91,20 +91,17 @@ class BaseLangchainWebsocketConnection(BaseModel):
         inputs: Union[Dict[str, Any], Any],
         websocket: WebSocket,
         response: Response,
-    ) -> Callable[[], Awaitable[Any]]:
+    ) -> Callable[[str], Awaitable[Any]]:
         raise NotImplementedError
 
     @classmethod
     def from_chain(
         cls,
         chain: Chain,
-        inputs: Union[Dict[str, Any], Any],
         websocket: WebSocket,
-        **kwargs: Any,
     ) -> "BaseLangchainWebsocketConnection":
         chain_executor = cls._create_chain_executor(
             chain,
-            inputs,
             websocket,
             Response(sender=Sender.BOT, message=Message.NULL, type=MessageType.STREAM),
         )
@@ -112,5 +109,4 @@ class BaseLangchainWebsocketConnection(BaseModel):
         return cls(
             chain_executor=chain_executor,
             websocket=websocket,
-            **kwargs,
         )

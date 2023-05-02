@@ -1,4 +1,4 @@
-from typing import Any, Awaitable, Callable, Dict, Union
+from typing import Any, Awaitable, Callable
 
 from fastapi import WebSocket
 from langchain import LLMChain
@@ -14,11 +14,10 @@ class LLMChainWebsocketConnection(BaseLangchainWebsocketConnection):
     @staticmethod
     def _create_chain_executor(
         chain: LLMChain,
-        inputs: Union[Dict[str, Any], Any],
         websocket: WebSocket,
         response: Response,
     ) -> Callable[[], Awaitable[Any]]:
-        async def wrapper():
+        async def wrapper(user_message: str):
             if not isinstance(chain.llm.callback_manager, AsyncCallbackManager):
                 raise TypeError(
                     "llm.callback_manager must be an instance of AsyncCallbackManager"
@@ -30,6 +29,6 @@ class LLMChainWebsocketConnection(BaseLangchainWebsocketConnection):
             chain.llm.callback_manager.add_handler(
                 AsyncLLMChainWebsocketCallback(websocket=websocket, response=response)
             )
-            return await chain.arun(inputs)
+            return await chain.arun(user_message)
 
         return wrapper

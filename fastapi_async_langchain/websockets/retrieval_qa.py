@@ -1,4 +1,4 @@
-from typing import Any, Awaitable, Callable, Dict, Union
+from typing import Any, Awaitable, Callable
 
 from fastapi import WebSocket
 from langchain.callbacks import AsyncCallbackManager
@@ -18,11 +18,10 @@ class RetrievalQAWebsocketConnection(BaseLangchainWebsocketConnection):
     @staticmethod
     def _create_chain_executor(
         chain: BaseRetrievalQA,
-        inputs: Union[Dict[str, Any], Any],
         websocket: WebSocket,
         response: Response,
     ) -> Callable[[], Awaitable[Any]]:
-        async def wrapper():
+        async def wrapper(user_message: str):
             if not isinstance(
                 chain.combine_documents_chain.llm_chain.llm.callback_manager,
                 AsyncCallbackManager,
@@ -56,6 +55,6 @@ class RetrievalQAWebsocketConnection(BaseLangchainWebsocketConnection):
                 )
             )
 
-            return await chain.acall(inputs)
+            return await chain.acall(user_message)
 
         return wrapper
