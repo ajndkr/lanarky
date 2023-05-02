@@ -42,6 +42,7 @@ def retrieval_qa_chain_dependency() -> Callable[[], RetrievalQAWithSourcesChain]
             retriever=db.as_retriever(),
             return_source_documents=True,
             verbose=True,
+            callback_manager=AsyncCallbackManager([]),
         )
 
     return dependency
