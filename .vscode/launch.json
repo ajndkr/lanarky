@@ -3,7 +3,7 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "preLaunchTask": "dotenv",
+    "envFile": "${workspaceFolder}/.env",
     "configurations": [
         {
             "name": "Python: Conversation Chain Example",
@@ -11,9 +11,6 @@
             "request": "launch",
             "module": "uvicorn",
             "cwd": "${workspaceFolder}/examples",
-            "env": {
-                "OPENAI_API_KEY": "${env:OPENAI_API_KEY}",
-            },
             "args": [
                 "app.conversation_chain:app",
                 "--reload",
@@ -29,9 +26,6 @@
             "request": "launch",
             "module": "uvicorn",
             "cwd": "${workspaceFolder}/examples",
-            "env": {
-                "OPENAI_API_KEY": "${env:OPENAI_API_KEY}",
-            },
             "args": [
                 "app.retrieval_qa_w_sources:app",
                 "--reload",
