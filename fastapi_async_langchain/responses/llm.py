@@ -15,7 +15,8 @@ class LLMChainStreamingResponse(BaseLangchainStreamingResponse):
         chain: LLMChain, inputs: Union[Dict[str, Any], Any]
     ) -> Callable[[Send], Awaitable[Any]]:
         async def wrapper(send: Send):
-            callback = AsyncLLMChainStreamingCallback(send=send)
-            return await chain.arun(input=inputs, callbacks=[callback])
+            return await chain.arun(
+                input=inputs, callbacks=[AsyncLLMChainStreamingCallback(send=send)]
+            )
 
         return wrapper

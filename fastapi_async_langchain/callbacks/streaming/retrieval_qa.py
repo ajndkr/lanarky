@@ -1,6 +1,6 @@
 from typing import Any, Dict
 
-from .base import AsyncStreamingResponseCallback
+from .base import AsyncLLMChainStreamingCallback
 
 SOURCE_DOCUMENT_TEMPLATE = """
 page content: {page_content}
@@ -8,7 +8,7 @@ source: {source}
 """
 
 
-class AsyncRetrievalQAStreamingCallback(AsyncStreamingResponseCallback):
+class AsyncRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
     """AsyncStreamingResponseCallback handler for RetrievalQA."""
 
     source_document_template: str = SOURCE_DOCUMENT_TEMPLATE
