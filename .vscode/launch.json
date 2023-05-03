@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "preLaunchTask": "dotenv",
+    "configurations": [
+        {
+            "name": "Python: Conversation Chain Example",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "cwd": "${workspaceFolder}/examples",
+            "env": {
+                "OPENAI_API_KEY": "${env:OPENAI_API_KEY}",
+            },
+            "args": [
+                "app.conversation_chain:app",
+                "--reload",
+                "--host",
+                "localhost",
+                "--port",
+                "8000",
+            ]
+        },
+        {
+            "name": "Python: Retrieval QA With Sources Example",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "cwd": "${workspaceFolder}/examples",
+            "env": {
+                "OPENAI_API_KEY": "${env:OPENAI_API_KEY}",
+            },
+            "args": [
+                "app.retrieval_qa_w_sources:app",
+                "--reload",
+                "--host",
+                "localhost",
+                "--port",
+                "8000",
+            ]
+        },
+    ]
+}

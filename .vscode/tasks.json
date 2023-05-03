@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "dotenv",
+			"type": "shell",
+			"command": "npx dotenv -- node",
+			"group": "none",
+			"problemMatcher": []
+		}
+	]
+}
