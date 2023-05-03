@@ -41,7 +41,6 @@ def retrieval_qa_chain_dependency() -> Callable[[], RetrievalQAWithSourcesChain]
                 temperature=0,
                 streaming=True,
                 callbacks=[],
-                # callback_manager=AsyncCallbackManager([]),
             ),
             chain_type="stuff",
             retriever=db.as_retriever(),
