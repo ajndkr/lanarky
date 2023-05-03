@@ -29,7 +29,6 @@ def conversation_chain_dependency() -> Callable[[], ConversationChain]:
             llm=ChatOpenAI(
                 temperature=0,
                 streaming=True,
-                callbacks=[],
             ),
             verbose=True,
         )
