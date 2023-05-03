@@ -18,11 +18,10 @@ class RetrievalQAStreamingResponse(BaseLangchainStreamingResponse):
         chain: BaseRetrievalQA, inputs: Union[Dict[str, Any], Any]
     ) -> Callable[[Send], Awaitable[Any]]:
         async def wrapper(send: Send):
-            chain.combine_documents_chain.llm_chain.llm.callbacks = [
-                AsyncLLMChainStreamingCallback(send=send)
-            ]
+            llm_callback = AsyncLLMChainStreamingCallback(send=send)
+            retrieval_callback = AsyncRetrievalQAStreamingCallback(send=send)
             return await chain.acall(
-                inputs=inputs, callbacks=[AsyncRetrievalQAStreamingCallback(send=send)]
+                inputs=inputs, callbacks=[llm_callback, retrieval_callback]
             )
 
         return wrapper
