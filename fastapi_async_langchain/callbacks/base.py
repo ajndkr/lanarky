@@ -1,10 +1,20 @@
-from typing import Any
-
 from fastapi import WebSocket
 from langchain.callbacks.base import AsyncCallbackHandler
 from pydantic import BaseModel, Field
+from starlette.types import Send
 
-from ...schemas import WebsocketResponse
+from ..schemas import WebsocketResponse
+
+
+class AsyncStreamingResponseCallback(AsyncCallbackHandler, BaseModel):
+    """Async Callback handler for FastAPI StreamingResponse."""
+
+    send: Send = Field(...)
+
+    @property
+    def always_verbose(self) -> bool:
+        """Whether to call verbose callbacks even if verbose is False."""
+        return True
 
 
 class AsyncWebsocketCallback(AsyncCallbackHandler, BaseModel):
@@ -20,11 +30,3 @@ class AsyncWebsocketCallback(AsyncCallbackHandler, BaseModel):
     def always_verbose(self) -> bool:
         """Whether to call verbose callbacks even if verbose is False."""
         return True
-
-
-class AsyncLLMChainWebsocketCallback(AsyncWebsocketCallback):
-    """AsyncWebsocketCallback handler for LLMChain."""
-
-    async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
-        """Run on new LLM token. Only available when streaming is enabled."""
-        await self.websocket.send_json({**self.response.dict(), **{"message": token}})
