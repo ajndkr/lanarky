@@ -35,7 +35,19 @@ uvicorn app:app --reload
 ```bash
 curl -N -X POST \
 -H "Accept: text/event-stream" -H "Content-Type: application/json" \
--d '{"query": "Give me list samples with code", "history": [ ["What is a Text Embedding Model?", "Text embedding models are machine learning algorithms that convert text into numerical representations called embeddings. These embeddings are useful for a variety of tasks, such as natural language processing, sentiment analysis, and text classification. Text embedding models use a variety of techniques, such as word embedding, sentence embedding, and document embedding."],     ["List a types of text embeddings", "Text embeddings are a type of representation that maps words, phrases, or sentences from a language to a vector of real numbers. There are several types of text embeddings, including: Word Embeddings: Word embeddings map words to a vector of real numbers. These vectors capture the semantic meaning of the words and can be used to compare words to one another."] ]}' \
+-d '{
+    "query": "Give me a code sample",
+    "history": [
+        [
+            "What is a Text Splitter?",
+            "Text Splitter is a module that is responsible for breaking up a document into smaller pieces, or chunks, that can be more easily processed."
+        ],
+        [
+            "List all text splitter supported",
+            "Langchain provides several different text splitters to help with processing text data. These include the Character Text Splitter, Hugging Face Length Function, Latex Text Splitter, Markdown Text Splitter, NLTK Text Splitter, Python Code Text Splitter, RecursiveCharacterTextSplitter, Spacy Text Splitter, tiktoken (OpenAI) Length Function, and TiktokenText Splitter."
+        ]
+    ]
+}' \
 http://localhost:8000/chat
 ```
 
