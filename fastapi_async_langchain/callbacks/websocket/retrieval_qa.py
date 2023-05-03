@@ -1,10 +1,10 @@
 from typing import Any, Dict
 
 from ..streaming.retrieval_qa import SOURCE_DOCUMENT_TEMPLATE
-from .base import AsyncWebsocketCallback
+from .base import AsyncLLMChainWebsocketCallback
 
 
-class AsyncRetrievalQAWebsocketCallback(AsyncWebsocketCallback):
+class AsyncRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
     """AsyncWebsocketCallback handler for RetrievalQA."""
 
     source_document_template: str = SOURCE_DOCUMENT_TEMPLATE

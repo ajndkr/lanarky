@@ -18,12 +18,13 @@ class LLMChainWebsocketConnection(BaseLangchainWebsocketConnection):
         response: WebsocketResponse,
     ) -> Callable[[], Awaitable[Any]]:
         async def wrapper(user_message: str):
-            callback = AsyncLLMChainWebsocketCallback(
-                websocket=websocket, response=response
-            )
             return await chain.arun(
                 inputs=user_message,
-                callbacks=[callback],
+                callbacks=[
+                    AsyncLLMChainWebsocketCallback(
+                        websocket=websocket, response=response
+                    )
+                ],
             )
 
         return wrapper
