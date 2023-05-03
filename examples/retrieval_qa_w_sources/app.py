@@ -4,7 +4,7 @@ from typing import Callable
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Request, WebSocket
 from fastapi.templating import Jinja2Templates
-from langchain.callbacks import AsyncCallbackManager
+from langchain.callbacks.manager import AsyncCallbackManager
 from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
@@ -40,7 +40,8 @@ def retrieval_qa_chain_dependency() -> Callable[[], RetrievalQAWithSourcesChain]
             llm=ChatOpenAI(
                 temperature=0,
                 streaming=True,
-                callback_manager=AsyncCallbackManager([]),
+                callbacks=[],
+                # callback_manager=AsyncCallbackManager([]),
             ),
             chain_type="stuff",
             retriever=db.as_retriever(),

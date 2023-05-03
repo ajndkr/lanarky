@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Request, WebSocket
 from fastapi.templating import Jinja2Templates
 from langchain import ConversationChain
-from langchain.callbacks import AsyncCallbackManager
+from langchain.callbacks.manager import AsyncCallbackManager
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 

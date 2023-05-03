@@ -15,7 +15,7 @@ class AsyncRetrievalQAStreamingCallback(AsyncStreamingResponseCallback):
 
     async def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
-        if outputs["source_documents"] is not None:
+        if "source_documents" in outputs:
             await self.send("\n\nSOURCE DOCUMENTS: \n")
             for document in outputs["source_documents"]:
                 await self.send(
