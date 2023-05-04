@@ -1,7 +1,7 @@
-langchain
-openai
-tiktoken
-gradio
-fastapi
-uvicorn[standard]
-fastapi-async-langchain
+langchain==0.0.157
+openai==0.27.6
+tiktoken==0.3.3
+gradio==3.28.1
+fastapi==0.95.1
+uvicorn[standard]==0.22.0
+fastapi-async-langchain==0.4.2
