@@ -19,12 +19,6 @@ The library is available on PyPI and can be installed via `pip`.
 pip install fastapi-async-langchain
 ```
 
-Create an .env file and set your API key like this:
-
-```bash
-OPENAI_API_KEY="YOUR_API_KEY"
-```
-
 ## 🎯 Demo Examples
 
 See [`examples/`](examples/README.md) for list of available demo examples.
