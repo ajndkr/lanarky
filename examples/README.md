@@ -33,7 +33,7 @@ To run a demo example, select the command based on the langchain use case you wa
 
 You can also use the "Run & Debug" VSCode feature to run one of the applications.
 
-![vscode-demo](assets/vs_code_configs.png)
+![vscode-demo](../assets/vs_code_configs.png)
 
 ### Sample cURL request
 
