@@ -17,12 +17,6 @@ jobs:
     name: Pull Request Automation
     runs-on: ubuntu-22.04
     steps:
-      - name: Assign Author
-        if: github.event.pull_request.assignee == null
-        uses: toshimaru/auto-author-assign@v1.6.2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Add Labels
         uses: actions/labeler@v4
         with:
