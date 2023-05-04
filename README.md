@@ -29,10 +29,8 @@ OPENAI_API_KEY="YOUR_API_KEY"
 
 See [`examples/`](examples/README.md) for list of available demo examples.
 
-
 Create a `.env` file using `.env.sample` and add your OpenAI API key to it
 before running the examples.
-
 
 ![demo](assets/demo.gif)
 
