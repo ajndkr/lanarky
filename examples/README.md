@@ -22,6 +22,10 @@ You can choose any other environment manager of your choice.
 pip install -r requirements.txt
 ```
 
+**Note**: The `requirements.txt` file is generated using `pip-tools`. To update the locked
+requirements, update the `requirements.in` file and run `pip-compile requirements.in`. To upgrade
+the dependencies, run `pip-compile --upgrade requirements.in`.
+
 ## Usage
 
 ### Run the application
