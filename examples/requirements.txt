@@ -5,4 +5,3 @@ gradio==3.28.1
 fastapi==0.95.1
 uvicorn[standard]==0.22.0
 fastapi-async-langchain==0.4.2
-
