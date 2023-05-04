@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "envFile": "${workspaceFolder}/.env",
+  "configurations": [
+    {
+      "name": "Python: Conversation Chain Example",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "cwd": "${workspaceFolder}/examples",
+      "args": [
+        "app.conversation_chain:app",
+        "--reload",
+        "--host",
+        "localhost",
+        "--port",
+        "8000"
+      ]
+    },
+    {
+      "name": "Python: Retrieval QA With Sources Example",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "cwd": "${workspaceFolder}/examples",
+      "args": [
+        "app.retrieval_qa_w_sources:app",
+        "--reload",
+        "--host",
+        "localhost",
+        "--port",
+        "8000"
+      ]
+    }
+  ]
+}
