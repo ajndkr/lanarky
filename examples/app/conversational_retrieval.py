@@ -2,9 +2,8 @@ from functools import lru_cache
 from typing import Callable
 
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, Request, WebSocket
+from fastapi import Depends, FastAPI
 from fastapi.templating import Jinja2Templates
-from langchain.callbacks import AsyncCallbackManager
 from langchain.chains import ConversationalRetrievalChain, LLMChain
 from langchain.chains.question_answering import load_qa_chain
 from langchain.chat_models import ChatOpenAI
@@ -12,9 +11,6 @@ from pydantic import BaseModel
 
 from fastapi_async_langchain.responses import ConversationalRetrievalStreamingResponse
 from fastapi_async_langchain.testing import mount_gradio_app
-from fastapi_async_langchain.websockets import (
-    ConversationalRetrievalWebsocketConnection,
-)
 
 load_dotenv()
 
@@ -25,7 +21,7 @@ templates = Jinja2Templates(directory="templates")
 
 class QueryRequest(BaseModel):
     query: str
-    history: list[list[str]] | None = []
+    history: list[list[str]] = []
 
 
 def conversational_retrieval_chain_dependency() -> (
@@ -40,15 +36,15 @@ def conversational_retrieval_chain_dependency() -> (
         from langchain.vectorstores import FAISS
 
         db = FAISS.load_local(
-            folder_path="../vector_stores/",
+            folder_path="vector_stores/",
             index_name="langchain-python",
             embeddings=OpenAIEmbeddings(),
         )
+
         question_generator = LLMChain(
             llm=ChatOpenAI(
                 temperature=0,
                 streaming=True,
-                callback_manager=AsyncCallbackManager([]),
             ),
             prompt=CONDENSE_QUESTION_PROMPT,
         )
@@ -56,7 +52,6 @@ def conversational_retrieval_chain_dependency() -> (
             llm=ChatOpenAI(
                 temperature=0,
                 streaming=True,
-                callback_manager=AsyncCallbackManager([]),
             ),
             chain_type="stuff",
         )
@@ -67,7 +62,6 @@ def conversational_retrieval_chain_dependency() -> (
             retriever=db.as_retriever(),
             return_source_documents=True,
             verbose=True,
-            callback_manager=AsyncCallbackManager([]),
         )
 
     return dependency
@@ -88,19 +82,3 @@ async def chat(
     return ConversationalRetrievalStreamingResponse.from_chain(
         chain, inputs, media_type="text/event-stream"
     )
-
-
-@app.get("/")
-async def get(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-
-@app.websocket("/ws")
-async def websocket_endpoint(
-    websocket: WebSocket,
-    chain: ConversationalRetrievalChain = Depends(conversational_retrieval_chain),
-):
-    connection = ConversationalRetrievalWebsocketConnection.from_chain(
-        chain=chain, websocket=websocket
-    )
-    await connection.connect()

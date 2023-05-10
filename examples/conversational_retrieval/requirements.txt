@@ -1,8 +1,0 @@
-langchain
-openai
-tiktoken
-faiss-cpu
-gradio
-fastapi
-uvicorn[standard]
-fastapi-async-langchain
