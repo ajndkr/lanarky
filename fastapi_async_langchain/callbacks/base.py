@@ -1,3 +1,5 @@
+from abc import abstractproperty
+
 from fastapi import WebSocket
 from langchain.callbacks.base import AsyncCallbackHandler
 from pydantic import BaseModel, Field
@@ -10,6 +12,11 @@ class AsyncStreamingResponseCallback(AsyncCallbackHandler, BaseModel):
     """Async Callback handler for FastAPI StreamingResponse."""
 
     send: Send = Field(...)
+
+    @abstractproperty
+    def chain_type(self) -> str:
+        """The chain type."""
+        pass
 
     @property
     def always_verbose(self) -> bool:
@@ -25,6 +32,11 @@ class AsyncWebsocketCallback(AsyncCallbackHandler, BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
+
+    @abstractproperty
+    def chain_type(self) -> str:
+        """The chain type."""
+        pass
 
     @property
     def always_verbose(self) -> bool:
