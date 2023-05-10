@@ -44,6 +44,8 @@ class BaseLangchainStreamingResponse(StreamingResponse):
             if self.background is not None:
                 self.background.kwargs["outputs"] = outputs
         except Exception as e:
+            if self.background is not None:
+                self.background.kwargs["outputs"] = str(e)
             await send(
                 {
                     "type": "http.response.body",

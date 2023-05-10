@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-async-langchain"
-version = "0.4.0"
+version = "0.4.3"
 description = "FastAPI async components for streaming LLM chains."
 authors = ["Ajinkya Indulkar <26824103+ajndkr@users.noreply.github.com>"]
 readme = "README.md"
@@ -9,7 +9,7 @@ packages = [{include = "fastapi_async_langchain"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 fastapi = "^0.95.1"
-langchain = "^0.0.146"
+langchain = "^0.0.157"
 
 [build-system]
 requires = ["poetry-core"]

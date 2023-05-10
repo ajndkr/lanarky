@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Request, WebSocket
 from fastapi.templating import Jinja2Templates
 from langchain import ConversationChain
-from langchain.callbacks import AsyncCallbackManager
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
@@ -30,7 +29,6 @@ def conversation_chain_dependency() -> Callable[[], ConversationChain]:
             llm=ChatOpenAI(
                 temperature=0,
                 streaming=True,
-                callback_manager=AsyncCallbackManager([]),
             ),
             verbose=True,
         )
