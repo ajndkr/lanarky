@@ -1,5 +1,10 @@
 from typing import Any, Dict
 
+from fastapi_async_langchain.register import (
+    register_streaming_callback,
+    register_websocket_callback,
+)
+
 from .llm import AsyncLLMChainStreamingCallback, AsyncLLMChainWebsocketCallback
 
 SOURCE_DOCUMENT_TEMPLATE = """
@@ -12,11 +17,6 @@ class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
     """AsyncStreamingResponseCallback handler for BaseRetrievalQA."""
 
     source_document_template: str = SOURCE_DOCUMENT_TEMPLATE
-
-    @staticmethod
-    def get_chain_type() -> str:
-        """The chain type."""
-        return "BaseRetrievalQA"
 
     async def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
@@ -35,11 +35,6 @@ class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
     """AsyncWebsocketCallback handler for BaseRetrievalQA."""
 
     source_document_template: str = SOURCE_DOCUMENT_TEMPLATE
-
-    @staticmethod
-    def get_chain_type() -> str:
-        """The chain type."""
-        return "BaseRetrievalQA"
 
     async def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
@@ -63,37 +58,29 @@ class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
                 )
 
 
+@register_streaming_callback("RetrievalQA")
 class AsyncRetrievalQAStreamingCallback(AsyncBaseRetrievalQAStreamingCallback):
     """AsyncStreamingResponseCallback handler for RetrievalQA."""
 
-    @staticmethod
-    def get_chain_type() -> str:
-        """The chain type."""
-        return "RetrievalQA"
+    pass
 
 
+@register_streaming_callback("VectorDBQA")
 class AsyncVectorDBQAStreamingCallback(AsyncBaseRetrievalQAStreamingCallback):
     """AsyncStreamingResponseCallback handler for VectorDBQA."""
 
-    @staticmethod
-    def get_chain_type() -> str:
-        """The chain type."""
-        return "VectorDBQA"
+    pass
 
 
+@register_websocket_callback("RetrievalQA")
 class AsyncRetrievalQAWebsocketCallback(AsyncBaseRetrievalQAWebsocketCallback):
     """AsyncWebsocketCallback handler for RetrievalQA."""
 
-    @staticmethod
-    def get_chain_type() -> str:
-        """The chain type."""
-        return "RetrievalQA"
+    pass
 
 
+@register_websocket_callback("VectorDBQA")
 class AsyncVectorDBQAWebsocketCallback(AsyncBaseRetrievalQAWebsocketCallback):
     """AsyncWebsocketCallback handler for VectorDBQA."""
 
-    @staticmethod
-    def get_chain_type() -> str:
-        """The chain type."""
-        return "VectorDBQA"
+    pass
