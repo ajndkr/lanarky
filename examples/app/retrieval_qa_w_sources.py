@@ -8,9 +8,9 @@ from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
-from fastapi_async_langchain.responses import RetrievalQAStreamingResponse
+from fastapi_async_langchain.responses import StreamingResponse
 from fastapi_async_langchain.testing import mount_gradio_app
-from fastapi_async_langchain.websockets import RetrievalQAWebsocketConnection
+from fastapi_async_langchain.websockets import WebsocketConnection
 
 load_dotenv()
 
@@ -56,8 +56,8 @@ retrieval_qa_chain = retrieval_qa_chain_dependency()
 async def chat(
     request: QueryRequest,
     chain: RetrievalQAWithSourcesChain = Depends(retrieval_qa_chain),
-) -> RetrievalQAStreamingResponse:
-    return RetrievalQAStreamingResponse.from_chain(
+) -> StreamingResponse:
+    return StreamingResponse.from_chain(
         chain, request.query, media_type="text/event-stream"
     )
 
@@ -72,7 +72,5 @@ async def websocket_endpoint(
     websocket: WebSocket,
     chain: RetrievalQAWithSourcesChain = Depends(retrieval_qa_chain),
 ):
-    connection = RetrievalQAWebsocketConnection.from_chain(
-        chain=chain, websocket=websocket
-    )
+    connection = WebsocketConnection.from_chain(chain=chain, websocket=websocket)
     await connection.connect()

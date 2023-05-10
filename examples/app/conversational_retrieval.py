@@ -9,7 +9,7 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
-from fastapi_async_langchain.responses import ConversationalRetrievalStreamingResponse
+from fastapi_async_langchain.responses import StreamingResponse
 from fastapi_async_langchain.testing import mount_gradio_app
 
 load_dotenv()
@@ -74,11 +74,9 @@ conversational_retrieval_chain = conversational_retrieval_chain_dependency()
 async def chat(
     request: QueryRequest,
     chain: ConversationalRetrievalChain = Depends(conversational_retrieval_chain),
-) -> ConversationalRetrievalStreamingResponse:
+) -> StreamingResponse:
     inputs = {
         "question": request.query,
         "chat_history": [(human, ai) for human, ai in request.history],
     }
-    return ConversationalRetrievalStreamingResponse.from_chain(
-        chain, inputs, media_type="text/event-stream"
-    )
+    return StreamingResponse.from_chain(chain, inputs, media_type="text/event-stream")
