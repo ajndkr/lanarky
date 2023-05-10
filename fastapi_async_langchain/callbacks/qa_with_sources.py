@@ -9,8 +9,8 @@ class AsyncBaseQAWithSourcesChainStreamingCallback(
 ):
     """AsyncStreamingResponseCallback handler for BaseQAWithSources."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "BaseQAWithSources"
 
@@ -20,8 +20,8 @@ class AsyncBaseQAWithSourcesChainWebsocketCallback(
 ):
     """AsyncWebsocketCallback handler for BaseQAWithSources."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "BaseQAWithSources"
 
@@ -31,8 +31,8 @@ class AsyncQAWithSourcesChainStreamingCallback(
 ):
     """AsyncStreamingResponseCallback handler for QAWithSourcesChain."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "QAWithSourcesChain"
 
@@ -42,8 +42,8 @@ class AsyncQAWithSourcesChainWebsocketCallback(
 ):
     """AsyncWebsocketCallback handler for QAWithSourcesChain."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "QAWithSourcesChain"
 
@@ -53,8 +53,8 @@ class AsyncVectorDBQAWithSourcesChainStreamingCallback(
 ):
     """AsyncStreamingResponseCallback handler for VectorDBQAWithSourcesChain."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "VectorDBQAWithSourcesChain"
 
@@ -64,8 +64,8 @@ class AsyncVectorDBQAWithSourcesChainWebsocketCallback(
 ):
     """AsyncWebsocketCallback handler for VectorDBQAWithSourcesChain."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "VectorDBQAWithSourcesChain"
 
@@ -75,8 +75,8 @@ class AsyncRetrievalQAWithSourcesChainStreamingCallback(
 ):
     """AsyncStreamingResponseCallback handler for RetrievalQAWithSourcesChain."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "RetrievalQAWithSourcesChain"
 
@@ -86,7 +86,7 @@ class AsyncRetrievalQAWithSourcesChainWebsocketCallback(
 ):
     """AsyncWebsocketCallback handler for RetrievalQAWithSourcesChain."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "RetrievalQAWithSourcesChain"

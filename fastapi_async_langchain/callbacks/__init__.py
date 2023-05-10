@@ -25,23 +25,23 @@ from .retrieval_qa import (
 # TODO: update logic to use decorate to
 # register callbacks
 STREAMING_CALLBACKS_REGISTRY = {
-    AsyncLLMChainStreamingCallback.chain_type: AsyncLLMChainStreamingCallback,
-    AsyncConversationChainStreamingCallback.chain_type: AsyncConversationChainStreamingCallback,
-    AsyncRetrievalQAStreamingCallback.chain_type: AsyncRetrievalQAStreamingCallback,
-    AsyncVectorDBQAStreamingCallback.chain_type: AsyncVectorDBQAStreamingCallback,
-    AsyncQAWithSourcesChainStreamingCallback.chain_type: AsyncQAWithSourcesChainStreamingCallback,
-    AsyncRetrievalQAWithSourcesChainStreamingCallback.chain_type: AsyncRetrievalQAWithSourcesChainStreamingCallback,
-    AsyncVectorDBQAWithSourcesChainStreamingCallback.chain_type: AsyncVectorDBQAWithSourcesChainStreamingCallback,
+    AsyncLLMChainStreamingCallback.get_chain_type(): AsyncLLMChainStreamingCallback,
+    AsyncConversationChainStreamingCallback.get_chain_type(): AsyncConversationChainStreamingCallback,
+    AsyncRetrievalQAStreamingCallback.get_chain_type(): AsyncRetrievalQAStreamingCallback,
+    AsyncVectorDBQAStreamingCallback.get_chain_type(): AsyncVectorDBQAStreamingCallback,
+    AsyncQAWithSourcesChainStreamingCallback.get_chain_type(): AsyncQAWithSourcesChainStreamingCallback,
+    AsyncRetrievalQAWithSourcesChainStreamingCallback.get_chain_type(): AsyncRetrievalQAWithSourcesChainStreamingCallback,
+    AsyncVectorDBQAWithSourcesChainStreamingCallback.get_chain_type(): AsyncVectorDBQAWithSourcesChainStreamingCallback,
 }
 
 WEBSOCKET_CALLBACKS_REGISTRY = {
-    AsyncLLMChainWebsocketCallback.chain_type: AsyncLLMChainWebsocketCallback,
-    AsyncConversationChainWebsocketCallback.chain_type: AsyncConversationChainWebsocketCallback,
-    AsyncRetrievalQAWebsocketCallback.chain_type: AsyncRetrievalQAWebsocketCallback,
-    AsyncVectorDBQAWebsocketCallback.chain_type: AsyncVectorDBQAWebsocketCallback,
-    AsyncQAWithSourcesChainWebsocketCallback.chain_type: AsyncQAWithSourcesChainWebsocketCallback,
-    AsyncRetrievalQAWithSourcesChainWebsocketCallback.chain_type: AsyncRetrievalQAWithSourcesChainWebsocketCallback,
-    AsyncVectorDBQAWithSourcesChainWebsocketCallback.chain_type: AsyncVectorDBQAWithSourcesChainWebsocketCallback,
+    AsyncLLMChainWebsocketCallback.get_chain_type(): AsyncLLMChainWebsocketCallback,
+    AsyncConversationChainWebsocketCallback.get_chain_type(): AsyncConversationChainWebsocketCallback,
+    AsyncRetrievalQAWebsocketCallback.get_chain_type(): AsyncRetrievalQAWebsocketCallback,
+    AsyncVectorDBQAWebsocketCallback.get_chain_type(): AsyncVectorDBQAWebsocketCallback,
+    AsyncQAWithSourcesChainWebsocketCallback.get_chain_type(): AsyncQAWithSourcesChainWebsocketCallback,
+    AsyncRetrievalQAWithSourcesChainWebsocketCallback.get_chain_type(): AsyncRetrievalQAWithSourcesChainWebsocketCallback,
+    AsyncVectorDBQAWithSourcesChainWebsocketCallback.get_chain_type(): AsyncVectorDBQAWithSourcesChainWebsocketCallback,
 }
 
 

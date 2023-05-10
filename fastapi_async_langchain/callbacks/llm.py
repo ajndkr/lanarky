@@ -6,8 +6,8 @@ from .base import AsyncStreamingResponseCallback, AsyncWebsocketCallback
 class AsyncLLMChainStreamingCallback(AsyncStreamingResponseCallback):
     """AsyncStreamingResponseCallback handler for LLMChain."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "LLMChain"
 
@@ -19,8 +19,8 @@ class AsyncLLMChainStreamingCallback(AsyncStreamingResponseCallback):
 class AsyncLLMChainWebsocketCallback(AsyncWebsocketCallback):
     """AsyncWebsocketCallback handler for LLMChain."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "LLMChain"
 
@@ -32,8 +32,8 @@ class AsyncLLMChainWebsocketCallback(AsyncWebsocketCallback):
 class AsyncConversationChainStreamingCallback(AsyncLLMChainStreamingCallback):
     """AsyncStreamingResponseCallback handler for ConversationChain."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "ConversationChain"
 
@@ -41,7 +41,7 @@ class AsyncConversationChainStreamingCallback(AsyncLLMChainStreamingCallback):
 class AsyncConversationChainWebsocketCallback(AsyncLLMChainWebsocketCallback):
     """AsyncWebsocketCallback handler for ConversationChain."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "ConversationChain"

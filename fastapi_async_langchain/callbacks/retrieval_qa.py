@@ -13,8 +13,8 @@ class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
 
     source_document_template: str = SOURCE_DOCUMENT_TEMPLATE
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "BaseRetrievalQA"
 
@@ -36,8 +36,8 @@ class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
 
     source_document_template: str = SOURCE_DOCUMENT_TEMPLATE
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "BaseRetrievalQA"
 
@@ -66,8 +66,8 @@ class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
 class AsyncRetrievalQAStreamingCallback(AsyncBaseRetrievalQAStreamingCallback):
     """AsyncStreamingResponseCallback handler for RetrievalQA."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "RetrievalQA"
 
@@ -75,8 +75,8 @@ class AsyncRetrievalQAStreamingCallback(AsyncBaseRetrievalQAStreamingCallback):
 class AsyncVectorDBQAStreamingCallback(AsyncBaseRetrievalQAStreamingCallback):
     """AsyncStreamingResponseCallback handler for VectorDBQA."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "VectorDBQA"
 
@@ -84,8 +84,8 @@ class AsyncVectorDBQAStreamingCallback(AsyncBaseRetrievalQAStreamingCallback):
 class AsyncRetrievalQAWebsocketCallback(AsyncBaseRetrievalQAWebsocketCallback):
     """AsyncWebsocketCallback handler for RetrievalQA."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "RetrievalQA"
 
@@ -93,7 +93,7 @@ class AsyncRetrievalQAWebsocketCallback(AsyncBaseRetrievalQAWebsocketCallback):
 class AsyncVectorDBQAWebsocketCallback(AsyncBaseRetrievalQAWebsocketCallback):
     """AsyncWebsocketCallback handler for VectorDBQA."""
 
-    @property
-    def chain_type(self) -> str:
+    @staticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         return "VectorDBQA"

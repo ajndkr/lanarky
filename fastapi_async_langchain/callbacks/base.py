@@ -1,4 +1,4 @@
-from abc import abstractproperty
+from abc import abstractstaticmethod
 
 from fastapi import WebSocket
 from langchain.callbacks.base import AsyncCallbackHandler
@@ -13,8 +13,8 @@ class AsyncStreamingResponseCallback(AsyncCallbackHandler, BaseModel):
 
     send: Send = Field(...)
 
-    @abstractproperty
-    def chain_type(self) -> str:
+    @abstractstaticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         pass
 
@@ -33,8 +33,8 @@ class AsyncWebsocketCallback(AsyncCallbackHandler, BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    @abstractproperty
-    def chain_type(self) -> str:
+    @abstractstaticmethod
+    def get_chain_type() -> str:
         """The chain type."""
         pass
 
