@@ -5,11 +5,12 @@
 
 Ship production-ready [LangChain](https://github.com/hwchase17/langchain) projects with [FastAPI](https://github.com/tiangolo/fastapi).
 
-## :rocket: Features
+## 🚀 Features
 
 - supports token streaming over HTTP and Websocket
-- supports multiple langchain `Chain` types (ongoing...)
+- supports multiple langchain `Chain` types
 - simple gradio chatbot UI for fast prototyping
+- follows FastAPI responses naming convention
 
 ## 💾 Installation
 
@@ -19,14 +20,34 @@ The library is available on PyPI and can be installed via `pip`.
 pip install fastapi-async-langchain
 ```
 
-## 🎯 Demo Examples
+## 🔥 Deploy in under 20 lines of code
 
-See [`examples/`](examples/README.md) for list of available demo examples.
+```python
+from dotenv import load_dotenv
+from fastapi import FastAPI
+from langchain import ConversationChain
+from langchain.chat_models import ChatOpenAI
+from pydantic import BaseModel
+from fastapi_async_langchain.responses import StreamingResponse
+
+load_dotenv()
+app = FastAPI()
+
+class Request(BaseModel):
+    query: str
+
+@app.post("/chat")
+async def chat(request: Request) -> StreamingResponse:
+    chain = ConversationChain(llm=ChatOpenAI(temperature=0, streaming=True), verbose=True)
+    return StreamingResponse.from_chain(chain, request.query, media_type="text/event-stream")
+```
+
+See [`examples/`](https://github.com/ajndkr/fastapi-async-langchain/blob/main/examples/README.md) for list of available demo examples.
 
 Create a `.env` file using `.env.sample` and add your OpenAI API key to it
 before running the examples.
 
-![demo](assets/demo.gif)
+![demo](https://raw.githubusercontent.com/ajndkr/fastapi-async-langchain/main/assets/demo.gif)
 
 ## 🤝 Contributing
 

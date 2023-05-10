@@ -8,9 +8,9 @@ from langchain import ConversationChain
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
-from fastapi_async_langchain.responses import LLMChainStreamingResponse
+from fastapi_async_langchain.responses import StreamingResponse
 from fastapi_async_langchain.testing import mount_gradio_app
-from fastapi_async_langchain.websockets import LLMChainWebsocketConnection
+from fastapi_async_langchain.websockets import WebsocketConnection
 
 load_dotenv()
 
@@ -43,8 +43,8 @@ conversation_chain = conversation_chain_dependency()
 async def chat(
     request: QueryRequest,
     chain: ConversationChain = Depends(conversation_chain),
-) -> LLMChainStreamingResponse:
-    return LLMChainStreamingResponse.from_chain(
+) -> StreamingResponse:
+    return StreamingResponse.from_chain(
         chain, request.query, media_type="text/event-stream"
     )
 
@@ -58,7 +58,5 @@ async def get(request: Request):
 async def websocket_endpoint(
     websocket: WebSocket, chain: ConversationChain = Depends(conversation_chain)
 ):
-    connection = LLMChainWebsocketConnection.from_chain(
-        chain=chain, websocket=websocket
-    )
+    connection = WebsocketConnection.from_chain(chain=chain, websocket=websocket)
     await connection.connect()

@@ -3,17 +3,18 @@ Credits:
 - https://gist.github.com/ninely/88485b2e265d852d3feb8bd115065b1a
 - https://github.com/hwchase17/langchain/discussions/1706
 """
-from abc import abstractstaticmethod
 from typing import Any, Awaitable, Callable, Dict, Optional, Union
 
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse as _StreamingResponse
 from langchain.chains.base import Chain
 from starlette.background import BackgroundTask
 from starlette.types import Send
 
+from fastapi_async_langchain.callbacks import get_streaming_callback
 
-class BaseLangchainStreamingResponse(StreamingResponse):
-    """Base StreamingResponse class wrapper for langchain chains."""
+
+class StreamingResponse(_StreamingResponse):
+    """StreamingResponse class wrapper for langchain chains."""
 
     def __init__(
         self,
@@ -57,11 +58,16 @@ class BaseLangchainStreamingResponse(StreamingResponse):
 
         await send({"type": "http.response.body", "body": b"", "more_body": False})
 
-    @abstractstaticmethod
+    @staticmethod
     def _create_chain_executor(
         chain: Chain, inputs: Union[Dict[str, Any], Any]
     ) -> Callable[[Send], Awaitable[Any]]:
-        raise NotImplementedError
+        async def wrapper(send: Send):
+            return await chain.acall(
+                inputs=inputs, callbacks=[get_streaming_callback(chain, send=send)]
+            )
+
+        return wrapper
 
     @classmethod
     def from_chain(
@@ -70,7 +76,7 @@ class BaseLangchainStreamingResponse(StreamingResponse):
         inputs: Union[Dict[str, Any], Any],
         background: Optional[BackgroundTask] = None,
         **kwargs: Any,
-    ) -> "BaseLangchainStreamingResponse":
+    ) -> "StreamingResponse":
         chain_executor = cls._create_chain_executor(chain, inputs)
 
         return cls(

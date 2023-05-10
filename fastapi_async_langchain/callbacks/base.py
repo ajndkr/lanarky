@@ -3,7 +3,7 @@ from langchain.callbacks.base import AsyncCallbackHandler
 from pydantic import BaseModel, Field
 from starlette.types import Send
 
-from ..schemas import WebsocketResponse
+from fastapi_async_langchain.schemas import WebsocketResponse
 
 
 class AsyncStreamingResponseCallback(AsyncCallbackHandler, BaseModel):

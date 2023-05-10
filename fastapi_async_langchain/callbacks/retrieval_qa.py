@@ -1,5 +1,10 @@
 from typing import Any, Dict
 
+from fastapi_async_langchain.register import (
+    register_streaming_callback,
+    register_websocket_callback,
+)
+
 from .llm import AsyncLLMChainStreamingCallback, AsyncLLMChainWebsocketCallback
 
 SOURCE_DOCUMENT_TEMPLATE = """
@@ -8,8 +13,8 @@ source: {source}
 """
 
 
-class AsyncRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
-    """AsyncStreamingResponseCallback handler for RetrievalQA."""
+class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
+    """AsyncStreamingResponseCallback handler for BaseRetrievalQA."""
 
     source_document_template: str = SOURCE_DOCUMENT_TEMPLATE
 
@@ -26,8 +31,8 @@ class AsyncRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
                 )
 
 
-class AsyncRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
-    """AsyncWebsocketCallback handler for RetrievalQA."""
+class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
+    """AsyncWebsocketCallback handler for BaseRetrievalQA."""
 
     source_document_template: str = SOURCE_DOCUMENT_TEMPLATE
 
@@ -51,3 +56,31 @@ class AsyncRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
                         **{"message": source_document},
                     }
                 )
+
+
+@register_streaming_callback("RetrievalQA")
+class AsyncRetrievalQAStreamingCallback(AsyncBaseRetrievalQAStreamingCallback):
+    """AsyncStreamingResponseCallback handler for RetrievalQA."""
+
+    pass
+
+
+@register_streaming_callback("VectorDBQA")
+class AsyncVectorDBQAStreamingCallback(AsyncBaseRetrievalQAStreamingCallback):
+    """AsyncStreamingResponseCallback handler for VectorDBQA."""
+
+    pass
+
+
+@register_websocket_callback("RetrievalQA")
+class AsyncRetrievalQAWebsocketCallback(AsyncBaseRetrievalQAWebsocketCallback):
+    """AsyncWebsocketCallback handler for RetrievalQA."""
+
+    pass
+
+
+@register_websocket_callback("VectorDBQA")
+class AsyncVectorDBQAWebsocketCallback(AsyncBaseRetrievalQAWebsocketCallback):
+    """AsyncWebsocketCallback handler for VectorDBQA."""
+
+    pass
