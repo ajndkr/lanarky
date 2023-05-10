@@ -11,12 +11,18 @@ from fastapi import WebSocket, WebSocketDisconnect
 from langchain.chains.base import Chain
 from pydantic import BaseModel, Field
 
-from ..schemas import Message, MessageType, Sender, WebsocketResponse
+from fastapi_async_langchain.callbacks import get_websocket_callback
+from fastapi_async_langchain.schemas import (
+    Message,
+    MessageType,
+    Sender,
+    WebsocketResponse,
+)
 
 logger = logging.getLogger(__name__)
 
 
-class BaseLangchainWebsocketConnection(BaseModel):
+class BaseWebsocketConnection(BaseModel):
     websocket: WebSocket = Field(...)
     chain_executor: Callable[[], Awaitable[Any]] = Field(...)
 
@@ -76,7 +82,7 @@ class BaseLangchainWebsocketConnection(BaseModel):
         cls,
         chain: Chain,
         websocket: WebSocket,
-    ) -> "BaseLangchainWebsocketConnection":
+    ) -> "BaseWebsocketConnection":
         chain_executor = cls._create_chain_executor(
             chain,
             websocket,
@@ -89,3 +95,25 @@ class BaseLangchainWebsocketConnection(BaseModel):
             chain_executor=chain_executor,
             websocket=websocket,
         )
+
+
+class WebsocketConnection(BaseWebsocketConnection):
+    """BaseLangchainStreamingResponse class wrapper for LLMChain instances."""
+
+    @staticmethod
+    def _create_chain_executor(
+        chain: Chain,
+        websocket: WebSocket,
+        response: WebsocketResponse,
+    ) -> Callable[[], Awaitable[Any]]:
+        async def wrapper(user_message: str):
+            return await chain.acall(
+                inputs=user_message,
+                callbacks=[
+                    get_websocket_callback(
+                        chain=chain, websocket=websocket, response=response
+                    )
+                ],
+            )
+
+        return wrapper
