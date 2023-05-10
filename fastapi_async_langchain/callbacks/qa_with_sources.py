@@ -24,12 +24,16 @@ class AsyncBaseQAWithSourcesChainWebsocketCallback(
 ):
     """AsyncWebsocketCallback handler for BaseQAWithSources."""
 
+    pass
+
 
 @register_streaming_callback("QAWithSourcesChain")
 class AsyncQAWithSourcesChainStreamingCallback(
     AsyncBaseQAWithSourcesChainStreamingCallback
 ):
     """AsyncStreamingResponseCallback handler for QAWithSourcesChain."""
+
+    pass
 
 
 @register_websocket_callback("QAWithSourcesChain")
@@ -38,12 +42,16 @@ class AsyncQAWithSourcesChainWebsocketCallback(
 ):
     """AsyncWebsocketCallback handler for QAWithSourcesChain."""
 
+    pass
+
 
 @register_streaming_callback("VectorDBQAWithSourcesChain")
 class AsyncVectorDBQAWithSourcesChainStreamingCallback(
     AsyncBaseQAWithSourcesChainStreamingCallback
 ):
     """AsyncStreamingResponseCallback handler for VectorDBQAWithSourcesChain."""
+
+    pass
 
 
 @register_websocket_callback("VectorDBQAWithSourcesChain")
@@ -52,12 +60,16 @@ class AsyncVectorDBQAWithSourcesChainWebsocketCallback(
 ):
     """AsyncWebsocketCallback handler for VectorDBQAWithSourcesChain."""
 
+    pass
+
 
 @register_streaming_callback("RetrievalQAWithSourcesChain")
 class AsyncRetrievalQAWithSourcesChainStreamingCallback(
     AsyncBaseQAWithSourcesChainStreamingCallback
 ):
     """AsyncStreamingResponseCallback handler for RetrievalQAWithSourcesChain."""
+
+    pass
 
 
 @register_websocket_callback("RetrievalQAWithSourcesChain")
@@ -66,7 +78,4 @@ class AsyncRetrievalQAWithSourcesChainWebsocketCallback(
 ):
     """AsyncWebsocketCallback handler for RetrievalQAWithSourcesChain."""
 
-    @staticmethod
-    def get_chain_type() -> str:
-        """The chain type."""
-        return "RetrievalQAWithSourcesChain"
+    pass
