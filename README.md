@@ -3,7 +3,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/fastapi-async-langchain/blob/main/LICENSE)
 [![PyPI version](https://badge.fury.io/py/fastapi-async-langchain.svg)](https://pypi.org/project/fastapi-async-langchain/)
 
-Ship production-ready [LangChain](https://github.com/hwchase17/langchain) projects with [FastAPI](https://github.com/tiangolo/fastapi).
+Ship production-ready [LangChain](https://github.com/hwchase17/langchain) projects with
+[FastAPI](https://github.com/tiangolo/fastapi).
 
 ## 🚀 Features
 
@@ -11,6 +12,13 @@ Ship production-ready [LangChain](https://github.com/hwchase17/langchain) projec
 - supports multiple langchain `Chain` types
 - simple gradio chatbot UI for fast prototyping
 - follows FastAPI responses naming convention
+
+## ❓ Why?
+
+There are great low-code/no-code solutions in the open source to deploy your Langchain projects. However,
+most of them are opinionated in terms of cloud or deployment code. This project aims to provide FastAPI users
+with a cloud-agnostic and deployment-agnostic solution which can be easily integrated into existing
+backend infrastructures.
 
 ## 💾 Installation
 
