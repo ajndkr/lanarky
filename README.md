@@ -42,12 +42,12 @@ async def chat(request: Request) -> StreamingResponse:
     return StreamingResponse.from_chain(chain, request.query, media_type="text/event-stream")
 ```
 
-See [`examples/`](examples/README.md) for list of available demo examples.
+See [`examples/`](https://github.com/ajndkr/fastapi-async-langchain/blob/main/examples/README.md) for list of available demo examples.
 
 Create a `.env` file using `.env.sample` and add your OpenAI API key to it
 before running the examples.
 
-![demo](assets/demo.gif)
+![demo](https://raw.githubusercontent.com/ajndkr/fastapi-async-langchain/main/assets/demo.gif)
 
 ## 🤝 Contributing
 
