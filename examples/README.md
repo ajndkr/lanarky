@@ -46,7 +46,7 @@ You can also use the "Run & Debug" VSCode feature to run one of the applications
 curl -N -X POST \
 -H "Accept: text/event-stream" -H "Content-Type: application/json" \
 -d '{"query": "Give me list of text splitters available with code samples" }' \
-http://localhost:8000/conversation_chain/chat
+http://localhost:8000/chat
 ```
 
 ### Gradio UI
