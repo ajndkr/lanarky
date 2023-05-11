@@ -79,3 +79,21 @@ class AsyncRetrievalQAWithSourcesChainWebsocketCallback(
     """AsyncWebsocketCallback handler for RetrievalQAWithSourcesChain."""
 
     pass
+
+
+@register_streaming_callback("ConversationalRetrievalChain")
+class AsyncConversationalRetrievalChainStreamingCallback(
+    AsyncBaseQAWithSourcesChainStreamingCallback
+):
+    """AsyncStreamingResponseCallback handler for ConversationalRetrievalChain."""
+
+    pass
+
+
+@register_websocket_callback("ConversationalRetrievalChain")
+class AsyncConversationalRetrievalChainWebsocketCallback(
+    AsyncBaseQAWithSourcesChainWebsocketCallback
+):
+    """AsyncWebsocketCallback handler for ConversationalRetrievalChain."""
+
+    pass

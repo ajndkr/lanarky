@@ -10,6 +10,8 @@ from .llm import (
     AsyncLLMChainWebsocketCallback,
 )
 from .qa_with_sources import (
+    AsyncConversationalRetrievalChainStreamingCallback,
+    AsyncConversationalRetrievalChainWebsocketCallback,
     AsyncQAWithSourcesChainStreamingCallback,
     AsyncQAWithSourcesChainWebsocketCallback,
     AsyncRetrievalQAWithSourcesChainStreamingCallback,
@@ -39,6 +41,8 @@ __all__ = [
     "AsyncRetrievalQAWithSourcesChainWebsocketCallback",
     "AsyncVectorDBQAWithSourcesChainStreamingCallback",
     "AsyncVectorDBQAWithSourcesChainWebsocketCallback",
+    "AsyncConversationalRetrievalChainStreamingCallback",
+    "AsyncConversationalRetrievalChainWebsocketCallback",
 ]
 
 
