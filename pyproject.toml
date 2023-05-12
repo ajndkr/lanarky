@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-async-langchain"
-version = "0.5.2"
+version = "0.5.3"
 description = "Ship production-ready LangChain projects with FastAPI"
 authors = ["Ajinkya Indulkar <26824103+ajndkr@users.noreply.github.com>"]
 readme = "README.md"
