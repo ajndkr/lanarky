@@ -13,13 +13,15 @@ def send_query(api_url: str, query: str, chat: list[Any], history: list[Any]):
 
     payload = {"query": query}
     headers = {
-        "accept": "text/event-stream", 
+        "accept": "text/event-stream",
         "Content-Type": "application/json",
-        "Connection": "keep-alive"
+        "Connection": "keep-alive",
     }
-    
+
     try:
-        response = requests.post(api_url, headers=headers, json=payload, timeout=60, stream=True)
+        response = requests.post(
+            api_url, headers=headers, json=payload, timeout=60, stream=True
+        )
         response.raise_for_status()  # Raise stored HTTPError, if one occurred
 
     except requests.exceptions.HTTPError as httpErr:
