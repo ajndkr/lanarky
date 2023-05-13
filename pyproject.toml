@@ -12,9 +12,12 @@ packages = [{include = "fastapi_async_langchain"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 fastapi = "^0.95.1"
-langchain = ">=0.0.166"
+langchain = ">=0.0.167"
 urllib3 = "<=1.26.15"  # added due to poetry errors
 python-dotenv = "^1.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.1"
 
 [build-system]
 requires = ["poetry-core"]

@@ -12,12 +12,34 @@ def send_query(api_url: str, query: str, chat: list[Any], history: list[Any]):
     history.append(query)
 
     payload = {"query": query}
-    headers = {"accept": "text/event-stream", "Content-Type": "application/json"}
-    response = requests.post(api_url, headers=headers, json=payload, stream=True)
+    headers = {
+        "accept": "text/event-stream",
+        "Content-Type": "application/json",
+        "Connection": "keep-alive",
+    }
+
+    try:
+        response = requests.post(
+            api_url, headers=headers, json=payload, timeout=60, stream=True
+        )
+        response.raise_for_status()  # Raise stored HTTPError, if one occurred
+
+    except requests.exceptions.HTTPError as httpErr:
+        print(f"HTTP error occurred: {httpErr}")
+        return
+    except requests.exceptions.ConnectionError as connErr:
+        print(f"Error connecting: {connErr}")
+        return
+    except requests.exceptions.Timeout as timeOutErr:
+        print(f"Timeout error: {timeOutErr}")
+        return
+    except requests.exceptions.RequestException as reqErr:
+        print(f"Something went wrong with the request: {reqErr}")
+        return
 
     token_counter = 0
     partial_words = ""
-    for chunk in response.iter_content():
+    for chunk in response.iter_content(chunk_size=1024):  # Smaller chunk size
         if chunk:
             partial_words = partial_words + chunk.decode()
             if token_counter == 0:

@@ -26,6 +26,5 @@ poetry install
 fastapi-async-langchain uses `pre-commit` to run code checks and tests before every commit. To install the pre-commit hooks, run the following commands:
 
 ```bash
-pip install pre-commit
 pre-commit install
 ```
