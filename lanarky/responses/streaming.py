@@ -10,7 +10,7 @@ from langchain.chains.base import Chain
 from starlette.background import BackgroundTask
 from starlette.types import Send
 
-from fastapi_async_langchain.callbacks import get_streaming_callback
+from lanarky.callbacks import get_streaming_callback
 
 
 class StreamingResponse(_StreamingResponse):

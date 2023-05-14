@@ -1,7 +1,4 @@
-from fastapi_async_langchain.register import (
-    register_streaming_callback,
-    register_websocket_callback,
-)
+from lanarky.register import register_streaming_callback, register_websocket_callback
 
 from .retrieval_qa import (
     AsyncBaseRetrievalQAStreamingCallback,

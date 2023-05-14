@@ -1,6 +1,6 @@
 from langchain.chains.base import Chain
 
-from fastapi_async_langchain.register import STREAMING_CALLBACKS, WEBSOCKET_CALLBACKS
+from lanarky.register import STREAMING_CALLBACKS, WEBSOCKET_CALLBACKS
 
 from .base import AsyncStreamingResponseCallback, AsyncWebsocketCallback
 from .llm import (

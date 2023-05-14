@@ -11,13 +11,8 @@ from fastapi import WebSocket, WebSocketDisconnect
 from langchain.chains.base import Chain
 from pydantic import BaseModel, Field
 
-from fastapi_async_langchain.callbacks import get_websocket_callback
-from fastapi_async_langchain.schemas import (
-    Message,
-    MessageType,
-    Sender,
-    WebsocketResponse,
-)
+from lanarky.callbacks import get_websocket_callback
+from lanarky.schemas import Message, MessageType, Sender, WebsocketResponse
 
 logger = logging.getLogger(__name__)
 
