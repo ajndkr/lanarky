@@ -3,7 +3,7 @@ name: Code check
 on:
   push:
     branches:
-      - main
+      - fastapi-async-langchain/main
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 

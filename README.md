@@ -3,6 +3,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/fastapi-async-langchain/blob/main/LICENSE)
 [![PyPI version](https://badge.fury.io/py/fastapi-async-langchain.svg)](https://pypi.org/project/fastapi-async-langchain/)
 
+> ⚠️ DISCLAIMER: `fastapi-async-langchain` has been deprecated in favor of `lanarky`. You can find the PyPI project [here](https://pypi.org/project/lanarky/).
+
 Ship production-ready [LangChain](https://github.com/hwchase17/langchain) projects with
 [FastAPI](https://github.com/tiangolo/fastapi).
 
