@@ -9,8 +9,8 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
-from fastapi_async_langchain.responses import StreamingResponse
-from fastapi_async_langchain.testing import mount_gradio_app
+from lanarky.responses import StreamingResponse
+from lanarky.testing import mount_gradio_app
 
 load_dotenv()
 

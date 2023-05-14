@@ -5,4 +5,4 @@ faiss-cpu
 gradio
 fastapi
 uvicorn[standard]
-fastapi-async-langchain
+lanarky

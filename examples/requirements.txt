@@ -50,9 +50,9 @@ faiss-cpu==1.7.4
 fastapi==0.95.1
     # via
     #   -r requirements.in
-    #   fastapi-async-langchain
+    #   lanarky
     #   gradio
-fastapi-async-langchain==0.5.4
+lanarky==0.6.0
     # via -r requirements.in
 ffmpy==0.3.0
     # via gradio
@@ -109,7 +109,7 @@ kiwisolver==1.4.4
 langchain==0.0.167
     # via
     #   -r requirements.in
-    #   fastapi-async-langchain
+    #   lanarky
 linkify-it-py==2.0.2
     # via markdown-it-py
 markdown-it-py[linkify]==2.2.0
@@ -189,7 +189,7 @@ python-dateutil==2.8.2
     #   pandas
 python-dotenv==1.0.0
     # via
-    #   fastapi-async-langchain
+    #   lanarky
     #   uvicorn
 python-multipart==0.0.6
     # via gradio
@@ -253,7 +253,7 @@ uc-micro-py==1.0.2
     # via linkify-it-py
 urllib3==1.26.15
     # via
-    #   fastapi-async-langchain
+    #   lanarky
     #   requests
 uvicorn[standard]==0.22.0
     # via
