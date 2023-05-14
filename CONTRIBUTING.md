@@ -2,14 +2,14 @@ This document contains information about contributing to this repository. Please
 
 ## Setup Instructions
 
-`fastapi-async-langchain` is built with Python 3.9 and managed by Poetry.
+`lanarky` is built with Python 3.9 and managed by Poetry.
 Clone this repository and follow the steps below to get started.
 
 ### Create conda environment:
 
 ```bash
-conda create -n fastapi-async-langchain python=3.9 -y
-conda activate fastapi-async-langchain
+conda create -n lanarky python=3.9 -y
+conda activate lanarky
 ```
 
 You can choose any other environment manager of your choice.
@@ -23,7 +23,8 @@ poetry install
 
 ## CI/CD
 
-fastapi-async-langchain uses `pre-commit` to run code checks and tests before every commit. To install the pre-commit hooks, run the following commands:
+`lanarky` uses `pre-commit` to run code checks and tests before every commit. To install the pre-commit hooks,
+run the following commands:
 
 ```bash
 pre-commit install
