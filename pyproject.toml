@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "fastapi-async-langchain"
+name = "lanarky"
 version = "0.5.4"
-description = "Ship production-ready LangChain projects with FastAPI"
+description = "Ship production-ready LLM projects with FastAPI"
 authors = ["Ajinkya Indulkar <26824103+ajndkr@users.noreply.github.com>"]
 readme = "README.md"
-homepage = "https://github.com/ajndkr/fastapi-async-langchain"
-repository = "https://github.com/ajndkr/fastapi-async-langchain"
+homepage = "https://github.com/ajndkr/lanarky"
+repository = "https://github.com/ajndkr/lanarky"
 license = "MIT"
-packages = [{include = "fastapi_async_langchain"}]
+packages = [{include = "lanarky"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
