@@ -1,13 +1,18 @@
-# lanarky
+<div align="center">
 
+<img src="assets/logo.png" alt="lanarky-logo" width="150">
+
+<h1> Lanarky </h1>
+
+[![stars](https://img.shields.io/github/stars/ajndkr/lanarky)](https://github.com/ajndkr/lanarky/stargazers)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/lanarky/blob/main/LICENSE)
 [![PyPI version](https://badge.fury.io/py/lanarky.svg)](https://pypi.org/project/lanarky/)
+[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-3916/)
 
-<!-- ![logo](https://raw.githubusercontent.com/ajndkr/lanarky/main/assets/logo.png) -->
-<img src="assets/logo.png" alt="lanarky-logo" width="100">
+</div>
 
-Lanarky is an open-source effort to build a framework for deploying LLM applications in production.
-It is built on top of [FastAPI](https://github.com/tiangolo/fastapi) and comes with batteries included.
+Lanarky is an open-source framework to deploy LLM applications in production. It is built on top of [FastAPI](https://github.com/tiangolo/fastapi)
+and comes with batteries included.
 
 ## 🚀 Features
 
