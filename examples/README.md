@@ -33,7 +33,7 @@ the dependencies, run `pip-compile --upgrade requirements.in`.
 To run a demo example, select the command based on the langchain use case you want to try out.
 
 - Conversation Chain: `uvicorn app.conversation_chain:app --reload`
-- Retrieval QA with Sources Chain: `uvicorn app.retrieval_qa_chain:app --reload`
+- Retrieval QA with Sources Chain: `uvicorn app.retrieval_qa_w_sources:app --reload`
 - Conversational Retrieval: `uvicorn app.conversational_retrieval:app --reload`
 
 You can also use the "Run & Debug" VSCode feature to run one of the applications.
