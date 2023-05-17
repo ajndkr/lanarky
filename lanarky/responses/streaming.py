@@ -1,7 +1,8 @@
 """
 Credits:
-- https://gist.github.com/ninely/88485b2e265d852d3feb8bd115065b1a
-- https://github.com/hwchase17/langchain/discussions/1706
+
+* `gist@ninely <https://gist.github.com/ninely/88485b2e265d852d3feb8bd115065b1a>`_
+* `langchain@#1705 <https://github.com/hwchase17/langchain/discussions/1706>`_
 """
 from typing import Any, Awaitable, Callable, Dict, Optional, Union
 
