@@ -8,9 +8,11 @@ Welcome to lanarky's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :name: api
+   :caption: API Reference
+   :hidden:
 
-
+   lanarky/lanarky
 
 Indices and tables
 ==================
