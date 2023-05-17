@@ -45,16 +45,34 @@ __all__ = [
     "AsyncConversationalRetrievalChainWebsocketCallback",
 ]
 
+ERROR_MESSAGE = """Error! Chain type '{chain_type}' is not currently supported by '{callable_name}'."""
+
 
 def get_streaming_callback(
     chain: Chain, *args, **kwargs
 ) -> AsyncStreamingResponseCallback:
     """Get the streaming callback for the given chain type."""
     chain_type = chain.__class__.__name__
-    return STREAMING_CALLBACKS[chain_type](*args, **kwargs)
+    try:
+        callback = STREAMING_CALLBACKS[chain_type]
+        return callback(*args, **kwargs)
+    except KeyError:
+        raise KeyError(
+            ERROR_MESSAGE.format(
+                chain_type=chain_type, callable_name="AsyncStreamingResponseCallback"
+            )
+        )
 
 
 def get_websocket_callback(chain: Chain, *args, **kwargs) -> AsyncWebsocketCallback:
     """Get the websocket callback for the given chain type."""
     chain_type = chain.__class__.__name__
-    return WEBSOCKET_CALLBACKS[chain_type](*args, **kwargs)
+    try:
+        callback = WEBSOCKET_CALLBACKS[chain_type]
+        return callback(*args, **kwargs)
+    except KeyError:
+        raise KeyError(
+            ERROR_MESSAGE.format(
+                chain_type=chain_type, callable_name="AsyncWebsocketCallback"
+            )
+        )
