@@ -1,5 +1,5 @@
 🔥 Getting Started
-================
+===================
 
 .. note::
    Create a `.env` file using `.env.sample` and add your OpenAI API key to it before running the examples.

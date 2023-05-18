@@ -8,12 +8,20 @@ Welcome to Lanarky
 
 .. toctree::
    :maxdepth: 1
-   :name: contents
-   :caption: Contents
+   :name: basic
+   :caption: Basic
    :hidden:
 
    features
    getting_started
+
+.. toctree::
+   :maxdepth: 1
+   :name: advanced
+   :caption: Advanced
+   :hidden:
+
+   advanced/custom_callbacks
 
 .. toctree::
    :maxdepth: 2
