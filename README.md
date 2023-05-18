@@ -36,6 +36,8 @@ The library is available on PyPI and can be installed via `pip`.
 pip install lanarky
 ```
 
+You can find the full documentation at [https://lanarky.readthedocs.io/en/latest/](https://lanarky.readthedocs.io/en/latest/).
+
 ## 🔥 Deploy a simple Langchain application in under 20 lines of code
 
 ```python
