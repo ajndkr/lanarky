@@ -1,4 +1,4 @@
-gradio testing
+testing
 =======================
 
 .. automodule:: lanarky.testing
