@@ -1,0 +1,2 @@
+furo==2023.3.27
+sphinx-autobuild==2021.3.14
