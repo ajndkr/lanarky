@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "lanarky"
+project = "Lanarky"
 copyright = "2023, Ajinkya Indulkar"
 author = "Ajinkya Indulkar"
 release = "v0.6.1"
@@ -42,4 +42,25 @@ html_theme_options = {
         "font-stack": "'Segoe UI', sans-serif",
         "font-stack--monospace": "Courier, monospace",
     },
+}
+html_css_files = [
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/solid.min.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css",
+]
+html_theme_options = {
+    "footer_icons": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/ajndkr/lanarky",
+            "html": "",
+            "class": "fa-brands fa-solid fa-github fa-2x",
+        },
+        {
+            "name": "Twitter",
+            "url": "https://twitter.com/ajndkr",
+            "html": "",
+            "class": "fa-brands fa-solid fa-twitter fa-2x",
+        },
+    ],
 }
