@@ -75,7 +75,7 @@ The library is available on PyPI and can be installed via ``pip``.
 Contributions are more than welcome! If you have an idea for a new feature or want to help improve lanarky,
 please create an issue or submit a pull request on `GitHub <https://github.com/ajndkr/lanarky>`_.
 
-See `CONTRIBUTING.md <./CONTRIBUTING.md>`_ for more information.
+See `CONTRIBUTING.md <https://github.com/ajndkr/lanarky/blob/main/CONTRIBUTING.md>`_ for more information.
 
 ⚖️ License
 ----------

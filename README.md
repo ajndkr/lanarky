@@ -84,7 +84,7 @@ before running the examples.
 Contributions are more than welcome! If you have an idea for a new feature or want to help improve lanarky,
 please create an issue or submit a pull request on [GitHub](https://github.com/ajndkr/lanarky).
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for more information.
+See [CONTRIBUTING.md](https://github.com/ajndkr/lanarky/blob/main/CONTRIBUTING.md) for more information.
 
 ## ⚖️ License
 
