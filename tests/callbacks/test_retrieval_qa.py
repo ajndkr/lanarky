@@ -8,26 +8,38 @@ from lanarky.callbacks.retrieval_qa import (
 )
 
 
-@pytest.mark.asyncio
-async def test_on_chain_end(send, websocket, bot_response):
-    streaming_callback = AsyncBaseRetrievalQAStreamingCallback(send=send)
-    outputs = {
+@pytest.fixture
+def outputs():
+    return {
         "source_documents": [
             MagicMock(page_content="Page 1 content", metadata={"source": "Source 1"}),
             MagicMock(page_content="Page 2 content", metadata={"source": "Source 2"}),
         ]
     }
 
-    await streaming_callback.on_chain_end(outputs)
 
-    streaming_callback.send.assert_has_calls(
-        [
-            call("\n\nSOURCE DOCUMENTS: \n"),
-            call("\npage content: Page 1 content\nsource: Source 1\n"),
-            call("\npage content: Page 2 content\nsource: Source 2\n"),
-        ]
+@pytest.fixture
+def messages():
+    return [
+        "\n\nSOURCE DOCUMENTS: \n",
+        "\npage content: Page 1 content\nsource: Source 1\n",
+        "\npage content: Page 2 content\nsource: Source 2\n",
+    ]
+
+
+@pytest.mark.asyncio
+async def test_streaming_on_chain_end(send, outputs, messages):
+    callback = AsyncBaseRetrievalQAStreamingCallback(send=send)
+
+    await callback.on_chain_end(outputs)
+
+    callback.send.assert_has_calls(
+        [call(callback._construct_message(message)) for message in messages]
     )
 
+
+@pytest.mark.asyncio
+async def test_websocket_on_chain_end(websocket, bot_response, outputs, messages):
     ws_callback = AsyncBaseRetrievalQAWebsocketCallback(
         websocket=websocket,
         response=bot_response,
@@ -35,19 +47,5 @@ async def test_on_chain_end(send, websocket, bot_response):
     await ws_callback.on_chain_end(outputs)
 
     ws_callback.websocket.send_json.assert_has_calls(
-        [
-            call({**bot_response.dict(), **{"message": "\n\nSOURCE DOCUMENTS: \n"}}),
-            call(
-                {
-                    **bot_response.dict(),
-                    **{"message": "\npage content: Page 1 content\nsource: Source 1\n"},
-                }
-            ),
-            call(
-                {
-                    **bot_response.dict(),
-                    **{"message": "\npage content: Page 2 content\nsource: Source 2\n"},
-                }
-            ),
-        ]
+        [call(ws_callback._construct_message(message)) for message in messages]
     )
