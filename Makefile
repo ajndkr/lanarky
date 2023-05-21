@@ -12,7 +12,7 @@ tests:	## run unit tests with coverage
 	-p pytest_asyncio -v
 
 coverage:	## run unit tests with coverage
-	coveralls
+	poetry run coveralls
 
 pre-commit:	## run pre-commit hooks
 	poetry run pre-commit run --all-files
