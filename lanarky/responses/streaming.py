@@ -36,13 +36,8 @@ class StreamingResponse(_StreamingResponse):
             }
         )
 
-        async def send_token(token: Union[str, bytes]):
-            if not isinstance(token, bytes):
-                token = token.encode(self.charset)
-            await send({"type": "http.response.body", "body": token, "more_body": True})
-
         try:
-            outputs = await self.chain_executor(send_token)
+            outputs = await self.chain_executor(send)
             if self.background is not None:
                 self.background.kwargs["outputs"] = outputs
         except Exception as e:

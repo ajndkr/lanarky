@@ -17,10 +17,10 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Code Checkout
+      - name: Code checkout
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: Setup python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}

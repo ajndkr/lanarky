@@ -18,14 +18,16 @@ class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
     async def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
         if "source_documents" in outputs:
-            await self.send("\n\nSOURCE DOCUMENTS: \n")
+            message = self._construct_message("\n\nSOURCE DOCUMENTS: \n")
+            await self.send(message)
             for document in outputs["source_documents"]:
-                await self.send(
+                message = self._construct_message(
                     self.source_document_template.format(
                         page_content=document.page_content,
                         source=document.metadata["source"],
                     )
                 )
+                await self.send(message)
 
 
 class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
@@ -36,23 +38,16 @@ class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
     async def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
         if "source_documents" in outputs:
-            await self.websocket.send_json(
-                {
-                    **self.response.dict(),
-                    **{"message": "\n\nSOURCE DOCUMENTS: \n"},
-                }
-            )
+            message = self._construct_message("\n\nSOURCE DOCUMENTS: \n")
+            await self.websocket.send_json(message)
             for document in outputs["source_documents"]:
-                source_document = self.source_document_template.format(
-                    page_content=document.page_content,
-                    source=document.metadata["source"],
+                message = self._construct_message(
+                    self.source_document_template.format(
+                        page_content=document.page_content,
+                        source=document.metadata["source"],
+                    )
                 )
-                await self.websocket.send_json(
-                    {
-                        **self.response.dict(),
-                        **{"message": source_document},
-                    }
-                )
+                await self.websocket.send_json(message)
 
 
 @register_streaming_callback("RetrievalQA")

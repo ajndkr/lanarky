@@ -11,7 +11,8 @@ class AsyncLLMChainStreamingCallback(AsyncStreamingResponseCallback):
 
     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
-        await self.send(token)
+        message = self._construct_message(token)
+        await self.send(message)
 
 
 @register_websocket_callback("LLMChain")
@@ -20,7 +21,8 @@ class AsyncLLMChainWebsocketCallback(AsyncWebsocketCallback):
 
     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
-        await self.websocket.send_json({**self.response.dict(), **{"message": token}})
+        message = self._construct_message(token)
+        await self.websocket.send_json(message)
 
 
 @register_streaming_callback("ConversationChain")

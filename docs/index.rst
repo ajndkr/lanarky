@@ -66,6 +66,9 @@ The library is available on PyPI and can be installed via ``pip``.
 🤝 Contributing
 ----------------
 
+.. image:: https://coveralls.io/repos/github/ajndkr/lanarky/badge.svg?branch=main
+   :target: https://coveralls.io/github/ajndkr/lanarky?branch=main
+
 .. image:: https://github.com/ajndkr/lanarky/actions/workflows/code-check.yaml/badge.svg
    :target: https://github.com/ajndkr/lanarky/actions/workflows/code-check.yaml
 

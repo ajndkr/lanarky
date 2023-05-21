@@ -4,7 +4,6 @@ Credits:
 - https://github.com/pors/langchain-chat-websockets
 """
 import logging
-from abc import abstractstaticmethod
 from typing import Any, Awaitable, Callable
 
 from fastapi import WebSocket, WebSocketDisconnect
@@ -19,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 class BaseWebsocketConnection(BaseModel):
     websocket: WebSocket = Field(...)
-    chain_executor: Callable[[], Awaitable[Any]] = Field(...)
+    chain_executor: Callable[[str], Awaitable[Any]] = Field(...)
 
     class Config:
         arbitrary_types_allowed = True
@@ -64,7 +63,7 @@ class BaseWebsocketConnection(BaseModel):
                     ).dict()
                 )
 
-    @abstractstaticmethod
+    @staticmethod
     def _create_chain_executor(
         chain: Chain,
         websocket: WebSocket,
@@ -100,7 +99,7 @@ class WebsocketConnection(BaseWebsocketConnection):
         chain: Chain,
         websocket: WebSocket,
         response: WebsocketResponse,
-    ) -> Callable[[], Awaitable[Any]]:
+    ) -> Callable[[str], Awaitable[Any]]:
         async def wrapper(user_message: str):
             return await chain.acall(
                 inputs=user_message,
