@@ -1,16 +1,10 @@
 from unittest.mock import AsyncMock, MagicMock
 
 import pytest
-from langchain.chains import LLMChain
 from starlette.background import BackgroundTask
 
 from lanarky.callbacks import get_streaming_callback
 from lanarky.responses.streaming import StreamingResponse
-
-
-@pytest.fixture
-def chain() -> MagicMock:
-    return MagicMock(spec=LLMChain)
 
 
 @pytest.fixture

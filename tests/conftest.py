@@ -1,7 +1,8 @@
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from fastapi import WebSocket
+from langchain.chains import LLMChain
 from starlette.types import Send
 
 from lanarky.schemas import Message, MessageType, Sender, WebsocketResponse
@@ -22,3 +23,8 @@ def bot_response():
     return WebsocketResponse(
         sender=Sender.BOT, message=Message.NULL, message_type=MessageType.STREAM
     )
+
+
+@pytest.fixture
+def chain():
+    return MagicMock(spec=LLMChain)
