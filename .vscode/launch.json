@@ -3,7 +3,7 @@
   "envFile": "${workspaceFolder}/.env",
   "configurations": [
     {
-      "name": "Python: Conversation Chain Example",
+      "name": "Lanarky: Conversation Chain",
       "type": "python",
       "request": "launch",
       "module": "uvicorn",
@@ -18,13 +18,43 @@
       ]
     },
     {
-      "name": "Python: Retrieval QA With Sources Example",
+      "name": "Lanarky: Retrieval QA With Sources",
       "type": "python",
       "request": "launch",
       "module": "uvicorn",
       "cwd": "${workspaceFolder}/examples",
       "args": [
         "app.retrieval_qa_w_sources:app",
+        "--reload",
+        "--host",
+        "localhost",
+        "--port",
+        "8000"
+      ]
+    },
+    {
+      "name": "Lanarky: Conversational Retrieval",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "cwd": "${workspaceFolder}/examples",
+      "args": [
+        "app.conversational_retrieval:app",
+        "--reload",
+        "--host",
+        "localhost",
+        "--port",
+        "8000"
+      ]
+    },
+    {
+      "name": "Lanarky: Zero shot Agent",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "cwd": "${workspaceFolder}/examples",
+      "args": [
+        "app.zero_shot_agent:app",
         "--reload",
         "--host",
         "localhost",
