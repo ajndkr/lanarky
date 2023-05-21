@@ -23,12 +23,12 @@ async def test_check_if_answer_reached(send):
     assert callback.last_tokens == ["", "", ""]
     assert callback.answer_reached is False
 
-    token = "\nFinal"
+    token = "Final"
 
     result = callback._check_if_answer_reached(token)
 
     assert result is False
-    assert callback.last_tokens == ["", "", "\nFinal"]
+    assert callback.last_tokens == ["", "", "Final"]
     assert callback.answer_reached is False
 
     token = " Answer"
@@ -36,15 +36,15 @@ async def test_check_if_answer_reached(send):
     result = callback._check_if_answer_reached(token)
 
     assert result is False
-    assert callback.last_tokens == ["", "\nFinal", " Answer"]
+    assert callback.last_tokens == ["", "Final", " Answer"]
     assert callback.answer_reached is False
 
     token = ":"
 
     result = callback._check_if_answer_reached(token)
 
-    assert result is True
-    assert callback.last_tokens == ["\nFinal", " Answer", ":"]
+    assert result is None
+    assert callback.last_tokens == ["Final", " Answer", ":"]
     assert callback.answer_reached is True
 
 
