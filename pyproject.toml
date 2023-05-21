@@ -29,6 +29,7 @@ sphinx-autobuild = "^2021.3.14"
 pytest = "^7.3.1"
 pytest-cov = "^4.0.0"
 pytest-asyncio = "^0.21.0"
+coveralls = "^3.3.1"
 
 [build-system]
 requires = ["poetry-core"]

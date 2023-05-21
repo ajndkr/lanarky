@@ -11,5 +11,8 @@ tests:	## run unit tests with coverage
 	--cov=lanarky --cov-report=term-missing:skip-covered \
 	-p pytest_asyncio -v
 
+coverage:	## run unit tests with coverage
+	coveralls
+
 pre-commit:	## run pre-commit hooks
 	poetry run pre-commit run --all-files
