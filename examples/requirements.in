@@ -6,4 +6,3 @@ faiss-cpu
 gradio
 fastapi
 uvicorn[standard]
-wikipedia
