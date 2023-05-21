@@ -5,7 +5,6 @@ from lanarky.schemas import Message, MessageType, Sender, WebsocketResponse
 
 
 def test_websocket_response():
-    # Test valid input
     response = WebsocketResponse(
         sender=Sender.BOT, message=Message.NULL, message_type=MessageType.START
     )
@@ -13,7 +12,6 @@ def test_websocket_response():
     assert response.message == Message.NULL
     assert response.message_type == MessageType.START
 
-    # Test invalid input
     with pytest.raises(ValidationError):
         response = WebsocketResponse(
             sender="invalid_sender",  # type: ignore

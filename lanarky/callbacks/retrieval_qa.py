@@ -18,13 +18,13 @@ class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
     async def on_chain_end(self, outputs: Dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
         if "source_documents" in outputs:
-            await self.send("\n\nSOURCE DOCUMENTS: \n")
+            await self.send("\n\nSOURCE DOCUMENTS: \n")  # type: ignore
             for document in outputs["source_documents"]:
                 await self.send(
                     self.source_document_template.format(
                         page_content=document.page_content,
                         source=document.metadata["source"],
-                    )
+                    )  # type: ignore
                 )
 
 

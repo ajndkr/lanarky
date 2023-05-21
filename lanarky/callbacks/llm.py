@@ -11,7 +11,7 @@ class AsyncLLMChainStreamingCallback(AsyncStreamingResponseCallback):
 
     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
-        await self.send(token)
+        await self.send(token)  # type: ignore
 
 
 @register_websocket_callback("LLMChain")
