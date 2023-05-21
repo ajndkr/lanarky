@@ -9,7 +9,7 @@
 project = "Lanarky"
 copyright = "2023, Ajinkya Indulkar"
 author = "Ajinkya Indulkar"
-release = "v0.6.2"
+release = "v0.6.3"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

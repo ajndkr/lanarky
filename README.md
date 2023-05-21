@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo.png" alt="lanarky-logo" width="150">
+<img src="https://raw.githubusercontent.com/ajndkr/lanarky/main/assets/logo.png" alt="lanarky-logo" width="150">
 
 <h1> Lanarky </h1>
 
