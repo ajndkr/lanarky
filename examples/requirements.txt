@@ -50,10 +50,8 @@ faiss-cpu==1.7.4
 fastapi==0.95.1
     # via
     #   -r requirements.in
-    #   lanarky
     #   gradio
-lanarky==0.6.0
-    # via -r requirements.in
+    #   lanarky
 ffmpy==0.3.0
     # via gradio
 filelock==3.12.0
@@ -106,7 +104,9 @@ jsonschema==4.17.3
     # via altair
 kiwisolver==1.4.4
     # via matplotlib
-langchain==0.0.167
+lanarky==0.6.2
+    # via -r requirements.in
+langchain==0.0.176
     # via
     #   -r requirements.in
     #   lanarky
@@ -233,7 +233,6 @@ toolz==0.12.0
 tqdm==4.65.0
     # via
     #   huggingface-hub
-    #   langchain
     #   openai
 typing-extensions==4.5.0
     # via

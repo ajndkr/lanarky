@@ -4,7 +4,7 @@ Credits:
 * `gist@ninely <https://gist.github.com/ninely/88485b2e265d852d3feb8bd115065b1a>`_
 * `langchain@#1705 <https://github.com/hwchase17/langchain/discussions/1706>`_
 """
-from typing import Any, Awaitable, Callable, Dict, Optional, Union
+from typing import Any, Awaitable, Callable, Optional, Union
 
 from fastapi.responses import StreamingResponse as _StreamingResponse
 from langchain.chains.base import Chain
@@ -56,11 +56,12 @@ class StreamingResponse(_StreamingResponse):
 
     @staticmethod
     def _create_chain_executor(
-        chain: Chain, inputs: Union[Dict[str, Any], Any]
+        chain: Chain, inputs: Union[dict[str, Any], Any], **callback_kwargs
     ) -> Callable[[Send], Awaitable[Any]]:
         async def wrapper(send: Send):
             return await chain.acall(
-                inputs=inputs, callbacks=[get_streaming_callback(chain, send=send)]
+                inputs=inputs,
+                callbacks=[get_streaming_callback(chain, send=send, **callback_kwargs)],
             )
 
         return wrapper
@@ -69,11 +70,12 @@ class StreamingResponse(_StreamingResponse):
     def from_chain(
         cls,
         chain: Chain,
-        inputs: Union[Dict[str, Any], Any],
+        inputs: Union[dict[str, Any], Any],
         background: Optional[BackgroundTask] = None,
+        callback_kwargs: dict[str, Any] = {},
         **kwargs: Any,
     ) -> "StreamingResponse":
-        chain_executor = cls._create_chain_executor(chain, inputs)
+        chain_executor = cls._create_chain_executor(chain, inputs, **callback_kwargs)
 
         return cls(
             chain_executor=chain_executor,
