@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  workflow_dispatch: # Allow running on-demand
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/ci.yaml
+      - lanarky/**
+      - tests/**
+      - "!**.md"
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - .github/workflows/ci.yaml
+      - lanarky/**
+      - tests/**
+      - "!**.md"
+
+env:
+  PYTHON_VERSION: 3.9
+  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
+jobs:
+  build-and-test:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v3
+
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip poetry
+          poetry install
+
+      - name: Run unit tests
+        run: make tests
+
+      - name: Upload coverage
+        run: make coverage
