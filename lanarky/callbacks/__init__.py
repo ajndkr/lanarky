@@ -2,6 +2,7 @@ from langchain.chains.base import Chain
 
 from lanarky.register import STREAMING_CALLBACKS, WEBSOCKET_CALLBACKS
 
+from .agents import AsyncAgentsStreamingCallback, AsyncAgentsWebsocketCallback
 from .base import AsyncStreamingResponseCallback, AsyncWebsocketCallback
 from .llm import (
     AsyncConversationChainStreamingCallback,
@@ -43,6 +44,8 @@ __all__ = [
     "AsyncVectorDBQAWithSourcesChainWebsocketCallback",
     "AsyncConversationalRetrievalChainStreamingCallback",
     "AsyncConversationalRetrievalChainWebsocketCallback",
+    "AsyncAgentsStreamingCallback",
+    "AsyncAgentsWebsocketCallback",
 ]
 
 ERROR_MESSAGE = """Error! Chain type '{chain_type}' is not currently supported by '{callable_name}'."""
