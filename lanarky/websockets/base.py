@@ -68,6 +68,7 @@ class BaseWebsocketConnection(BaseModel):
         chain: Chain,
         websocket: WebSocket,
         response: WebsocketResponse,
+        **callback_kwargs,
     ) -> Callable[[str], Awaitable[Any]]:
         raise NotImplementedError
 
@@ -76,6 +77,7 @@ class BaseWebsocketConnection(BaseModel):
         cls,
         chain: Chain,
         websocket: WebSocket,
+        callback_kwargs: dict[str, Any] = {},
     ) -> "BaseWebsocketConnection":
         chain_executor = cls._create_chain_executor(
             chain,
@@ -83,6 +85,7 @@ class BaseWebsocketConnection(BaseModel):
             WebsocketResponse(
                 sender=Sender.BOT, message=Message.NULL, message_type=MessageType.STREAM
             ),
+            **callback_kwargs,
         )
 
         return cls(
@@ -99,13 +102,17 @@ class WebsocketConnection(BaseWebsocketConnection):
         chain: Chain,
         websocket: WebSocket,
         response: WebsocketResponse,
+        **callback_kwargs,
     ) -> Callable[[str], Awaitable[Any]]:
         async def wrapper(user_message: str):
             return await chain.acall(
                 inputs=user_message,
                 callbacks=[
                     get_websocket_callback(
-                        chain=chain, websocket=websocket, response=response
+                        chain=chain,
+                        websocket=websocket,
+                        response=response,
+                        **callback_kwargs,
                     )
                 ],
             )

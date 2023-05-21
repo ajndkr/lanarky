@@ -1,7 +1,5 @@
 from typing import Any, Dict, List
 
-from langchain.callbacks.streaming_stdout_final_only import DEFAULT_ANSWER_PREFIX_TOKENS
-
 from lanarky.register import register_streaming_callback, register_websocket_callback
 
 from .base import AsyncLanarkyCallback
@@ -14,7 +12,7 @@ class AsyncAgentsLanarkyCallback(AsyncLanarkyCallback):
     Adapted from `langchain/callbacks/streaming_stdout_final_only.py <https://github.com/hwchase17/langchain/blob/master/langchain/callbacks/streaming_stdout_final_only.py>`_
     """
 
-    answer_prefix_tokens: List[str] = DEFAULT_ANSWER_PREFIX_TOKENS
+    answer_prefix_tokens: List[str] = ["Final", " Answer", ":"]
     last_tokens: List[str] = [""] * len(answer_prefix_tokens)
     answer_reached: bool = False
 
@@ -25,13 +23,14 @@ class AsyncAgentsLanarkyCallback(AsyncLanarkyCallback):
         self.last_tokens = [""] * len(self.answer_prefix_tokens)
         self.answer_reached = False
 
-    def _check_if_answer_reached(self, token: str) -> bool:
+    def _check_if_answer_reached(self, token: str):
         self.last_tokens.append(token)
         if len(self.last_tokens) > len(self.answer_prefix_tokens):
             self.last_tokens.pop(0)
 
         if self.last_tokens == self.answer_prefix_tokens:
             self.answer_reached = True
+            return
 
         return self.answer_reached
 
@@ -44,11 +43,6 @@ class AsyncAgentsStreamingCallback(
 
     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
-        print(f"token: {token}")
-        print(f"self.last_tokens: {self.last_tokens}")
-        print(f"self.answer_prefix_tokens: {self.answer_prefix_tokens}")
-        print(f"self.answer_reached: {self.answer_reached}")
-
         if self._check_if_answer_reached(token):
             message = self._construct_message(token)
             await self.send(message)
@@ -62,11 +56,6 @@ class AsyncAgentsWebsocketCallback(
 
     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
-        print(f"token: {token}")
-        print(f"self.last_tokens: {self.last_tokens}")
-        print(f"self.answer_prefix_tokens: {self.answer_prefix_tokens}")
-        print(f"self.answer_reached: {self.answer_reached}")
-
         if self._check_if_answer_reached(token):
             message = self._construct_message(token)
             await self.websocket.send_json(message)
