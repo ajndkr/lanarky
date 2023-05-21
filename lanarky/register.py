@@ -1,4 +1,4 @@
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 
 def register(key: str, _registry: Dict[str, Tuple[Any, List[str]]]) -> Any:
@@ -9,7 +9,7 @@ def register(key: str, _registry: Dict[str, Tuple[Any, List[str]]]) -> Any:
     it is a dictionary mapping from a key to the class/function.
     """
 
-    def _register_cls(cls: Any, required_kwargs: List = None) -> Any:
+    def _register_cls(cls: Any, required_kwargs: Optional[List] = None) -> Any:
         if key in _registry:
             raise KeyError(f"{cls} already registered as {key}")
         _registry[key] = cls if required_kwargs is None else (cls, required_kwargs)
