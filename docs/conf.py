@@ -19,6 +19,9 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.coverage",
     "sphinx.ext.viewcode",
+    "myst_parser",
+    "sphinx_copybutton",
+    "sphinxcontrib.autodoc_pydantic",
 ]
 
 # autodoc: Default to members and undoc-members

@@ -48,7 +48,11 @@ __all__ = [
     "AsyncAgentsWebsocketCallback",
 ]
 
-ERROR_MESSAGE = """Error! Chain type '{chain_type}' is not currently supported by '{callable_name}'."""
+ERROR_MESSAGE = """Error! Chain type '{chain_type}' is not currently supported by '{callable_name}'.
+
+To use a custom chain type, you must register a new callback handler.
+See the documentation for more details: https://lanarky.readthedocs.io/en/latest/advanced/custom_callbacks.html
+"""
 
 
 def get_streaming_callback(

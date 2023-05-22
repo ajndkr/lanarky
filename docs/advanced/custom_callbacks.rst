@@ -63,11 +63,12 @@ Let's first create a custom chain called ``ConversationalRetrievalWithSourcesCha
             result[self.sources_output_key] = sources
             return result
 
-Next, we will define a new callback handler and add it to the registry:
+Next, we will define a new streaming callback handler and add it to the registry:
 
 .. code-block:: python
 
-    from lanarky.register import register_callback
+    from lanarky.register import register_streaming_callback
+
     @register_streaming_callback("ConversationalRetrievalWithSourcesChain")
     class AsyncConversationalRetrievalWithSourcesChainStreamingCallback(
         AsyncConversationalRetrievalChainStreamingCallback
@@ -77,3 +78,6 @@ Next, we will define a new callback handler and add it to the registry:
 
 Once your callback handler is registered, Lanarky will automatically detect it using your custom chain when
 you use the ``StreamingResponse`` class in your FastAPI application.
+
+For more register functions, check out the ``lanarky.register`` module
+`reference <https://lanarky.readthedocs.io/en/latest/lanarky/lanarky.register.html>`_.
