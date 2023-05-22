@@ -23,7 +23,7 @@ WEBSOCKET_CALLBACKS: Dict[str, Any] = {}
 
 
 def register_streaming_callback(key: str) -> Callable:
-    """Register an streaming callback handler."""
+    """Register a streaming callback handler."""
 
     def _register_cls(cls: Any) -> Callable:
         register(key, STREAMING_CALLBACKS)(cls=cls)
@@ -33,7 +33,7 @@ def register_streaming_callback(key: str) -> Callable:
 
 
 def register_websocket_callback(key: str) -> Callable:
-    """Register an websocket callback handler."""
+    """Register a websocket callback handler."""
 
     def _register_cls(cls: Any) -> Callable:
         register(key, WEBSOCKET_CALLBACKS)(cls=cls)
