@@ -33,7 +33,7 @@ class AsyncStreamingResponseCallback(AsyncLanarkyCallback):
 
     def _construct_message(self, message_str: str) -> Message:
         """Construct a Message from a string."""
-        return {"type": "http.response.body", "body": message_str, "more_body": True}
+        return {"type": "http.response.body", "body": message_str.encode("utf-8"), "more_body": True}
 
 
 class AsyncWebsocketCallback(AsyncLanarkyCallback):
