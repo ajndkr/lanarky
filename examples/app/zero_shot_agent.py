@@ -51,6 +51,16 @@ async def chat(
     )
 
 
+@app.post("/chat_json")
+async def chat_json(
+    request: QueryRequest,
+    agent: AgentExecutor = Depends(zero_shot_agent),
+) -> StreamingResponse:
+    return StreamingResponse.from_chain(
+        agent, request.query, as_json=True, media_type="text/event-stream"
+    )
+
+
 @app.get("/")
 async def get(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})

@@ -4,7 +4,7 @@
 Langchain Support
 -----------------
 
-- Token streaming over HTTP and Websocket
+- Supports output streaming over HTTP and Websocket
 - Supports multiple Chains and Agents
 
 Gradio Testing

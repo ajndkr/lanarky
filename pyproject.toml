@@ -12,9 +12,10 @@ packages = [{include = "lanarky"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 fastapi = ">=0.95.2"
-langchain = ">=0.0.175"
+langchain = ">=0.0.178"
 urllib3 = "<=1.26.15"  # added due to poetry errors
 python-dotenv = "^1.0.0"
+typing-extensions = "4.5.0"  # added due to https://github.com/hwchase17/langchain/issues/5113
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.1"

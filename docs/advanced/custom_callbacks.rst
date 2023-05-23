@@ -10,6 +10,14 @@ Let's first create a custom chain called ``ConversationalRetrievalWithSourcesCha
 
 .. code-block:: python
 
+    import re
+    from typing import Any, Dict, List, Optional
+    from langchain.chains import ConversationalRetrievalChain
+    from langchain.callbacks.manager import (
+        AsyncCallbackManagerForChainRun,
+        CallbackManagerForChainRun,
+    )
+
     class ConversationalRetrievalWithSourcesChain(ConversationalRetrievalChain):
         """Chain for chatting with sources over documents."""
 

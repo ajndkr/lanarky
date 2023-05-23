@@ -80,3 +80,13 @@ async def chat(
         "chat_history": [(human, ai) for human, ai in request.history],
     }
     return StreamingResponse.from_chain(chain, inputs, media_type="text/event-stream")
+
+
+@app.post("/chat_json")
+async def chat_json(
+    request: QueryRequest,
+    chain: ConversationalRetrievalChain = Depends(conversational_retrieval_chain),
+) -> StreamingResponse:
+    return StreamingResponse.from_chain(
+        chain, request.query, as_json=True, media_type="text/event-stream"
+    )

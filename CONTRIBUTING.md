@@ -27,5 +27,5 @@ poetry install
 run the following commands:
 
 ```bash
-pre-commit install
+poetry run pre-commit install
 ```

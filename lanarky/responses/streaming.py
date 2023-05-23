@@ -11,7 +11,7 @@ from langchain.chains.base import Chain
 from starlette.background import BackgroundTask
 from starlette.types import Send
 
-from lanarky.callbacks import get_streaming_callback
+from lanarky.callbacks import get_streaming_callback, get_streaming_json_callback
 
 
 class StreamingResponse(_StreamingResponse):
@@ -56,12 +56,19 @@ class StreamingResponse(_StreamingResponse):
 
     @staticmethod
     def _create_chain_executor(
-        chain: Chain, inputs: Union[dict[str, Any], Any], **callback_kwargs
+        chain: Chain,
+        inputs: Union[dict[str, Any], Any],
+        as_json: bool = False,
+        **callback_kwargs,
     ) -> Callable[[Send], Awaitable[Any]]:
+        get_callback_fn = (
+            get_streaming_json_callback if as_json else get_streaming_callback
+        )
+
         async def wrapper(send: Send):
             return await chain.acall(
                 inputs=inputs,
-                callbacks=[get_streaming_callback(chain, send=send, **callback_kwargs)],
+                callbacks=[get_callback_fn(chain, send=send, **callback_kwargs)],
             )
 
         return wrapper
@@ -71,11 +78,14 @@ class StreamingResponse(_StreamingResponse):
         cls,
         chain: Chain,
         inputs: Union[dict[str, Any], Any],
+        as_json: bool = False,
         background: Optional[BackgroundTask] = None,
         callback_kwargs: dict[str, Any] = {},
         **kwargs: Any,
     ) -> "StreamingResponse":
-        chain_executor = cls._create_chain_executor(chain, inputs, **callback_kwargs)
+        chain_executor = cls._create_chain_executor(
+            chain, inputs, as_json, **callback_kwargs
+        )
 
         return cls(
             chain_executor=chain_executor,
