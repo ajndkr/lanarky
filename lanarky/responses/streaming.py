@@ -11,7 +11,7 @@ from langchain.chains.base import Chain
 from starlette.background import BackgroundTask
 from starlette.types import Send
 
-from lanarky.callbacks import get_streaming_callback
+from lanarky.callbacks import get_streaming_callback, get_streaming_json_callback
 
 
 class StreamingResponse(_StreamingResponse):
@@ -82,3 +82,21 @@ class StreamingResponse(_StreamingResponse):
             background=background,
             **kwargs,
         )
+
+
+class StreamingJSONResponse(StreamingResponse):
+    """StreamingJSONResponse class wrapper for langchain chains."""
+
+    @staticmethod
+    def _create_chain_executor(
+        chain: Chain, inputs: Union[dict[str, Any], Any], **callback_kwargs
+    ) -> Callable[[Send], Awaitable[Any]]:
+        async def wrapper(send: Send):
+            return await chain.acall(
+                inputs=inputs,
+                callbacks=[
+                    get_streaming_json_callback(chain, send=send, **callback_kwargs)
+                ],
+            )
+
+        return wrapper
