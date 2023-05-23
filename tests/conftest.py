@@ -2,7 +2,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 from fastapi import WebSocket
-from langchain.chains import LLMChain
+from langchain.chains.llm import LLMChain
 from starlette.types import Send
 
 from lanarky.schemas import Message, MessageType, Sender, WebsocketResponse
