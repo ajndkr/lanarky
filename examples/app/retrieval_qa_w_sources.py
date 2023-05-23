@@ -8,7 +8,7 @@ from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
-from lanarky.responses import StreamingResponse
+from lanarky.responses import StreamingJSONResponse, StreamingResponse
 from lanarky.testing import mount_gradio_app
 from lanarky.websockets import WebsocketConnection
 
@@ -58,6 +58,16 @@ async def chat(
     chain: RetrievalQAWithSourcesChain = Depends(retrieval_qa_chain),
 ) -> StreamingResponse:
     return StreamingResponse.from_chain(
+        chain, request.query, media_type="text/event-stream"
+    )
+
+
+@app.post("/chat_json")
+async def chat_json(
+    request: QueryRequest,
+    chain: RetrievalQAWithSourcesChain = Depends(retrieval_qa_chain),
+) -> StreamingResponse:
+    return StreamingJSONResponse.from_chain(
         chain, request.query, media_type="text/event-stream"
     )
 

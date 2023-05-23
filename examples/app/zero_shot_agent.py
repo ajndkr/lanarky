@@ -8,7 +8,7 @@ from langchain.agents import AgentExecutor, AgentType, initialize_agent, load_to
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
-from lanarky.responses import StreamingResponse
+from lanarky.responses import StreamingJSONResponse, StreamingResponse
 from lanarky.testing import mount_gradio_app
 from lanarky.websockets import WebsocketConnection
 
@@ -47,6 +47,16 @@ async def chat(
     agent: AgentExecutor = Depends(zero_shot_agent),
 ) -> StreamingResponse:
     return StreamingResponse.from_chain(
+        agent, request.query, media_type="text/event-stream"
+    )
+
+
+@app.post("/chat_json")
+async def chat_json(
+    request: QueryRequest,
+    agent: AgentExecutor = Depends(zero_shot_agent),
+) -> StreamingResponse:
+    return StreamingJSONResponse.from_chain(
         agent, request.query, media_type="text/event-stream"
     )
 
