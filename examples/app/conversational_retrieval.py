@@ -9,7 +9,7 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.chat_models import ChatOpenAI
 from pydantic import BaseModel
 
-from lanarky.responses import StreamingJSONResponse, StreamingResponse
+from lanarky.responses import StreamingResponse
 from lanarky.testing import mount_gradio_app
 
 load_dotenv()
@@ -87,6 +87,6 @@ async def chat_json(
     request: QueryRequest,
     chain: ConversationalRetrievalChain = Depends(conversational_retrieval_chain),
 ) -> StreamingResponse:
-    return StreamingJSONResponse.from_chain(
-        chain, request.query, media_type="text/event-stream"
+    return StreamingResponse.from_chain(
+        chain, request.query, as_json=True, media_type="text/event-stream"
     )
