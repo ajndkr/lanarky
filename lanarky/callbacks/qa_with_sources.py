@@ -1,7 +1,12 @@
-from lanarky.register import register_streaming_callback, register_websocket_callback
+from lanarky.register import (
+    register_streaming_callback,
+    register_streaming_json_callback,
+    register_websocket_callback,
+)
 
 from .retrieval_qa import (
     AsyncBaseRetrievalQAStreamingCallback,
+    AsyncBaseRetrievalQAStreamingJSONCallback,
     AsyncBaseRetrievalQAWebsocketCallback,
 )
 
@@ -24,6 +29,15 @@ class AsyncBaseQAWithSourcesChainWebsocketCallback(
     pass
 
 
+@register_streaming_json_callback("BaseQAWithSources")
+class AsyncBaseQAWithSourcesChainStreamingJSONCallback(
+    AsyncBaseRetrievalQAStreamingJSONCallback
+):
+    """AsyncStreamingJSONResponseCallback handler for BaseQAWithSources."""
+
+    pass
+
+
 @register_streaming_callback("QAWithSourcesChain")
 class AsyncQAWithSourcesChainStreamingCallback(
     AsyncBaseQAWithSourcesChainStreamingCallback
@@ -38,6 +52,15 @@ class AsyncQAWithSourcesChainWebsocketCallback(
     AsyncBaseQAWithSourcesChainWebsocketCallback
 ):
     """AsyncWebsocketCallback handler for QAWithSourcesChain."""
+
+    pass
+
+
+@register_streaming_json_callback("QAWithSourcesChain")
+class AsyncQAWithSourcesChainStreamingJSONCallback(
+    AsyncBaseQAWithSourcesChainStreamingJSONCallback
+):
+    """AsyncStreamingJSONResponseCallback handler for QAWithSourcesChain."""
 
     pass
 
@@ -60,6 +83,15 @@ class AsyncVectorDBQAWithSourcesChainWebsocketCallback(
     pass
 
 
+@register_streaming_json_callback("VectorDBQAWithSourcesChain")
+class AsyncVectorDBQAWithSourcesChainStreamingJSONCallback(
+    AsyncBaseQAWithSourcesChainStreamingJSONCallback
+):
+    """AsyncStreamingJSONResponseCallback handler for VectorDBQAWithSourcesChain."""
+
+    pass
+
+
 @register_streaming_callback("RetrievalQAWithSourcesChain")
 class AsyncRetrievalQAWithSourcesChainStreamingCallback(
     AsyncBaseQAWithSourcesChainStreamingCallback
@@ -78,6 +110,15 @@ class AsyncRetrievalQAWithSourcesChainWebsocketCallback(
     pass
 
 
+@register_streaming_json_callback("RetrievalQAWithSourcesChain")
+class AsyncRetrievalQAWithSourcesChainStreamingJSONCallback(
+    AsyncBaseQAWithSourcesChainStreamingJSONCallback
+):
+    """AsyncStreamingJSONResponseCallback handler for RetrievalQAWithSourcesChain."""
+
+    pass
+
+
 @register_streaming_callback("ConversationalRetrievalChain")
 class AsyncConversationalRetrievalChainStreamingCallback(
     AsyncBaseQAWithSourcesChainStreamingCallback
@@ -92,5 +133,14 @@ class AsyncConversationalRetrievalChainWebsocketCallback(
     AsyncBaseQAWithSourcesChainWebsocketCallback
 ):
     """AsyncWebsocketCallback handler for ConversationalRetrievalChain."""
+
+    pass
+
+
+@register_streaming_json_callback("ConversationalRetrievalChain")
+class AsyncConversationalRetrievalChainStreamingJSONCallback(
+    AsyncBaseQAWithSourcesChainStreamingJSONCallback
+):
+    """AsyncStreamingJSONResponseCallback handler for ConversationalRetrievalChain."""
 
     pass
