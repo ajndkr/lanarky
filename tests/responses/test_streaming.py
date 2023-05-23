@@ -4,7 +4,7 @@ import pytest
 from starlette.background import BackgroundTask
 
 from lanarky.callbacks import get_streaming_callback, get_streaming_json_callback
-from lanarky.responses import StreamingJSONResponse, StreamingResponse
+from lanarky.responses import StreamingResponse
 
 
 @pytest.fixture
@@ -88,8 +88,8 @@ async def test_stream_response_error(
 async def test_streaming_json_create_chain_executor(
     chain: MagicMock, inputs: dict[str, str], send
 ) -> None:
-    chain_executor = StreamingJSONResponse._create_chain_executor(
-        chain=chain, inputs=inputs
+    chain_executor = StreamingResponse._create_chain_executor(
+        chain=chain, inputs=inputs, as_json=True
     )
 
     assert callable(chain_executor)
