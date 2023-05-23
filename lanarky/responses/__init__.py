@@ -1,3 +1,3 @@
-from .streaming import StreamingJSONResponse, StreamingResponse
+from .streaming import StreamingResponse
 
-__all__ = ["StreamingResponse", "StreamingJSONResponse"]
+__all__ = ["StreamingResponse"]
