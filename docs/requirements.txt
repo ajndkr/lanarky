@@ -1,2 +1,5 @@
 furo==2023.3.27
 sphinx-autobuild==2021.3.14
+myst-parser==1.0.0
+sphinx-copybutton==0.5.2
+autodoc-pydantic==1.8.0
