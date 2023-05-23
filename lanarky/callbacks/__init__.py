@@ -13,10 +13,10 @@ from .base import (
     AsyncWebsocketCallback,
 )
 from .llm import *  # noqa: F401, F403
-from .qa_with_sources import *  # noqa: F401, F403
 from .retrieval_qa import *  # noqa: F401, F403
 
 ERROR_MESSAGE = """Error! Chain type '{chain_type}' is not currently supported by '{callable_name}'.
+Available chain types: {chain_types}
 
 To use a custom chain type, you must register a new callback handler.
 See the documentation for more details: https://lanarky.readthedocs.io/en/latest/advanced/custom_callbacks.html
@@ -34,7 +34,9 @@ def get_streaming_callback(
     except KeyError:
         raise KeyError(
             ERROR_MESSAGE.format(
-                chain_type=chain_type, callable_name="AsyncStreamingResponseCallback"
+                chain_type=chain_type,
+                callable_name="AsyncStreamingResponseCallback",
+                chain_types="\n".join(list(STREAMING_CALLBACKS.keys())),
             )
         )
 
@@ -48,7 +50,9 @@ def get_websocket_callback(chain: Chain, *args, **kwargs) -> AsyncWebsocketCallb
     except KeyError:
         raise KeyError(
             ERROR_MESSAGE.format(
-                chain_type=chain_type, callable_name="AsyncWebsocketCallback"
+                chain_type=chain_type,
+                callable_name="AsyncWebsocketCallback",
+                chain_types="\n".join(list(WEBSOCKET_CALLBACKS.keys())),
             )
         )
 
@@ -66,5 +70,6 @@ def get_streaming_json_callback(
             ERROR_MESSAGE.format(
                 chain_type=chain_type,
                 callable_name="AsyncStreamingJSONResponseCallback",
+                chain_types="\n".join(list(STREAMING_JSON_CALLBACKS.keys())),
             )
         )

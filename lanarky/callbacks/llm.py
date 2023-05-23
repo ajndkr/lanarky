@@ -13,8 +13,10 @@ from .base import (
     AsyncWebsocketCallback,
 )
 
+SUPPORTED_CHAINS = ["LLMChain", "ConversationChain"]
 
-@register_streaming_callback("LLMChain")
+
+@register_streaming_callback(SUPPORTED_CHAINS)
 class AsyncLLMChainStreamingCallback(AsyncStreamingResponseCallback):
     """AsyncStreamingResponseCallback handler for LLMChain."""
 
@@ -24,7 +26,7 @@ class AsyncLLMChainStreamingCallback(AsyncStreamingResponseCallback):
         await self.send(message)
 
 
-@register_websocket_callback("LLMChain")
+@register_websocket_callback(SUPPORTED_CHAINS)
 class AsyncLLMChainWebsocketCallback(AsyncWebsocketCallback):
     """AsyncWebsocketCallback handler for LLMChain."""
 
@@ -34,7 +36,7 @@ class AsyncLLMChainWebsocketCallback(AsyncWebsocketCallback):
         await self.websocket.send_json(message)
 
 
-@register_streaming_json_callback("LLMChain")
+@register_streaming_json_callback(SUPPORTED_CHAINS)
 class AsyncLLMChainStreamingJSONCallback(AsyncStreamingJSONResponseCallback):
     """AsyncStreamingJSONResponseCallback handler for LLMChain."""
 
@@ -42,24 +44,3 @@ class AsyncLLMChainStreamingJSONCallback(AsyncStreamingJSONResponseCallback):
         """Run on new LLM token. Only available when streaming is enabled."""
         message = self._construct_message(StreamingJSONResponse(token=token))
         await self.send(message)
-
-
-@register_streaming_callback("ConversationChain")
-class AsyncConversationChainStreamingCallback(AsyncLLMChainStreamingCallback):
-    """AsyncStreamingResponseCallback handler for ConversationChain."""
-
-    pass
-
-
-@register_websocket_callback("ConversationChain")
-class AsyncConversationChainWebsocketCallback(AsyncLLMChainWebsocketCallback):
-    """AsyncWebsocketCallback handler for ConversationChain."""
-
-    pass
-
-
-@register_streaming_json_callback("ConversationChain")
-class AsyncConversationChainStreamingJSONCallback(AsyncLLMChainStreamingJSONCallback):
-    """AsyncStreamingJSONResponseCallback handler for ConversationChain."""
-
-    pass

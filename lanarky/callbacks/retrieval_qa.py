@@ -13,12 +13,22 @@ from .llm import (
     AsyncLLMChainWebsocketCallback,
 )
 
+SUPPORTED_CHAINS = [
+    "RetrievalQA",
+    "ConversationRetrievalQA",
+    "VectorDBQA",
+    "QAWithSourcesChain",
+    "VectorDBQAWithSourcesChain",
+    "RetrievalQAWithSourcesChain",
+    "ConversationalRetrievalChain",
+]
 SOURCE_DOCUMENT_TEMPLATE = """
 page content: {page_content}
 {document_metadata}
 """
 
 
+@register_streaming_callback(SUPPORTED_CHAINS)
 class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
     """AsyncStreamingResponseCallback handler for BaseRetrievalQA."""
 
@@ -42,6 +52,7 @@ class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
                 await self.send(message)
 
 
+@register_websocket_callback(SUPPORTED_CHAINS)
 class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
     """AsyncWebsocketCallback handler for BaseRetrievalQA."""
 
@@ -65,6 +76,7 @@ class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
                 await self.websocket.send_json(message)
 
 
+@register_streaming_json_callback(SUPPORTED_CHAINS)
 class AsyncBaseRetrievalQAStreamingJSONCallback(AsyncLLMChainStreamingJSONCallback):
     """AsyncStreamingJSONResponseCallback handler for BaseRetrievalQA."""
 
@@ -78,45 +90,3 @@ class AsyncBaseRetrievalQAStreamingJSONCallback(AsyncLLMChainStreamingJSONCallba
                 BaseRetrievalQAStreamingJSONResponse(source_documents=source_documents)
             )
             await self.send(message)
-
-
-@register_streaming_callback("RetrievalQA")
-class AsyncRetrievalQAStreamingCallback(AsyncBaseRetrievalQAStreamingCallback):
-    """AsyncStreamingResponseCallback handler for RetrievalQA."""
-
-    pass
-
-
-@register_websocket_callback("RetrievalQA")
-class AsyncRetrievalQAWebsocketCallback(AsyncBaseRetrievalQAWebsocketCallback):
-    """AsyncWebsocketCallback handler for RetrievalQA."""
-
-    pass
-
-
-@register_streaming_json_callback("RetrievalQA")
-class AsyncRetrievalQAStreamingJSONCallback(AsyncBaseRetrievalQAStreamingJSONCallback):
-    """AsyncStreamingJSONResponseCallback handler for RetrievalQA."""
-
-    pass
-
-
-@register_streaming_callback("VectorDBQA")
-class AsyncVectorDBQAStreamingCallback(AsyncBaseRetrievalQAStreamingCallback):
-    """AsyncStreamingResponseCallback handler for VectorDBQA."""
-
-    pass
-
-
-@register_websocket_callback("VectorDBQA")
-class AsyncVectorDBQAWebsocketCallback(AsyncBaseRetrievalQAWebsocketCallback):
-    """AsyncWebsocketCallback handler for VectorDBQA."""
-
-    pass
-
-
-@register_streaming_json_callback("VectorDBQA")
-class AsyncVectorDBQAStreamingJSONCallback(AsyncBaseRetrievalQAStreamingJSONCallback):
-    """AsyncStreamingJSONResponseCallback handler for VectorDBQA."""
-
-    pass
