@@ -4,8 +4,10 @@ import pytest
 
 from lanarky.callbacks.retrieval_qa import (
     AsyncBaseRetrievalQAStreamingCallback,
+    AsyncBaseRetrievalQAStreamingJSONCallback,
     AsyncBaseRetrievalQAWebsocketCallback,
 )
+from lanarky.schemas import BaseRetrievalQAStreamingJSONResponse
 
 
 @pytest.fixture
@@ -21,7 +23,7 @@ def outputs():
 @pytest.fixture
 def messages():
     return [
-        "\n\nSOURCE DOCUMENTS: \n",
+        "\n\nSOURCE DOCUMENTS:\n",
         "\npage content: Page 1 content\nsource: Source 1\n",
         "\npage content: Page 2 content\nsource: Source 2\n",
     ]
@@ -40,12 +42,27 @@ async def test_streaming_on_chain_end(send, outputs, messages):
 
 @pytest.mark.asyncio
 async def test_websocket_on_chain_end(websocket, bot_response, outputs, messages):
-    ws_callback = AsyncBaseRetrievalQAWebsocketCallback(
+    callback = AsyncBaseRetrievalQAWebsocketCallback(
         websocket=websocket,
         response=bot_response,
     )
-    await ws_callback.on_chain_end(outputs)
+    await callback.on_chain_end(outputs)
 
-    ws_callback.websocket.send_json.assert_has_calls(
-        [call(ws_callback._construct_message(message)) for message in messages]
+    callback.websocket.send_json.assert_has_calls(
+        [call(callback._construct_message(message)) for message in messages]
+    )
+
+
+@pytest.mark.asyncio
+async def test_streaming_json_on_chain_end(send, outputs):
+    callback = AsyncBaseRetrievalQAStreamingJSONCallback(send=send)
+
+    await callback.on_chain_end(outputs)
+
+    source_documents = [document.dict() for document in outputs["source_documents"]]
+
+    callback.send.assert_awaited_once_with(
+        callback._construct_message(
+            BaseRetrievalQAStreamingJSONResponse(source_documents=source_documents)
+        )
     )
