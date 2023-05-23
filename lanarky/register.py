@@ -20,6 +20,7 @@ def register(key: str, _registry: Dict[str, Tuple[Any, List[str]]]) -> Any:
 
 STREAMING_CALLBACKS: Dict[str, Any] = {}
 WEBSOCKET_CALLBACKS: Dict[str, Any] = {}
+STREAMING_JSON_CALLBACKS: Dict[str, Any] = {}
 
 
 def register_streaming_callback(key: str) -> Callable:
@@ -37,6 +38,16 @@ def register_websocket_callback(key: str) -> Callable:
 
     def _register_cls(cls: Any) -> Callable:
         register(key, WEBSOCKET_CALLBACKS)(cls=cls)
+        return cls
+
+    return _register_cls
+
+
+def register_streaming_json_callback(key: str) -> Callable:
+    """Register an streaming json callback handler."""
+
+    def _register_cls(cls: Any) -> Callable:
+        register(key, STREAMING_JSON_CALLBACKS)(cls=cls)
         return cls
 
     return _register_cls
