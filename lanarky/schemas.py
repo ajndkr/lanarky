@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Union
+from typing import Any, Union
 
 from pydantic import BaseModel
 
@@ -29,3 +29,11 @@ class WebsocketResponse(BaseModel):
 
     class Config:
         use_enum_values = True
+
+
+class StreamingJSONResponse(BaseModel):
+    token: str = ""
+
+
+class BaseRetrievalQAStreamingJSONResponse(StreamingJSONResponse):
+    source_documents: list[dict[str, Any]]
