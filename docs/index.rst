@@ -12,8 +12,8 @@ Welcome to Lanarky
    :caption: Basic
    :hidden:
 
-   features
-   getting_started
+   basic/features
+   basic/getting_started
 
 .. toctree::
    :maxdepth: 1
