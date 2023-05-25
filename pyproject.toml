@@ -27,6 +27,7 @@ sphinx-autobuild = "^2021.3.14"
 myst-parser = "^1.0.0"
 sphinx-copybutton = "^0.5.2"
 autodoc-pydantic = "^1.8.0"
+toml = "^0.10.2"
 
 
 [tool.poetry.group.tests.dependencies]

@@ -6,10 +6,19 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import toml
+
+
+def get_poetry_version():
+    with open("pyproject.toml", "r") as f:
+        pyproject = toml.load(f)
+    return pyproject["tool"]["poetry"]["version"]
+
+
 project = "Lanarky"
 copyright = "2023, Ajinkya Indulkar"
 author = "Ajinkya Indulkar"
-release = "v0.6.5"
+release = f"v{get_poetry_version()}"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
