@@ -1,3 +1,5 @@
+from typing import Any, Optional
+
 from langchain.chains.base import Chain
 
 from lanarky.register import (
@@ -24,52 +26,69 @@ See the documentation for more details: https://lanarky.readthedocs.io/en/latest
 
 
 def get_streaming_callback(
-    chain: Chain, *args, **kwargs
+    chain: Chain, override: Optional[str] = None, *args, **kwargs
 ) -> AsyncStreamingResponseCallback:
     """Get the streaming callback for the given chain type."""
-    chain_type = chain.__class__.__name__
-    try:
-        callback = STREAMING_CALLBACKS[chain_type]
-        return callback(*args, **kwargs)
-    except KeyError:
-        raise KeyError(
-            ERROR_MESSAGE.format(
-                chain_type=chain_type,
-                callable_name="AsyncStreamingResponseCallback",
-                chain_types="\n".join(list(STREAMING_CALLBACKS.keys())),
-            )
-        )
+    return _get_callback(
+        chain,
+        override,
+        STREAMING_CALLBACKS,
+        "AsyncStreamingResponseCallback",
+        *args,
+        **kwargs
+    )
 
 
-def get_websocket_callback(chain: Chain, *args, **kwargs) -> AsyncWebsocketCallback:
+def get_websocket_callback(
+    chain: Chain, override: Optional[str] = None, *args, **kwargs
+) -> AsyncWebsocketCallback:
     """Get the websocket callback for the given chain type."""
-    chain_type = chain.__class__.__name__
-    try:
-        callback = WEBSOCKET_CALLBACKS[chain_type]
-        return callback(*args, **kwargs)
-    except KeyError:
-        raise KeyError(
-            ERROR_MESSAGE.format(
-                chain_type=chain_type,
-                callable_name="AsyncWebsocketCallback",
-                chain_types="\n".join(list(WEBSOCKET_CALLBACKS.keys())),
-            )
-        )
+    return _get_callback(
+        chain, override, WEBSOCKET_CALLBACKS, "AsyncWebsocketCallback", *args, **kwargs
+    )
 
 
 def get_streaming_json_callback(
-    chain: Chain, *args, **kwargs
+    chain: Chain, override: Optional[str] = None, *args, **kwargs
 ) -> AsyncStreamingJSONResponseCallback:
     """Get the streaming JSON callback for the given chain type."""
-    chain_type = chain.__class__.__name__
+    return _get_callback(
+        chain,
+        override,
+        STREAMING_JSON_CALLBACKS,
+        "AsyncStreamingJSONResponseCallback",
+        *args,
+        **kwargs
+    )
+
+
+def _get_callback(
+    chain: Chain,
+    override: Optional[str],
+    callback_registry: dict[str, Any],
+    callable_name: str,
+    *args,
+    **kwargs
+):
+    """Base function for getting a callback from a registry.
+
+    Args:
+        chain: The chain to get the callback for.
+        override: The name of the chain type to use instead of the chain's type.
+        callback_registry: The registry to get the callback from.
+        callable_name: The name of the callable to use in the error message.
+        *args: Positional arguments to pass to the callback.
+        **kwargs: Keyword arguments to pass to the callback.
+    """
+    chain_type = override or chain.__class__.__name__
     try:
-        callback = STREAMING_JSON_CALLBACKS[chain_type]
+        callback = callback_registry[chain_type]
         return callback(*args, **kwargs)
     except KeyError:
         raise KeyError(
             ERROR_MESSAGE.format(
                 chain_type=chain_type,
-                callable_name="AsyncStreamingJSONResponseCallback",
-                chain_types="\n".join(list(STREAMING_JSON_CALLBACKS.keys())),
+                callable_name=callable_name,
+                chain_types="\n".join(list(callback_registry.keys())),
             )
         )

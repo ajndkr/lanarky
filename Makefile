@@ -19,3 +19,6 @@ pre-commit:	## run pre-commit hooks
 
 build-docs:	## build documentation
 	poetry run sphinx-autobuild -b html --host 0.0.0.0 --port 8000 docs docs/_build/html
+
+clean-docs: ## clean documentation
+	rm -rf docs/_build

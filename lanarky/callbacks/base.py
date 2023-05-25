@@ -49,7 +49,7 @@ class AsyncWebsocketCallback(AsyncLanarkyCallback):
 
     def _construct_message(self, content: str) -> dict:
         """Construct a WebsocketResponse from a string."""
-        return {**self.response.dict(), **{"message": content.encode("utf-8")}}
+        return {**self.response.dict(), **{"message": content}}
 
 
 class AsyncStreamingJSONResponseCallback(AsyncStreamingResponseCallback):
