@@ -78,6 +78,12 @@ before running the examples.
 - [ ] Add support for [LlamaIndex](https://github.com/jerryjliu/llama_index)
 - [ ] Add [GPTCache](https://github.com/zilliztech/GPTCache) integration
 
+## 🤩 Stargazers
+
+Leave a ⭐ if you find this project useful.
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ajndkr/lanarky&type=Date)](https://star-history.com/#ajndkr/lanarky&Date)
+
 ## 🤝 Contributing
 
 [![Code check](https://github.com/ajndkr/lanarky/actions/workflows/code-check.yaml/badge.svg)](https://github.com/ajndkr/lanarky/actions/workflows/code-check.yaml)
@@ -87,6 +93,14 @@ Contributions are more than welcome! If you have an idea for a new feature or wa
 please create an issue or submit a pull request on [GitHub](https://github.com/ajndkr/lanarky).
 
 See [CONTRIBUTING.md](https://github.com/ajndkr/lanarky/blob/main/CONTRIBUTING.md) for more information.
+
+### Contributors
+
+[![](https://img.shields.io/github/contributors-anon/ajndkr/lanarky)](https://github.com/ajndkr/lanarky/graphs/contributors)
+
+<a href="https://github.com/ajndkr/lanarky/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ajndkr/lanarky" />
+</a>
 
 ## ⚖️ License
 
