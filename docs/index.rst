@@ -9,19 +9,18 @@ Welcome to Lanarky
 .. toctree::
    :maxdepth: 1
    :name: basic
-   :caption: Basic
    :hidden:
 
-   basic/features
-   basic/getting_started
+   features
+   getting_started
 
 .. toctree::
    :maxdepth: 1
-   :name: advanced
-   :caption: Advanced
+   :name: frameworks
+   :caption: Supported Frameworks
    :hidden:
 
-   advanced/custom_callbacks
+   langchain/index
 
 .. toctree::
    :maxdepth: 2
