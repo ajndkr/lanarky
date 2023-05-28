@@ -17,7 +17,7 @@ coverage:	## run unit tests with coverage
 pre-commit:	## run pre-commit hooks
 	poetry run pre-commit run --all-files
 
-build-docs:	## build documentation
+build-docs: clean-docs	## build documentation
 	poetry run sphinx-autobuild -b html --host 0.0.0.0 --port 8000 docs docs/_build/html
 
 clean-docs: ## clean documentation

@@ -5,11 +5,11 @@
 <h1> Lanarky </h1>
 
 [![stars](https://img.shields.io/github/stars/ajndkr/lanarky)](https://github.com/ajndkr/lanarky/stargazers)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/lanarky/blob/main/LICENSE)
-[![PyPI version](https://badge.fury.io/py/lanarky.svg)](https://pypi.org/project/lanarky/)
-[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-3916/)
-[![Code Coverage](https://coveralls.io/repos/github/ajndkr/lanarky/badge.svg?branch=main)](https://coveralls.io/github/ajndkr/lanarky?branch=main)
 [![Documentation](https://img.shields.io/badge/documentation-ReadTheDocs-blue.svg)](https://lanarky.readthedocs.io/en/latest/)
+[![PyPI version](https://badge.fury.io/py/lanarky.svg)](https://pypi.org/project/lanarky/)
+![Supported Python Versions](https://img.shields.io/pypi/pyversions/lanarky.svg)
+[![Code Coverage](https://coveralls.io/repos/github/ajndkr/lanarky/badge.svg?branch=main)](https://coveralls.io/github/ajndkr/lanarky?branch=main)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/lanarky/blob/main/LICENSE)
 
 </div>
 
@@ -40,29 +40,29 @@ pip install lanarky
 
 You can find the full documentation at [https://lanarky.readthedocs.io/en/latest/](https://lanarky.readthedocs.io/en/latest/).
 
-## 🔥 Deploy a simple Langchain application in under 20 lines of code
+## 🔥 Build your first Langchain app
 
 ```python
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from langchain import ConversationChain
 from langchain.chat_models import ChatOpenAI
-from pydantic import BaseModel
-from lanarky.responses import StreamingResponse
+
+from lanarky.routing import LangchainRouter
 
 load_dotenv()
 app = FastAPI()
 
-class Request(BaseModel):
-    query: str
-
-@app.post("/chat")
-async def chat(request: Request) -> StreamingResponse:
-    chain = ConversationChain(llm=ChatOpenAI(temperature=0, streaming=True), verbose=True)
-    return StreamingResponse.from_chain(chain, request.query, media_type="text/event-stream")
+langchain_router = LangchainRouter(
+    langchain_object=ConversationChain(
+        llm=ChatOpenAI(temperature=0), verbose=True
+    )
+)
+app.include_router(langchain_router)
 ```
 
-See [`examples/`](https://github.com/ajndkr/lanarky/blob/main/examples/README.md) for list of available demo examples.
+See [`examples/`](https://github.com/ajndkr/lanarky/blob/main/examples/README.md)
+for list of available demo examples.
 
 Create a `.env` file using `.env.sample` and add your OpenAI API key to it
 before running the examples.

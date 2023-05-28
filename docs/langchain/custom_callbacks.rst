@@ -1,4 +1,4 @@
-Langchain: Register Custom Callbacks
+Advanced: Register Custom Callbacks
 =====================================
 
 Lanarky auto-detects the required callback handler based on input chain type using a callback registry.
