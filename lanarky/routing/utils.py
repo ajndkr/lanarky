@@ -2,11 +2,12 @@ from enum import IntEnum
 from functools import lru_cache
 from typing import Type
 
-from fastapi import Depends, params
+from fastapi import Depends, WebSocket, params
 from langchain.chains.base import Chain
 from pydantic import BaseModel, create_model
 
 from lanarky.responses import StreamingResponse
+from lanarky.websockets import WebsocketConnection
 
 
 class StreamingMode(IntEnum):
@@ -96,7 +97,10 @@ def create_langchain_streaming_json_endpoint(
 
 
 def create_langchain_endpoint(
-    endpoint_request, langchain_dependency, response_model, streaming_mode
+    endpoint_request: BaseModel,
+    langchain_dependency: params.Depends,
+    response_model: BaseModel,
+    streaming_mode: StreamingMode,
 ):
     """Creates a Langchain endpoint."""
     if streaming_mode == StreamingMode.OFF:
@@ -113,5 +117,21 @@ def create_langchain_endpoint(
         )
     else:
         raise ValueError(f"Invalid streaming mode: {streaming_mode}")
+
+    return endpoint
+
+
+def create_langchain_websocket_endpoint(
+    websocket: Type[WebSocket], langchain_dependency: params.Depends
+):
+    async def endpoint(
+        websocket: websocket,
+        langchain_object: Chain = langchain_dependency,
+    ) -> None:
+        """Websocket chat endpoint."""
+        connection = WebsocketConnection.from_chain(
+            chain=langchain_object, websocket=websocket
+        )
+        await connection.connect()
 
     return endpoint

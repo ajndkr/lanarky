@@ -1,12 +1,14 @@
 from typing import Any, Optional, Type
 
 from fastapi.routing import APIRouter
+from fastapi.websockets import WebSocket
 from langchain.chains.base import Chain
 
 from .utils import (
     StreamingMode,
     create_langchain_dependency,
     create_langchain_endpoint,
+    create_langchain_websocket_endpoint,
     create_request_from_langchain_dependency,
     create_response_model_from_langchain_dependency,
 )
@@ -75,5 +77,17 @@ class LangchainRouter(APIRouter):
             methods=methods,
             **kwargs,
         )
+
+        self.langchain_dependencies.append(langchain_dependency)
+
+    def add_langchain_api_websocket_route(self, url: str, langchain_object: Chain):
+        """Adds a Langchain API websocket route to the router."""
+        langchain_dependency = create_langchain_dependency(langchain_object)
+        endpoint = create_langchain_websocket_endpoint(
+            WebSocket,
+            langchain_dependency,
+        )
+
+        self.add_api_websocket_route(url, endpoint)
 
         self.langchain_dependencies.append(langchain_dependency)
