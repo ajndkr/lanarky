@@ -16,6 +16,12 @@ class StreamingMode(IntEnum):
     JSON = 2
 
 
+class LLMCacheMode(IntEnum):
+    OFF = 0
+    IN_MEMORY = 1
+    REDIS = 2
+
+
 def create_langchain_dependency(langchain_object: Type[Chain]) -> params.Depends:
     """Creates a langchain object dependency."""
 
