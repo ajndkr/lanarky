@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 from langchain.chains import ConversationChain
 
-from lanarky.routing import LangchainRouter
+from lanarky.routing import LangchainRouter, LLMCacheMode
 
 
 @pytest.fixture
@@ -19,6 +19,8 @@ def test_langchain_router_init():
     assert router.langchain_url is None
     assert router.langchain_endpoint_kwargs == {}
     assert router.langchain_dependencies == []
+    assert router.llm_cache_mode is None
+    assert router.llm_cache_kwargs == {}
 
 
 def test_langchain_router_add_routes(chain):
@@ -56,3 +58,18 @@ def test_langchain_router_add_routes(chain):
     assert router.routes[2].path == "/chat"
     assert router.routes[2].response_model is None
     assert "LangchainRequest" in router.routes[2].body_field.type_.schema()["title"]
+
+
+def test_langchain_router_enable_llm_cache(chain):
+    router = LangchainRouter(
+        langchain_url="/chat",
+        langchain_object=chain,
+        streaming_mode=0,
+        llm_cache_mode=1,
+    )
+
+    assert router.llm_cache_mode == LLMCacheMode.IN_MEMORY
+
+    import langchain
+
+    assert langchain.llm_cache is not None

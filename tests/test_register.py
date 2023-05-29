@@ -5,10 +5,10 @@ import pytest
 from lanarky.register import (
     STREAMING_CALLBACKS,
     WEBSOCKET_CALLBACKS,
-    register,
     register_streaming_callback,
     register_websocket_callback,
 )
+from lanarky.register.base import register
 
 
 @pytest.fixture
