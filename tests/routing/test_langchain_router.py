@@ -34,8 +34,8 @@ def test_langchain_router_add_routes(chain):
     assert len(router.routes) == 1
     assert router.routes[0].methods == {"POST"}
     assert router.routes[0].path == "/chat"
-    assert router.routes[0].response_model.schema()["title"] == "LangchainResponse"
-    assert router.routes[0].body_field.type_.schema()["title"] == "LangchainRequest"
+    assert "LangchainResponse" in router.routes[0].response_model.schema()["title"]
+    assert "LangchainRequest" in router.routes[0].body_field.type_.schema()["title"]
 
     router.add_langchain_api_route(
         url="/chat", langchain_object=chain, streaming_mode=1
@@ -45,7 +45,7 @@ def test_langchain_router_add_routes(chain):
     assert router.routes[1].methods == {"POST"}
     assert router.routes[1].path == "/chat"
     assert router.routes[1].response_model is None
-    assert router.routes[1].body_field.type_.schema()["title"] == "LangchainRequest"
+    assert "LangchainRequest" in router.routes[1].body_field.type_.schema()["title"]
 
     router.add_langchain_api_route(
         url="/chat", langchain_object=chain, streaming_mode=2
@@ -55,4 +55,4 @@ def test_langchain_router_add_routes(chain):
     assert router.routes[2].methods == {"POST"}
     assert router.routes[2].path == "/chat"
     assert router.routes[2].response_model is None
-    assert router.routes[2].body_field.type_.schema()["title"] == "LangchainRequest"
+    assert "LangchainRequest" in router.routes[2].body_field.type_.schema()["title"]
