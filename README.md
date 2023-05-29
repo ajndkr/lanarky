@@ -54,10 +54,12 @@ load_dotenv()
 app = FastAPI()
 
 langchain_router = LangchainRouter(
+    url="/chat",
     langchain_object=ConversationChain(
         llm=ChatOpenAI(temperature=0), verbose=True
-    )
-)
+    ),
+    streaming_mode=0
+  )
 app.include_router(langchain_router)
 ```
 
