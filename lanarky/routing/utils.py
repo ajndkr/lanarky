@@ -20,6 +20,7 @@ class LLMCacheMode(IntEnum):
     OFF = 0
     IN_MEMORY = 1
     REDIS = 2
+    GPTCACHE = 3
 
 
 def create_langchain_dependency(langchain_object: Type[Chain]) -> params.Depends:

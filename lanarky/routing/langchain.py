@@ -66,16 +66,40 @@ class LangchainRouter(APIRouter):
 
         elif self.llm_cache_mode == LLMCacheMode.REDIS:
             try:
-                from redis import Redis
+                from redis import Redis  # type: ignore
             except ImportError:
                 raise ImportError(
-                    "Redis is not installed. Install it with `pip install redis`."
+                    """Redis is not installed. Install it with `pip install "lanarky[redis]"`."""
                 )
             from langchain.cache import RedisCache
 
             langchain.llm_cache = RedisCache(
                 redis_=Redis.from_url(**self.llm_cache_kwargs)
             )
+
+        elif self.llm_cache_mode == LLMCacheMode.GPTCACHE:
+            try:
+                from gptcache import Cache  # type: ignore
+                from gptcache.manager.factory import manager_factory  # type: ignore
+                from gptcache.processor.pre import get_prompt  # type: ignore
+            except ImportError:
+                raise ImportError(
+                    """GPTCache is not installed. Install it with `pip install "lanarky[gptcache]"`."""
+                )
+            import hashlib
+
+            from langchain.cache import GPTCache
+
+            def init_gptcache(cache_obj: Cache, llm: str):
+                hashed_llm = hashlib.sha256(llm.encode()).hexdigest()
+                cache_obj.init(
+                    pre_embedding_func=get_prompt,
+                    data_manager=manager_factory(
+                        manager="map", data_dir=f"map_cache_{hashed_llm}"
+                    ),
+                )
+
+            langchain.llm_cache = GPTCache(init_gptcache)
 
         else:
             raise ValueError(f"Invalid LLM cache mode: {self.llm_cache_mode}")
