@@ -7,6 +7,7 @@ from fastapi.websockets import WebSocket
 from langchain.chains.base import Chain
 
 from .utils import (
+    LLMCacheMode,
     StreamingMode,
     create_langchain_dependency,
     create_langchain_endpoint,
@@ -24,6 +25,8 @@ class LangchainRouter(APIRouter):
         langchain_object: Optional[Type[Chain]] = None,
         langchain_endpoint_kwargs: Optional[dict[str, Any]] = None,
         streaming_mode: Optional[StreamingMode] = None,
+        llm_cache_mode: Optional[LLMCacheMode] = None,
+        llm_cache_kwargs: Optional[dict[str, Any]] = None,
         **kwargs,
     ):
         super().__init__(**kwargs)
@@ -32,6 +35,8 @@ class LangchainRouter(APIRouter):
         self.langchain_object = langchain_object
         self.langchain_endpoint_kwargs = langchain_endpoint_kwargs or {}
         self.streaming_mode = streaming_mode
+        self.llm_cache_mode = llm_cache_mode
+        self.llm_cache_kwargs = llm_cache_kwargs or {}
 
         self.langchain_dependencies = []
 
@@ -39,13 +44,65 @@ class LangchainRouter(APIRouter):
 
     def setup(self) -> None:
         """Sets up the Langchain router."""
-        if self.langchain_url:
+        if self.langchain_url is not None:
             self.add_langchain_api_route(
                 self.langchain_url,
                 self.langchain_object,
                 self.streaming_mode,
                 **self.langchain_endpoint_kwargs,
             )
+
+        if self.llm_cache_mode is not None:
+            self.setup_llm_cache()
+
+    def setup_llm_cache(self) -> None:
+        """Sets up the LLM cache."""
+        import langchain
+
+        if self.llm_cache_mode == LLMCacheMode.IN_MEMORY:
+            from langchain.cache import InMemoryCache
+
+            langchain.llm_cache = InMemoryCache()
+
+        elif self.llm_cache_mode == LLMCacheMode.REDIS:
+            try:
+                from redis import Redis  # type: ignore
+            except ImportError:
+                raise ImportError(
+                    """Redis is not installed. Install it with `pip install "lanarky[redis]"`."""
+                )
+            from langchain.cache import RedisCache
+
+            langchain.llm_cache = RedisCache(
+                redis_=Redis.from_url(**self.llm_cache_kwargs)
+            )
+
+        elif self.llm_cache_mode == LLMCacheMode.GPTCACHE:
+            try:
+                from gptcache import Cache  # type: ignore
+                from gptcache.manager.factory import manager_factory  # type: ignore
+                from gptcache.processor.pre import get_prompt  # type: ignore
+            except ImportError:
+                raise ImportError(
+                    """GPTCache is not installed. Install it with `pip install "lanarky[gptcache]"`."""
+                )
+            import hashlib
+
+            from langchain.cache import GPTCache
+
+            def init_gptcache(cache_obj: Cache, llm: str):
+                hashed_llm = hashlib.sha256(llm.encode()).hexdigest()
+                cache_obj.init(
+                    pre_embedding_func=get_prompt,
+                    data_manager=manager_factory(
+                        manager="map", data_dir=f"map_cache_{hashed_llm}"
+                    ),
+                )
+
+            langchain.llm_cache = GPTCache(init_gptcache)
+
+        else:
+            raise ValueError(f"Invalid LLM cache mode: {self.llm_cache_mode}")
 
     def add_langchain_api_route(
         self,

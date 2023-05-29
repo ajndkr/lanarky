@@ -16,6 +16,8 @@ langchain = ">=0.0.183"
 urllib3 = "<=1.26.15"  # added due to poetry errors
 python-dotenv = "^1.0.0"
 typing-extensions = "4.5.0"  # added due to https://github.com/hwchase17/langchain/issues/5113
+redis = {version = "^4.5.5", optional = true}
+gptcache = {version = "^0.1.28", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.1"
@@ -35,6 +37,10 @@ pytest = "^7.3.1"
 pytest-cov = "^4.0.0"
 pytest-asyncio = "^0.21.0"
 coveralls = "^3.3.1"
+
+[tool.poetry.extras]
+redis = ["redis"]
+gptcache = ["gptcache"]
 
 [build-system]
 requires = ["poetry-core"]

@@ -12,4 +12,5 @@ your Langchain application.
    :maxdepth: 1
 
    deploy
+   cache
    custom_callbacks

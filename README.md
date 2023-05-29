@@ -75,10 +75,10 @@ before running the examples.
 
 - [x] Add support for [LangChain](https://github.com/hwchase17/langchain)
 - [x] Add [Gradio](https://github.com/gradio-app/gradio) UI for fast prototyping
-- [ ] Add SQL database integration
-- [ ] Add support for [Guardrails](https://github.com/ShreyaR/guardrails)
+- [x] Add support for in-memory, Redis and [GPTCache](https://github.com/zilliztech/GPTCache) LLM caching
 - [ ] Add support for [LlamaIndex](https://github.com/jerryjliu/llama_index)
-- [ ] Add [GPTCache](https://github.com/zilliztech/GPTCache) integration
+- [ ] Add SQL database integration
+- [ ] Add support for [Rebuff](https://github.com/woop/rebuff)
 
 ## 🤩 Stargazers
 
