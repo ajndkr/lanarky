@@ -19,7 +19,7 @@ To better understand ``LangchainRouter``, let's break down the example below:
     app = FastAPI()
 
     langchain_router = LangchainRouter(
-        url="/chat",
+        langchain_url="/chat",
         langchain_object=ConversationChain(
             llm=ChatOpenAI(temperature=0),
             verbose=True
@@ -46,7 +46,7 @@ Here's an example:
     app = FastAPI()
 
     langchain_router = LangchainRouter(
-        url="/chat",
+        langchain_url="/chat",
         langchain_object=ConversationChain(
             llm=ChatOpenAI(temperature=0, streaming=True),
             verbose=True

@@ -27,21 +27,25 @@ def create_langchain_dependency(langchain_object: Type[Chain]) -> params.Depends
 
 
 def create_request_from_langchain_dependency(
-    langchain_dependency: params.Depends,
+    langchain_dependency: params.Depends, name_prefix: str = ""
 ) -> Type[BaseModel]:
     langchain_object: Chain = langchain_dependency.dependency()
+    model_name = name_prefix + "LangchainRequest"
     return create_model(
-        "LangchainRequest", **{key: (str, "") for key in langchain_object.input_keys}
+        model_name,
+        **{key: (str, "") for key in langchain_object.input_keys},
     )
 
 
 def create_response_model_from_langchain_dependency(
-    langchain_dependency: params.Depends,
+    langchain_dependency: params.Depends, name_prefix: str = ""
 ) -> Type[BaseModel]:
     """Creates a response model from a langchain dependency."""
     langchain_object: Chain = langchain_dependency.dependency()
+    model_name = name_prefix + "LangchainResponse"
     return create_model(
-        "LangchainResponse", **{key: (str, "") for key in langchain_object.output_keys}
+        model_name,
+        **{key: (str, "") for key in langchain_object.output_keys},
     )
 
 

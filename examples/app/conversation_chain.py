@@ -1,62 +1,28 @@
-from functools import lru_cache
-from typing import Callable
-
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, Request, WebSocket
+from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from langchain import ConversationChain
 from langchain.chat_models import ChatOpenAI
-from pydantic import BaseModel
 
-from lanarky.responses import StreamingResponse
+from lanarky.routing import LangchainRouter
 from lanarky.testing import mount_gradio_app
-from lanarky.websockets import WebsocketConnection
 
 load_dotenv()
 
+
+def create_chain():
+    return ConversationChain(
+        llm=ChatOpenAI(
+            temperature=0,
+            streaming=True,
+        ),
+        verbose=True,
+    )
+
+
 app = mount_gradio_app(FastAPI(title="ConversationChainDemo"))
 templates = Jinja2Templates(directory="templates")
-
-
-class QueryRequest(BaseModel):
-    query: str
-
-
-def conversation_chain_dependency() -> Callable[[], ConversationChain]:
-    @lru_cache(maxsize=1)
-    def dependency() -> ConversationChain:
-        return ConversationChain(
-            llm=ChatOpenAI(
-                temperature=0,
-                streaming=True,
-            ),
-            verbose=True,
-        )
-
-    return dependency
-
-
-conversation_chain = conversation_chain_dependency()
-
-
-@app.post("/chat")
-async def chat(
-    request: QueryRequest,
-    chain: ConversationChain = Depends(conversation_chain),
-) -> StreamingResponse:
-    return StreamingResponse.from_chain(
-        chain, request.query, media_type="text/event-stream"
-    )
-
-
-@app.post("/chat_json")
-async def chat_json(
-    request: QueryRequest,
-    chain: ConversationChain = Depends(conversation_chain),
-) -> StreamingResponse:
-    return StreamingResponse.from_chain(
-        chain, request.query, as_json=True, media_type="text/event-stream"
-    )
+chain = create_chain()
 
 
 @app.get("/")
@@ -64,9 +30,12 @@ async def get(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@app.websocket("/ws")
-async def websocket_endpoint(
-    websocket: WebSocket, chain: ConversationChain = Depends(conversation_chain)
-):
-    connection = WebsocketConnection.from_chain(chain=chain, websocket=websocket)
-    await connection.connect()
+langchain_router = LangchainRouter(
+    langchain_url="/chat", langchain_object=chain, streaming_mode=1
+)
+langchain_router.add_langchain_api_route(
+    "/chat_json", langchain_object=chain, streaming_mode=2
+)
+langchain_router.add_langchain_api_websocket_route("/ws", langchain_object=chain)
+
+app.include_router(langchain_router)

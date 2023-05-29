@@ -19,7 +19,7 @@ You can get quickly started with Lanarky and deploy your first Langchain app in 
    app = FastAPI()
 
    langchain_router = LangchainRouter(
-      url="/chat",
+      langchain_url="/chat",
       langchain_object=ConversationChain(
          llm=ChatOpenAI(temperature=0), verbose=True
       ),

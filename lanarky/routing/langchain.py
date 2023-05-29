@@ -1,3 +1,5 @@
+import random
+import string
 from typing import Any, Optional, Type
 
 from fastapi.routing import APIRouter
@@ -55,14 +57,21 @@ class LangchainRouter(APIRouter):
     ):
         """Adds a Langchain API route to the router."""
         langchain_dependency = create_langchain_dependency(langchain_object)
+
+        name_prefix = "".join(
+            random.choice(string.ascii_letters) for _ in range(5)
+        ).title()
         endpoint_request = create_request_from_langchain_dependency(
-            langchain_dependency
+            langchain_dependency, name_prefix
         )
         response_model = (
-            create_response_model_from_langchain_dependency(langchain_dependency)
+            create_response_model_from_langchain_dependency(
+                langchain_dependency, name_prefix
+            )
             if streaming_mode == StreamingMode.OFF
             else None
         )
+
         endpoint = create_langchain_endpoint(
             endpoint_request,
             langchain_dependency,
