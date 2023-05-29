@@ -39,8 +39,8 @@ Welcome to Lanarky
 .. image:: https://badge.fury.io/py/lanarky.svg
    :target: https://pypi.org/project/lanarky/
 
-.. image:: https://img.shields.io/badge/python-3.9-blue.svg
-   :target: https://www.python.org/downloads/release/python-3916/
+.. image:: https://img.shields.io/pypi/pyversions/lanarky.svg
+   :target: https://pypi.org/project/lanarky/
 
 .. image:: https://coveralls.io/repos/github/ajndkr/lanarky/badge.svg?branch=main
    :target: https://coveralls.io/github/ajndkr/lanarky?branch=main
