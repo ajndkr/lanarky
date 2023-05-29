@@ -1,4 +1,4 @@
-from typing import Any, Callable, Optional, Union
+from typing import Any, Optional, Union
 
 
 def register(
@@ -25,41 +25,6 @@ def register(
             if _key in _registry:
                 raise KeyError(f"{cls} already registered as {_key}")
             _registry[_key] = cls if required_kwargs is None else (cls, required_kwargs)
-        return cls
-
-    return _register_cls
-
-
-STREAMING_CALLBACKS: dict[str, Any] = {}
-WEBSOCKET_CALLBACKS: dict[str, Any] = {}
-STREAMING_JSON_CALLBACKS: dict[str, Any] = {}
-
-
-def register_streaming_callback(key: Union[list[str], str]) -> Callable:
-    """Register a streaming callback handler."""
-
-    def _register_cls(cls: Any) -> Callable:
-        register(key, STREAMING_CALLBACKS)(cls=cls)
-        return cls
-
-    return _register_cls
-
-
-def register_websocket_callback(key: Union[list[str], str]) -> Callable:
-    """Register a websocket callback handler."""
-
-    def _register_cls(cls: Any) -> Callable:
-        register(key, WEBSOCKET_CALLBACKS)(cls=cls)
-        return cls
-
-    return _register_cls
-
-
-def register_streaming_json_callback(key: Union[list[str], str]) -> Callable:
-    """Register an streaming json callback handler."""
-
-    def _register_cls(cls: Any) -> Callable:
-        register(key, STREAMING_JSON_CALLBACKS)(cls=cls)
         return cls
 
     return _register_cls
