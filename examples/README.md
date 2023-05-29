@@ -75,7 +75,7 @@ uvicorn app.conversation_chain:app --reload
 ```bash
 curl -N -X POST \
 -H "Accept: text/event-stream" -H "Content-Type: application/json" \
--d '{"query": "write me a song about sparkling water" }' \
+-d '{"input": "write me a song about sparkling water" }' \
 http://localhost:8000/chat
 ```
 
@@ -92,7 +92,7 @@ uvicorn app.retrieval_qa_w_sources:app --reload
 ```bash
 curl -N -X POST \
 -H "Accept: text/event-stream" -H "Content-Type: application/json" \
--d '{"query": "Give me list of text splitters available with code samples" }' \
+-d '{"question": "Give me list of text splitters available with code samples" }' \
 http://localhost:8000/chat
 ```
 
@@ -138,6 +138,6 @@ uvicorn app.zero_shot_agent:app --reload
 ```bash
 curl -N -X POST \
 -H "Accept: text/event-stream" -H "Content-Type: application/json" \
--d '{"query": "what is the square root of 64?" }' \
+-d '{"input": "what is the square root of 64?" }' \
 http://localhost:8000/chat
 ```
