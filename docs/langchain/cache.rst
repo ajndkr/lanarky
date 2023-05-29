@@ -36,6 +36,7 @@ There are three available modes:
 - ``llm_cache_mode=0``: No LLM caching
 - ``llm_cache_mode=1``: In-memory LLM caching
 - ``llm_cache_mode=2``: Redis LLM caching
+- ``llm_cache_mode=3``: GPTCache LLM caching
 
 In-Memory Caching
 -----------------
@@ -60,7 +61,7 @@ To setup Redis caching, first install the required dependencies:
 
 .. code-block:: bash
 
-    pip install "lanarky[cache]"
+    pip install "lanarky[redis]"
 
 Next, setup a Redis server. We recommend using Docker:
 
@@ -79,4 +80,26 @@ Finally, use the following ``LangchainRouter`` configuration:
         streaming_mode=0,
         llm_cache_mode=2,
         llm_cache_kwargs={"url": "redis://localhost:6379/"},
+    )
+
+
+GPTCache Caching
+----------------
+
+To setup GPTCache caching, first install the required dependencies:
+
+.. code-block:: bash
+
+    pip install "lanarky[gptcache]"
+
+Then, use the following ``LangchainRouter`` configuration:
+
+.. code-block:: python
+    langchain_router = LangchainRouter(
+        langchain_url="/chat",
+        langchain_object=LLMChain.from_string(
+            llm=OpenAI(temperature=0), template="Answer the query.\n{query}"
+        ),
+        streaming_mode=0,
+        llm_cache_mode=3,
     )
