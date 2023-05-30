@@ -1,16 +1,13 @@
 responses
-=========================
+=========
 
 .. automodule:: lanarky.responses
    :members:
    :undoc-members:
    :show-inheritance:
 
-Submodules
-----------
-
-lanarky.responses.streaming module
-----------------------------------
+lanarky.responses.streaming
+----------------------------
 
 .. automodule:: lanarky.responses.streaming
    :members:

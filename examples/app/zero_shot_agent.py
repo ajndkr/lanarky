@@ -4,7 +4,7 @@ from fastapi.templating import Jinja2Templates
 from langchain.agents import AgentExecutor, AgentType, initialize_agent, load_tools
 from langchain.chat_models import ChatOpenAI
 
-from lanarky.routing import LangchainRouter
+from lanarky import LangchainRouter
 from lanarky.testing import mount_gradio_app
 
 load_dotenv()

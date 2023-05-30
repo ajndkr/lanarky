@@ -13,7 +13,7 @@ You can get quickly started with Lanarky and deploy your first Langchain app in 
    from langchain import ConversationChain
    from langchain.chat_models import ChatOpenAI
 
-   from lanarky.routing import LangchainRouter
+   from lanarky import LangchainRouter
 
    load_dotenv()
    app = FastAPI()

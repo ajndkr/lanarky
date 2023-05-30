@@ -1,24 +1,21 @@
 routing
-=========================
+========
 
 .. automodule:: lanarky.routing
    :members:
    :undoc-members:
    :show-inheritance:
 
-Submodules
-----------
-
-lanarky.routing.langchain module
-----------------------------------
+lanarky.routing.langchain
+--------------------------
 
 .. automodule:: lanarky.routing.langchain
    :members:
    :undoc-members:
    :show-inheritance:
 
-lanarky.routing.utils module
-----------------------------------
+lanarky.routing.utils
+----------------------
 
 .. automodule:: lanarky.routing.utils
    :members:

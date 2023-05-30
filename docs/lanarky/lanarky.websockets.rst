@@ -6,10 +6,7 @@ websockets
    :undoc-members:
    :show-inheritance:
 
-Submodules
-----------
-
-lanarky.websockets.base module
+lanarky.websockets.base
 ------------------------------
 
 .. automodule:: lanarky.websockets.base

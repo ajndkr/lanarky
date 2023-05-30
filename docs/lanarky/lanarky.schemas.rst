@@ -1,5 +1,5 @@
 schemas
-----------------------
+=======
 
 .. automodule:: lanarky.schemas
    :members:
