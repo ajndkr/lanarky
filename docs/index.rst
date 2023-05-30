@@ -45,6 +45,9 @@ Welcome to Lanarky
 .. image:: https://coveralls.io/repos/github/ajndkr/lanarky/badge.svg?branch=main
    :target: https://coveralls.io/github/ajndkr/lanarky?branch=main
 
+.. image:: https://img.shields.io/pypi/dm/lanarky.svg
+   :target: https://pypistats.org/packages/lanarky
+
 Lanarky is an open-source framework to deploy LLM applications in production.
 It is built on top of `FastAPI <https://github.com/tiangolo/fastapi>`_ and comes with batteries included.
 

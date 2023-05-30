@@ -7,6 +7,7 @@
 [![stars](https://img.shields.io/github/stars/ajndkr/lanarky)](https://github.com/ajndkr/lanarky/stargazers)
 [![Documentation](https://img.shields.io/badge/documentation-ReadTheDocs-blue.svg)](https://lanarky.readthedocs.io/en/latest/)
 [![PyPI version](https://badge.fury.io/py/lanarky.svg)](https://pypi.org/project/lanarky/)
+[![PyPI stats](https://img.shields.io/pypi/dm/lanarky.svg)](https://pypistats.org/packages/lanarky)
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/lanarky.svg)](https://pypi.org/project/lanarky/)
 [![Code Coverage](https://coveralls.io/repos/github/ajndkr/lanarky/badge.svg?branch=main)](https://coveralls.io/github/ajndkr/lanarky?branch=main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/lanarky/blob/main/LICENSE)
