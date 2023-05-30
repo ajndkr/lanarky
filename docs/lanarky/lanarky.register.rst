@@ -1,24 +1,21 @@
-registry
------------------------
+register
+=========
 
 .. automodule:: lanarky.register
    :members:
    :undoc-members:
    :show-inheritance:
 
-Submodules
-----------
-
-lanarky.register.base module
------------------------------
+lanarky.register.base
+----------------------
 
 .. automodule:: lanarky.register.base
    :members:
    :undoc-members:
    :show-inheritance:
 
-lanarky.register.callbacks module
-----------------------------
+lanarky.register.callbacks
+--------------------------
 
 .. automodule:: lanarky.register.callbacks
    :members:

@@ -1,16 +1,10 @@
 lanarky
 ===============
 
-.. automodule:: lanarky
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Modules
------------
+Welcome to Lanarky's API Reference!
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    lanarky.callbacks
    lanarky.responses

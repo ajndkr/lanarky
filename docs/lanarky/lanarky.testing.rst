@@ -1,15 +1,12 @@
 testing
-=======================
+=======
 
 .. automodule:: lanarky.testing
    :members:
    :undoc-members:
    :show-inheritance:
 
-Submodules
-----------
-
-lanarky.testing.gradio module
+lanarky.testing.gradio
 -----------------------------
 
 .. automodule:: lanarky.testing.gradio
@@ -17,7 +14,7 @@ lanarky.testing.gradio module
    :undoc-members:
    :show-inheritance:
 
-lanarky.testing.settings module
+lanarky.testing.settings
 -------------------------------
 
 .. automodule:: lanarky.testing.settings

@@ -44,6 +44,7 @@ In-Memory Caching
 To setup in-memory caching, use the following ``LangchainRouter`` configuration:
 
 .. code-block:: python
+
     langchain_router = LangchainRouter(
         langchain_url="/chat",
         langchain_object=LLMChain.from_string(
@@ -72,6 +73,7 @@ Next, setup a Redis server. We recommend using Docker:
 Finally, use the following ``LangchainRouter`` configuration:
 
 .. code-block:: python
+
     langchain_router = LangchainRouter(
         langchain_url="/chat",
         langchain_object=LLMChain.from_string(
@@ -95,6 +97,7 @@ To setup GPTCache caching, first install the required dependencies:
 Then, use the following ``LangchainRouter`` configuration:
 
 .. code-block:: python
+
     langchain_router = LangchainRouter(
         langchain_url="/chat",
         langchain_object=LLMChain.from_string(
