@@ -48,7 +48,7 @@ from fastapi import FastAPI
 from langchain import ConversationChain
 from langchain.chat_models import ChatOpenAI
 
-from lanarky.routing import LangchainRouter
+from lanarky import LangchainRouter
 
 load_dotenv()
 app = FastAPI()

@@ -13,7 +13,7 @@ To better understand ``LangchainRouter``, let's break down the example below:
     from fastapi import FastAPI
     from langchain import ConversationChain
     from langchain.chat_models import ChatOpenAI
-    from lanarky.routing import LangchainRouter
+    from lanarky import LangchainRouter
 
     load_dotenv()
     app = FastAPI()
@@ -40,7 +40,7 @@ Here's an example:
     from fastapi import FastAPI
     from langchain import ConversationChain
     from langchain.chat_models import ChatOpenAI
-    from lanarky.routing import LangchainRouter
+    from lanarky import LangchainRouter
 
     load_dotenv()
     app = FastAPI()

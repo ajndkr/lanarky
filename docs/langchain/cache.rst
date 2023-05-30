@@ -14,7 +14,7 @@ We'll use a simple ``LLMChain`` application as an example:
     from langchain import LLMChain
     from langchain.llms import OpenAI
 
-    from lanarky.routing import LangchainRouter
+    from lanarky import LangchainRouter
 
     load_dotenv()
 

@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 import pytest
 from langchain.chains import ConversationChain
 
-from lanarky.routing import LangchainRouter, LLMCacheMode
+from lanarky import LangchainRouter, LLMCacheMode
 
 
 @pytest.fixture
