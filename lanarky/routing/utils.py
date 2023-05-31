@@ -79,11 +79,8 @@ def create_langchain_streaming_endpoint(
         langchain_object: Chain = langchain_dependency,
     ) -> StreamingResponse:
         """Streaming chat endpoint."""
-        print(f"langchain_object: {langchain_object}")
-        inputs = request.dict()
-        print(f"inputs: {inputs}")
         return StreamingResponse.from_chain(
-            langchain_object, inputs, media_type="text/event-stream"
+            langchain_object, request.dict(), media_type="text/event-stream"
         )
 
     return endpoint
