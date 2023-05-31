@@ -4,16 +4,46 @@ Credits:
 * `gist@ninely <https://gist.github.com/ninely/88485b2e265d852d3feb8bd115065b1a>`_
 * `langchain@#1705 <https://github.com/hwchase17/langchain/discussions/1706>`_
 """
+import logging
+from functools import wraps
 from typing import Any, Awaitable, Callable, Optional, Union
 
+import aiohttp
 from fastapi.responses import StreamingResponse as _StreamingResponse
 from langchain.chains.base import Chain
 from starlette.background import BackgroundTask
-from starlette.types import Send
+from starlette.types import Receive, Scope, Send
 
 from lanarky.callbacks import get_streaming_callback, get_streaming_json_callback
 
+logger = logging.getLogger(__name__)
 
+
+def openai_aiosession(func):
+    """Decorator to set openai.aiosession for StreamingResponse."""
+
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        try:
+            import openai  # type: ignore
+        except ImportError:
+            raise ImportError(
+                "openai is not installed. Install it with `pip install 'lanarky[openai]'`."
+            )
+
+        openai.aiosession.set(aiohttp.ClientSession())
+        logger.info(f"opeanai.aiosession set: {openai.aiosession.get()}")
+
+        try:
+            await func(*args, **kwargs)
+        finally:
+            await openai.aiosession.get().close()
+            logger.info(f"opeanai.aiosession closed: {openai.aiosession.get()}")
+
+    return wrapper
+
+
+# TODO: create OpenAIStreamingResponse for streaming with OpenAI only
 class StreamingResponse(_StreamingResponse):
     """StreamingResponse class wrapper for langchain chains."""
 
@@ -53,6 +83,10 @@ class StreamingResponse(_StreamingResponse):
             return
 
         await send({"type": "http.response.body", "body": b"", "more_body": False})
+
+    @openai_aiosession
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        await super().__call__(scope, receive, send)
 
     @staticmethod
     def _create_chain_executor(
