@@ -4,8 +4,9 @@ Credits:
 * `gist@ninely <https://gist.github.com/ninely/88485b2e265d852d3feb8bd115065b1a>`_
 * `langchain@#1705 <https://github.com/hwchase17/langchain/discussions/1706>`_
 """
+import asyncio
 import logging
-from functools import wraps
+from functools import partial, wraps
 from typing import Any, Awaitable, Callable, Optional, Union
 
 import aiohttp
@@ -32,13 +33,13 @@ def openai_aiosession(func):
             )
 
         openai.aiosession.set(aiohttp.ClientSession())
-        logger.info(f"opeanai.aiosession set: {openai.aiosession.get()}")
+        logger.debug(f"opeanai.aiosession set: {openai.aiosession.get()}")
 
         try:
             await func(*args, **kwargs)
         finally:
             await openai.aiosession.get().close()
-            logger.info(f"opeanai.aiosession closed: {openai.aiosession.get()}")
+            logger.debug(f"opeanai.aiosession closed: {openai.aiosession.get()}")
 
     return wrapper
 
@@ -56,6 +57,13 @@ class StreamingResponse(_StreamingResponse):
         super().__init__(content=iter(()), background=background, **kwargs)
 
         self.chain_executor = chain_executor
+
+    async def listen_for_disconnect(self, receive: Receive) -> None:
+        while True:
+            message = await receive()
+            if message["type"] == "http.disconnect":
+                logger.debug("Client disconnected")
+                break
 
     async def stream_response(self, send: Send) -> None:
         await send(
@@ -86,7 +94,27 @@ class StreamingResponse(_StreamingResponse):
 
     @openai_aiosession
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        await super().__call__(scope, receive, send)
+        async def wrap(func: Callable[[], Awaitable[None]]) -> None:
+            await func()
+            raise asyncio.CancelledError
+
+        async def run_tasks():
+            stream_response_task = asyncio.create_task(
+                wrap(partial(self.stream_response, send))
+            )
+            listen_for_disconnect_task = asyncio.create_task(
+                wrap(partial(self.listen_for_disconnect, receive))
+            )
+
+            try:
+                await asyncio.gather(stream_response_task, listen_for_disconnect_task)
+            except asyncio.CancelledError:
+                pass
+
+        await asyncio.create_task(run_tasks())
+
+        if self.background is not None:
+            await self.background()
 
     @staticmethod
     def _create_chain_executor(
