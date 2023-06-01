@@ -33,13 +33,13 @@ def openai_aiosession(func):
             )
 
         openai.aiosession.set(aiohttp.ClientSession())
-        logger.info(f"opeanai.aiosession set: {openai.aiosession.get()}")
+        logger.debug(f"opeanai.aiosession set: {openai.aiosession.get()}")
 
         try:
             await func(*args, **kwargs)
         finally:
             await openai.aiosession.get().close()
-            logger.info(f"opeanai.aiosession closed: {openai.aiosession.get()}")
+            logger.debug(f"opeanai.aiosession closed: {openai.aiosession.get()}")
 
     return wrapper
 
@@ -57,6 +57,13 @@ class StreamingResponse(_StreamingResponse):
         super().__init__(content=iter(()), background=background, **kwargs)
 
         self.chain_executor = chain_executor
+
+    async def listen_for_disconnect(self, receive: Receive) -> None:
+        while True:
+            message = await receive()
+            if message["type"] == "http.disconnect":
+                logger.debug("Client disconnected")
+                break
 
     async def stream_response(self, send: Send) -> None:
         await send(
