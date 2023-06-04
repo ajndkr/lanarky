@@ -37,10 +37,10 @@ def create_request_from_langchain_dependency(
     langchain_dependency: params.Depends, name_prefix: str = ""
 ) -> Type[BaseModel]:
     langchain_object: Chain = langchain_dependency.dependency()
-    model_name = name_prefix + "LangchainRequest"
+    model_name = f"{name_prefix}{str(langchain_object.__class__.__name__)}Request"
     return create_model(
         model_name,
-        **{key: (str, "") for key in langchain_object.input_keys},
+        **{key: (str, ...) for key in langchain_object.input_keys},
     )
 
 
@@ -49,7 +49,7 @@ def create_response_model_from_langchain_dependency(
 ) -> Type[BaseModel]:
     """Creates a response model from a langchain dependency."""
     langchain_object: Chain = langchain_dependency.dependency()
-    model_name = name_prefix + "LangchainResponse"
+    model_name = f"{name_prefix}{str(langchain_object.__class__.__name__)}Response"
     return create_model(
         model_name,
         **{key: (str, "") for key in langchain_object.output_keys},
@@ -66,7 +66,9 @@ def create_langchain_base_endpoint(
         langchain_object: Chain = langchain_dependency,
     ) -> response_model:
         """Base chat endpoint."""
-        return await langchain_object.acall(inputs=request.dict())
+        return await langchain_object.acall(
+            inputs=request.dict(), return_only_outputs=True
+        )
 
     return endpoint
 

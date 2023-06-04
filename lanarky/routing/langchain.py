@@ -1,5 +1,3 @@
-import random
-import string
 from typing import Any, Optional, Type
 
 from fastapi.routing import APIRouter
@@ -113,11 +111,8 @@ class LangchainRouter(APIRouter):
         **kwargs,
     ):
         """Adds a Langchain API route to the router."""
+        name_prefix = url.replace("/", "").title().replace("_", "")
         langchain_dependency = create_langchain_dependency(langchain_object)
-
-        name_prefix = "".join(
-            random.choice(string.ascii_letters) for _ in range(5)
-        ).title()
         endpoint_request = create_request_from_langchain_dependency(
             langchain_dependency, name_prefix
         )
