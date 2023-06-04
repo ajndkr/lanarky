@@ -21,8 +21,10 @@ and comes with batteries included.
 
 ## 🚀 Features
 
-- supports [LangChain](https://github.com/hwchase17/langchain)
-- simple gradio chatbot UI for fast prototyping
+- 🌐 multi-mode token streaming
+- 💬 simple gradio chatbot UI for fast prototyping
+- 🔗 supports [LangChain](https://github.com/hwchase17/langchain) applications
+- 🗄️ multiple LLM caching strategies
 
 See [Roadmap](#-roadmap) for upcoming features.
 
@@ -80,6 +82,7 @@ before running the examples.
 - [x] Add [Gradio](https://github.com/gradio-app/gradio) UI for fast prototyping
 - [x] Add support for in-memory, Redis and [GPTCache](https://github.com/zilliztech/GPTCache) LLM caching
 - [ ] Add support for [LlamaIndex](https://github.com/jerryjliu/llama_index)
+- [ ] Add support for [Guidance](https://github.com/microsoft/guidance)
 - [ ] Add SQL database integration
 - [ ] Add support for [Rebuff](https://github.com/woop/rebuff)
 
