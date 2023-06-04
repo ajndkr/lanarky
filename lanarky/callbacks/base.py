@@ -1,6 +1,6 @@
 import json
 from abc import abstractmethod
-from typing import Any
+from typing import Any, Type
 
 from fastapi import WebSocket
 from langchain.callbacks.base import AsyncCallbackHandler
@@ -44,7 +44,7 @@ class AsyncStreamingResponseCallback(AsyncLanarkyCallback):
 class AsyncWebsocketCallback(AsyncLanarkyCallback):
     """Async Callback handler for WebsocketConnection."""
 
-    websocket: WebSocket = Field(...)
+    websocket: Type[WebSocket] = Field(...)
     response: WebsocketResponse = Field(...)
 
     def _construct_message(self, content: str) -> dict:

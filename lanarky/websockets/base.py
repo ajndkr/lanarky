@@ -5,7 +5,7 @@ Credits:
 * `langchain-chat-websockets <https://github.com/pors/langchain-chat-websockets>`_
 """
 import logging
-from typing import Any, Awaitable, Callable
+from typing import Any, Awaitable, Callable, Type
 
 from fastapi import WebSocket, WebSocketDisconnect
 from langchain.chains.base import Chain
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseWebsocketConnection(BaseModel):
-    websocket: WebSocket = Field(...)
+    websocket: Type[WebSocket] = Field(...)
     chain_executor: Callable[[str], Awaitable[Any]] = Field(...)
 
     class Config:
@@ -67,7 +67,7 @@ class BaseWebsocketConnection(BaseModel):
     @staticmethod
     def _create_chain_executor(
         chain: Chain,
-        websocket: WebSocket,
+        websocket: Type[WebSocket],
         response: WebsocketResponse,
         **callback_kwargs,
     ) -> Callable[[str], Awaitable[Any]]:
@@ -77,7 +77,7 @@ class BaseWebsocketConnection(BaseModel):
     def from_chain(
         cls,
         chain: Chain,
-        websocket: WebSocket,
+        websocket: Type[WebSocket],
         callback_kwargs: dict[str, Any] = {},
     ) -> "BaseWebsocketConnection":
         chain_executor = cls._create_chain_executor(
@@ -101,7 +101,7 @@ class WebsocketConnection(BaseWebsocketConnection):
     @staticmethod
     def _create_chain_executor(
         chain: Chain,
-        websocket: WebSocket,
+        websocket: Type[WebSocket],
         response: WebsocketResponse,
         **callback_kwargs,
     ) -> Callable[[str], Awaitable[Any]]:
