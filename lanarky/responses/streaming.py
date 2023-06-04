@@ -32,13 +32,13 @@ def openai_aiosession(func):
             )
 
         openai.aiosession.set(aiohttp.ClientSession())
-        logger.info(f"opeanai.aiosession set: {openai.aiosession.get()}")
+        logger.debug(f"opeanai.aiosession set: {openai.aiosession.get()}")
 
         try:
             await func(*args, **kwargs)
         finally:
             await openai.aiosession.get().close()
-            logger.info(f"opeanai.aiosession closed: {openai.aiosession.get()}")
+            logger.debug(f"opeanai.aiosession closed: {openai.aiosession.get()}")
 
     return wrapper
 
