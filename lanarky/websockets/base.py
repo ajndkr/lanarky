@@ -5,7 +5,7 @@ Credits:
 * `langchain-chat-websockets <https://github.com/pors/langchain-chat-websockets>`_
 """
 import logging
-from typing import Any, Awaitable, Callable, Type
+from typing import Any, Awaitable, Callable
 
 from fastapi import WebSocket, WebSocketDisconnect
 from langchain.chains.base import Chain
@@ -18,13 +18,16 @@ logger = logging.getLogger(__name__)
 
 
 class BaseWebsocketConnection(BaseModel):
-    websocket: Type[WebSocket] = Field(...)
+    """Base class for websocket connections."""
+
+    websocket: WebSocket = Field(...)
     chain_executor: Callable[[str], Awaitable[Any]] = Field(...)
 
     class Config:
         arbitrary_types_allowed = True
 
     async def connect(self):
+        """Connect to websocket."""
         await self.websocket.accept()
         while True:
             try:
@@ -67,19 +70,34 @@ class BaseWebsocketConnection(BaseModel):
     @staticmethod
     def _create_chain_executor(
         chain: Chain,
-        websocket: Type[WebSocket],
+        websocket: WebSocket,
         response: WebsocketResponse,
         **callback_kwargs,
     ) -> Callable[[str], Awaitable[Any]]:
+        """Creates a function to execute ``chain.acall()``.
+
+        Args:
+            chain: langchain chain instance.
+            websocket: websocket instance.
+            response: WebsocketResponse instance.
+            callback_kwargs: keyword arguments for callback function.
+        """
         raise NotImplementedError
 
     @classmethod
     def from_chain(
         cls,
         chain: Chain,
-        websocket: Type[WebSocket],
+        websocket: WebSocket,
         callback_kwargs: dict[str, Any] = {},
     ) -> "BaseWebsocketConnection":
+        """Creates a BaseWebsocketConnection instance from a langchain chain instance.
+
+        Args:
+            chain: langchain chain instance.
+            websocket: websocket instance.
+            callback_kwargs: keyword arguments for callback function.
+        """
         chain_executor = cls._create_chain_executor(
             chain,
             websocket,
@@ -101,10 +119,19 @@ class WebsocketConnection(BaseWebsocketConnection):
     @staticmethod
     def _create_chain_executor(
         chain: Chain,
-        websocket: Type[WebSocket],
+        websocket: WebSocket,
         response: WebsocketResponse,
         **callback_kwargs,
     ) -> Callable[[str], Awaitable[Any]]:
+        """Creates a function to execute ``chain.acall()``.
+
+        Args:
+            chain: langchain chain instance.
+            websocket: websocket instance.
+            response: WebsocketResponse instance.
+            callback_kwargs: keyword arguments for callback function.
+        """
+
         async def wrapper(user_message: str):
             return await chain.acall(
                 inputs=user_message,

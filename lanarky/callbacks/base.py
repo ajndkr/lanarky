@@ -1,6 +1,6 @@
 import json
 from abc import abstractmethod
-from typing import Any, Type
+from typing import Any
 
 from fastapi import WebSocket
 from langchain.callbacks.base import AsyncCallbackHandler
@@ -23,7 +23,7 @@ class AsyncLanarkyCallback(AsyncCallbackHandler, BaseModel):
 
     @abstractmethod
     def _construct_message(self, content: Any) -> Any:  # pragma: no cover
-        """Construct a Message from a string."""
+        """Constructs a Message from a string."""
         pass
 
 
@@ -33,7 +33,7 @@ class AsyncStreamingResponseCallback(AsyncLanarkyCallback):
     send: Send = Field(...)
 
     def _construct_message(self, content: str) -> Message:
-        """Construct a Message from a string."""
+        """Constructs a Message from a string."""
         return {
             "type": "http.response.body",
             "body": content.encode("utf-8"),
@@ -44,11 +44,11 @@ class AsyncStreamingResponseCallback(AsyncLanarkyCallback):
 class AsyncWebsocketCallback(AsyncLanarkyCallback):
     """Async Callback handler for WebsocketConnection."""
 
-    websocket: Type[WebSocket] = Field(...)
+    websocket: WebSocket = Field(...)
     response: WebsocketResponse = Field(...)
 
     def _construct_message(self, content: str) -> dict:
-        """Construct a WebsocketResponse from a string."""
+        """Constructs a WebsocketResponse from a string."""
         return {**self.response.dict(), **{"message": content}}
 
 
@@ -58,7 +58,7 @@ class AsyncStreamingJSONResponseCallback(AsyncStreamingResponseCallback):
     send: Send = Field(...)
 
     def _construct_message(self, content: StreamingJSONResponse) -> Message:
-        """Construct a Message from a dictionary."""
+        """Constructs a Message from a dictionary."""
         return {
             "type": "http.response.body",
             "body": json.dumps(

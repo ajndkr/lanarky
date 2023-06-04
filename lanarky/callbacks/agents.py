@@ -33,6 +33,7 @@ class AsyncAgentsLanarkyCallback(AsyncLanarkyCallback):
         self.answer_reached = False
 
     def _check_if_answer_reached(self, token: str):
+        """Checks if the final answer has been reached."""
         self.last_tokens.append(token)
         if len(self.last_tokens) > len(self.answer_prefix_tokens):
             self.last_tokens.pop(0)

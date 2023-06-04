@@ -44,6 +44,7 @@ Available chain types: {chain_types}
 
 To use a custom chain type, you must define your own FastAPI endpoint.
 """
+SOURCE_DOCUMENTS_KEY = "source_documents"
 
 
 def create_langchain_dependency(langchain_object: Type[Chain]) -> params.Depends:
@@ -108,7 +109,7 @@ def create_response_model_from_langchain_dependency(
     model_name = f"{name_prefix}{langchain_object_name}Response"
 
     additional_keys = (
-        {"source_documents": (list[Document], ...)}
+        {SOURCE_DOCUMENTS_KEY: (list[Document], ...)}
         if hasattr(langchain_object, "return_source_documents")
         and langchain_object.return_source_documents
         else {}
@@ -235,7 +236,7 @@ def create_langchain_endpoint(
 
 
 def create_langchain_websocket_endpoint(
-    websocket: Type[WebSocket], langchain_dependency: params.Depends
+    websocket: WebSocket, langchain_dependency: params.Depends
 ):
     """Creates a websocket Langchain endpoint.
 
