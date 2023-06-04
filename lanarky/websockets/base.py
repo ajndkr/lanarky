@@ -52,7 +52,7 @@ class BaseWebsocketConnection(BaseModel):
                     ).dict()
                 )
             except WebSocketDisconnect:
-                logger.info("client disconnected.")
+                logger.debug("client disconnected.")
                 break
             except Exception as e:
                 logger.error(e)
