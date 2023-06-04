@@ -110,8 +110,8 @@ uvicorn app.conversational_retrieval:app --reload
 curl -N -X POST \
 -H "Accept: text/event-stream" -H "Content-Type: application/json" \
 -d '{
-    "query": "Give me a code sample",
-    "history": [
+    "question": "Give me a code sample",
+    "chat_history": [
         [
             "What is a Text Splitter?",
             "Text Splitter is a module that is responsible for breaking up a document into smaller pieces, or chunks, that can be more easily processed."
