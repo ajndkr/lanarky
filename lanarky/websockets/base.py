@@ -18,6 +18,8 @@ logger = logging.getLogger(__name__)
 
 
 class BaseWebsocketConnection(BaseModel):
+    """Base class for websocket connections."""
+
     websocket: WebSocket = Field(...)
     chain_executor: Callable[[str], Awaitable[Any]] = Field(...)
 
@@ -25,6 +27,7 @@ class BaseWebsocketConnection(BaseModel):
         arbitrary_types_allowed = True
 
     async def connect(self):
+        """Connect to websocket."""
         await self.websocket.accept()
         while True:
             try:
@@ -71,6 +74,14 @@ class BaseWebsocketConnection(BaseModel):
         response: WebsocketResponse,
         **callback_kwargs,
     ) -> Callable[[str], Awaitable[Any]]:
+        """Creates a function to execute ``chain.acall()``.
+
+        Args:
+            chain: langchain chain instance.
+            websocket: websocket instance.
+            response: WebsocketResponse instance.
+            callback_kwargs: keyword arguments for callback function.
+        """
         raise NotImplementedError
 
     @classmethod
@@ -80,6 +91,13 @@ class BaseWebsocketConnection(BaseModel):
         websocket: WebSocket,
         callback_kwargs: dict[str, Any] = {},
     ) -> "BaseWebsocketConnection":
+        """Creates a BaseWebsocketConnection instance from a langchain chain instance.
+
+        Args:
+            chain: langchain chain instance.
+            websocket: websocket instance.
+            callback_kwargs: keyword arguments for callback function.
+        """
         chain_executor = cls._create_chain_executor(
             chain,
             websocket,
@@ -105,6 +123,15 @@ class WebsocketConnection(BaseWebsocketConnection):
         response: WebsocketResponse,
         **callback_kwargs,
     ) -> Callable[[str], Awaitable[Any]]:
+        """Creates a function to execute ``chain.acall()``.
+
+        Args:
+            chain: langchain chain instance.
+            websocket: websocket instance.
+            response: WebsocketResponse instance.
+            callback_kwargs: keyword arguments for callback function.
+        """
+
         async def wrapper(user_message: str):
             return await chain.acall(
                 inputs=user_message,

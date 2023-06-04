@@ -1,5 +1,3 @@
-import random
-import string
 from typing import Any, Optional, Type
 
 from fastapi.routing import APIRouter
@@ -112,12 +110,16 @@ class LangchainRouter(APIRouter):
         methods: list[str] = ["POST"],
         **kwargs,
     ):
-        """Adds a Langchain API route to the router."""
-        langchain_dependency = create_langchain_dependency(langchain_object)
+        """Adds a Langchain API route to the router.
 
-        name_prefix = "".join(
-            random.choice(string.ascii_letters) for _ in range(5)
-        ).title()
+        Args:
+            url: The URL of the route.
+            langchain_object: The Langchain object to use for the route.
+            streaming_mode: The streaming mode to use for the route.
+            methods: The HTTP methods to use for the route.
+        """
+        name_prefix = url.replace("/", "").title().replace("_", "")
+        langchain_dependency = create_langchain_dependency(langchain_object)
         endpoint_request = create_request_from_langchain_dependency(
             langchain_dependency, name_prefix
         )
@@ -147,7 +149,12 @@ class LangchainRouter(APIRouter):
         self.langchain_dependencies.append(langchain_dependency)
 
     def add_langchain_api_websocket_route(self, url: str, langchain_object: Chain):
-        """Adds a Langchain API websocket route to the router."""
+        """Adds a Langchain API websocket route to the router.
+
+        Args:
+            url: The URL of the route.
+            langchain_object: The Langchain object to use for the route.
+        """
         langchain_dependency = create_langchain_dependency(langchain_object)
         endpoint = create_langchain_websocket_endpoint(
             WebSocket,

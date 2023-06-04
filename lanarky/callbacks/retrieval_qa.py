@@ -26,6 +26,7 @@ SOURCE_DOCUMENT_TEMPLATE = """
 page content: {page_content}
 {document_metadata}
 """
+SOURCE_DOCUMENTS_KEY = "source_documents"
 
 
 @register_streaming_callback(SUPPORTED_CHAINS)
@@ -36,10 +37,10 @@ class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
 
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
-        if "source_documents" in outputs:
+        if SOURCE_DOCUMENTS_KEY in outputs:
             message = self._construct_message("\n\nSOURCE DOCUMENTS:\n")
             await self.send(message)
-            for document in outputs["source_documents"]:
+            for document in outputs[SOURCE_DOCUMENTS_KEY]:
                 document_metadata = "\n".join(
                     [f"{k}: {v}" for k, v in document.metadata.items()]
                 )
@@ -60,10 +61,10 @@ class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
 
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
-        if "source_documents" in outputs:
+        if SOURCE_DOCUMENTS_KEY in outputs:
             message = self._construct_message("\n\nSOURCE DOCUMENTS:\n")
             await self.websocket.send_json(message)
-            for document in outputs["source_documents"]:
+            for document in outputs[SOURCE_DOCUMENTS_KEY]:
                 document_metadata = "\n".join(
                     [f"{k}: {v}" for k, v in document.metadata.items()]
                 )
@@ -82,9 +83,9 @@ class AsyncBaseRetrievalQAStreamingJSONCallback(AsyncLLMChainStreamingJSONCallba
 
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
-        if "source_documents" in outputs:
+        if SOURCE_DOCUMENTS_KEY in outputs:
             source_documents = [
-                document.dict() for document in outputs["source_documents"]
+                document.dict() for document in outputs[SOURCE_DOCUMENTS_KEY]
             ]
             message = self._construct_message(
                 BaseRetrievalQAStreamingJSONResponse(source_documents=source_documents)

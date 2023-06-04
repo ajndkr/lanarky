@@ -54,11 +54,18 @@ class StreamingResponse(_StreamingResponse):
         background: Optional[BackgroundTask] = None,
         **kwargs: Any,
     ) -> None:
+        """Constructor method.
+
+        Args:
+            chain_executor: function to execute ``chain.acall()``.
+            background: A ``BackgroundTask`` object to run in the background.
+        """
         super().__init__(content=iter(()), background=background, **kwargs)
 
         self.chain_executor = chain_executor
 
     async def listen_for_disconnect(self, receive: Receive) -> None:
+        """Listen for client disconnect."""
         while True:
             message = await receive()
             if message["type"] == "http.disconnect":
@@ -66,6 +73,7 @@ class StreamingResponse(_StreamingResponse):
                 break
 
     async def stream_response(self, send: Send) -> None:
+        """Streams the response."""
         await send(
             {
                 "type": "http.response.start",
@@ -123,6 +131,14 @@ class StreamingResponse(_StreamingResponse):
         as_json: bool = False,
         **callback_kwargs,
     ) -> Callable[[Send], Awaitable[Any]]:
+        """Creates a function to execute ``chain.acall()``.
+
+        Args:
+            chain: A ``Chain`` object.
+            inputs: Inputs to pass to ``chain.acall()``.
+            as_json: Whether to return the outputs as JSON.
+            callback_kwargs: Keyword arguments to pass to the callback function.
+        """
         get_callback_fn = (
             get_streaming_json_callback if as_json else get_streaming_callback
         )
@@ -145,6 +161,15 @@ class StreamingResponse(_StreamingResponse):
         callback_kwargs: dict[str, Any] = {},
         **kwargs: Any,
     ) -> "StreamingResponse":
+        """Creates a ``StreamingResponse`` object from a ``Chain`` object.
+
+        Args:
+            chain: A ``Chain`` object.
+            inputs: Inputs to pass to ``chain.acall()``.
+            as_json: Whether to return the outputs as JSON.
+            background: A ``BackgroundTask`` object to run in the background.
+            callback_kwargs: Keyword arguments to pass to the callback function.
+        """
         chain_executor = cls._create_chain_executor(
             chain, inputs, as_json, **callback_kwargs
         )
