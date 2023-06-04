@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lanarky"
-version = "0.7.6"
+version = "0.7.7"
 description = "Ship production-ready LLM projects with FastAPI"
 authors = ["Ajinkya Indulkar <26824103+ajndkr@users.noreply.github.com>"]
 readme = "README.md"
