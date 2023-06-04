@@ -28,12 +28,7 @@ class LLMCacheMode(IntEnum):
     GPTCACHE = 3
 
 
-BASE_LANGCHAIN_REQUEST_TYPES = [
-    "ConversationChain",
-    "AgentExecutor",
-    "RetrievalQAWithSourcesChain",
-]
-BASE_LANGCHAIN_RESPONSE_TYPES = [
+BASE_LANGCHAIN_TYPES = [
     "ConversationChain",
     "AgentExecutor",
     "RetrievalQAWithSourcesChain",
@@ -44,6 +39,7 @@ Available chain types: {chain_types}
 
 To use a custom chain type, you must define your own FastAPI endpoint.
 """
+CHAT_HISTORY_KEY = "chat_history"
 SOURCE_DOCUMENTS_KEY = "source_documents"
 
 
@@ -74,23 +70,26 @@ def create_request_from_langchain_dependency(
     langchain_object_name = str(langchain_object.__class__.__name__)
     model_name = f"{name_prefix}{langchain_object_name}Request"
 
-    if langchain_object_name in BASE_LANGCHAIN_REQUEST_TYPES:
+    additional_keys = (
+        {CHAT_HISTORY_KEY: (list[tuple[str, str]], ...)}
+        if langchain_object_name == "ConversationalRetrievalChain"
+        else {}
+    )
+
+    if langchain_object_name in BASE_LANGCHAIN_TYPES:
         return create_model(
             model_name,
-            **{key: (str, ...) for key in langchain_object.input_keys},
-        )
-    elif langchain_object_name == "ConversationalRetrievalChain":
-        return create_model(
-            model_name,
-            query=(str, ...),
-            history=(list[list[str]], []),
+            **{
+                **{key: (str, ...) for key in langchain_object.input_keys},
+                **additional_keys,
+            },
         )
     else:
         raise TypeError(
             ERROR_MESSAGE.format(
                 model_type="Request",
                 chain_type=langchain_object_name,
-                chain_types=BASE_LANGCHAIN_REQUEST_TYPES,
+                chain_types=BASE_LANGCHAIN_TYPES,
             )
         )
 
@@ -115,18 +114,20 @@ def create_response_model_from_langchain_dependency(
         else {}
     )
 
-    if langchain_object_name in BASE_LANGCHAIN_RESPONSE_TYPES:
+    if langchain_object_name in BASE_LANGCHAIN_TYPES:
         return create_model(
             model_name,
-            **{key: (str, ...) for key in langchain_object.output_keys},
-            **additional_keys,
+            **{
+                **{key: (str, ...) for key in langchain_object.output_keys},
+                **additional_keys,
+            },
         )
     else:
         raise TypeError(
             ERROR_MESSAGE.format(
                 model_type="Response",
                 chain_type=langchain_object_name,
-                chain_types=BASE_LANGCHAIN_RESPONSE_TYPES,
+                chain_types=BASE_LANGCHAIN_TYPES,
             )
         )
 
