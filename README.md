@@ -23,15 +23,15 @@ and comes with batteries included.
 <details>
 <summary><strong>Table of Contents</strong></summary>
 
-- [🚀 Features](#🚀-features)
-- [❓ Why?](#❓-why)
-- [💾 Installation](#💾-installation)
-- [🔥 Build your first LLM app](#🔥-build-your-first-llm-app)
-- [📍 Roadmap](#📍-roadmap)
-- [🤩 Stargazers](#🤩-stargazers)
-- [🤝 Contributing](#🤝-contributing)
-- [📝 License](#⚖️-license)
-- [✨ Want to build LLM applications with us?](#✨-want-to-build-llm-applications-with-us)
+- [🚀 Features](#-features)
+- [❓ Why?](#-why)
+- [💾 Installation](#-installation)
+- [🔥 Build your first LLM app](#-build-your-first-llm-app)
+- [📍 Roadmap](#-roadmap)
+- [🤩 Stargazers](#-stargazers)
+- [🤝 Contributing](#-contributing)
+- [📝 License](#-license)
+- [✨ Want to build LLM applications with us?](#-want-to-build-llm-applications-with-us)
 
 </details>
 
