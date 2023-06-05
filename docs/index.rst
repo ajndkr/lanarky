@@ -89,3 +89,11 @@ See `CONTRIBUTING.md <https://github.com/ajndkr/lanarky/blob/main/CONTRIBUTING.m
 ----------
 
 The library is released under the `MIT License <https://github.com/ajndkr/lanarky/blob/main/LICENSE>`_.
+
+✨ Want to build LLM applications with us?
+------------------------------------------
+
+Are you interested in building LLM applications with us? We would love to hear from you! Reach out to us on
+Twitter `@lanarky_io <https://twitter.com/lanarky_io>`_.
+
+Let's connect and explore the possibilities of working together to create amazing LLM applications with Lanarky!

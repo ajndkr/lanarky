@@ -19,6 +19,22 @@
 Lanarky is an open-source framework to deploy LLM applications in production. It is built on top of [FastAPI](https://github.com/tiangolo/fastapi)
 and comes with batteries included.
 
+</div>
+<details>
+<summary><strong>Table of Contents</strong></summary>
+
+- [🚀 Features](#🚀-features)
+- [❓ Why?](#❓-why)
+- [💾 Installation](#💾-installation)
+- [🔥 Build your first LLM app](#🔥-build-your-first-llm-app)
+- [📍 Roadmap](#📍-roadmap)
+- [🤩 Stargazers](#🤩-stargazers)
+- [🤝 Contributing](#🤝-contributing)
+- [📝 License](#⚖️-license)
+- [✨ Want to build LLM applications with us?](#✨-want-to-build-llm-applications-with-us)
+
+</details>
+
 ## 🚀 Features
 
 - 🌐 multi-mode token streaming
@@ -113,3 +129,10 @@ See [CONTRIBUTING.md](https://github.com/ajndkr/lanarky/blob/main/CONTRIBUTING.m
 ## ⚖️ License
 
 The library is released under the [MIT License](https://github.com/ajndkr/lanarky/blob/main/LICENSE).
+
+## ✨ Want to build LLM applications with us?
+
+Are you interested in building LLM applications with us? We would love to hear from you! Reach out to us on
+Twitter [@lanarky_io](https://twitter.com/lanarky_io).
+
+Let's connect and explore the possibilities of working together to create amazing LLM applications with Lanarky!
