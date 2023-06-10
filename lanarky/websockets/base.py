@@ -22,13 +22,20 @@ class BaseWebsocketConnection(BaseModel):
 
     websocket: WebSocket = Field(...)
     chain_executor: Callable[[str], Awaitable[Any]] = Field(...)
+    connection_accepted: bool = Field(False)
 
     class Config:
         arbitrary_types_allowed = True
 
-    async def connect(self):
-        """Connect to websocket."""
-        await self.websocket.accept()
+    async def connect(self, accept_connection: bool = True):
+        if accept_connection and self.connection_accepted:
+            raise RuntimeError("Connection already accepted.")
+
+        if accept_connection:
+            """Connect to websocket."""
+            await self.websocket.accept()
+            self.connection_accepted = True
+
         while True:
             try:
                 user_message = await self.websocket.receive_text()

@@ -1,7 +1,7 @@
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock, MagicMock, create_autospec
 
 import pytest
-from fastapi import WebSocket
+from fastapi import WebSocket, WebSocketDisconnect
 from langchain.chains.llm import LLMChain
 from starlette.types import Send
 
@@ -28,3 +28,13 @@ def bot_response():
 @pytest.fixture
 def chain():
     return MagicMock(spec=LLMChain)
+
+
+@pytest.fixture
+def mock_websocket():
+    websocket = create_autospec(WebSocket)
+    websocket.accept = AsyncMock()
+    websocket.receive_text = AsyncMock(side_effect=["Hello", WebSocketDisconnect()])
+    websocket.send_json = AsyncMock()
+    websocket.send_text = AsyncMock()
+    return websocket
