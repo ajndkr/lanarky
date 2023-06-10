@@ -27,7 +27,7 @@ class BaseWebsocketConnection(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    async def connect(self, accept_connection=True):
+    async def connect(self, accept_connection: bool = True):
         if accept_connection and self.connection_accepted:
             raise RuntimeError("Connection already accepted.")
 
