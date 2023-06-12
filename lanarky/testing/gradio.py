@@ -6,12 +6,29 @@ from fastapi import FastAPI
 from .settings import get_settings
 
 
+# FIXME: This is a hacky way to get the query key from the OpenAPI spec
+def get_payload_query_key() -> str:
+    openapi_json_url = f"{get_settings().api_url}/openapi.json"
+    response = requests.get(openapi_json_url)
+    openapi_data = response.json()
+
+    ref = openapi_data["paths"][get_settings().api_endpoint]["post"]["requestBody"][
+        "content"
+    ]["application/json"]["schema"]["$ref"]
+    schema_name = ref.split("/")[-1]
+    required = openapi_data["components"]["schemas"][schema_name]["required"]
+
+    return required[0]
+
+
 def send_query(api_url: str, query: str, chat: list[Any], history: list[Any]):
     """Adapted code from: https://huggingface.co/spaces/ysharma/Gradio-demo-streaming"""
     history = history or []
     history.append(query)
 
-    payload = {"query": query}
+    query_key = get_payload_query_key()
+
+    payload = {query_key: query}
     headers = {
         "accept": "text/event-stream",
         "Content-Type": "application/json",
