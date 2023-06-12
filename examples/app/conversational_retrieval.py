@@ -9,11 +9,10 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 
 from lanarky import LangchainRouter
-from lanarky.testing import mount_gradio_app
 
 load_dotenv()
 
-app = mount_gradio_app(FastAPI(title="ConversationalRetrievalChainDemo"))
+app = FastAPI(title="ConversationalRetrievalChainDemo")
 
 templates = Jinja2Templates(directory="templates")
 
