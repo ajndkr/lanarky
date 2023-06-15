@@ -164,6 +164,7 @@ class StreamingResponse(_StreamingResponse):
         inputs: Union[dict[str, Any], Any],
         as_json: bool = False,
         background: Optional[BackgroundTask] = None,
+        callback: Optional[AsyncLanarkyCallback] = None,
         callback_kwargs: dict[str, Any] = {},
         **kwargs: Any,
     ) -> "StreamingResponse":
@@ -174,10 +175,11 @@ class StreamingResponse(_StreamingResponse):
             inputs: Inputs to pass to ``chain.acall()``.
             as_json: Whether to return the outputs as JSON.
             background: A ``BackgroundTask`` object to run in the background.
+            callback: custom callback function to use instead of using the registry.
             callback_kwargs: Keyword arguments to pass to the callback function.
         """
         chain_executor = cls._create_chain_executor(
-            chain, inputs, as_json, **callback_kwargs
+            chain, inputs, as_json, callback, **callback_kwargs
         )
 
         return cls(
