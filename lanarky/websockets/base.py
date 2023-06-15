@@ -5,13 +5,13 @@ Credits:
 * `langchain-chat-websockets <https://github.com/pors/langchain-chat-websockets>`_
 """
 import logging
-from typing import Any, Awaitable, Callable
+from typing import Any, Awaitable, Callable, Optional
 
 from fastapi import WebSocket, WebSocketDisconnect
 from langchain.chains.base import Chain
 from pydantic import BaseModel, Field
 
-from lanarky.callbacks import get_websocket_callback
+from lanarky.callbacks import AsyncLanarkyCallback, get_websocket_callback
 from lanarky.schemas import Message, MessageType, Sender, WebsocketResponse
 
 logger = logging.getLogger(__name__)
@@ -79,6 +79,7 @@ class BaseWebsocketConnection(BaseModel):
         chain: Chain,
         websocket: WebSocket,
         response: WebsocketResponse,
+        callback: Optional[AsyncLanarkyCallback] = None,
         **callback_kwargs,
     ) -> Callable[[str], Awaitable[Any]]:
         """Creates a function to execute ``chain.acall()``.
@@ -87,6 +88,7 @@ class BaseWebsocketConnection(BaseModel):
             chain: langchain chain instance.
             websocket: websocket instance.
             response: WebsocketResponse instance.
+            callback: custom callback function.
             callback_kwargs: keyword arguments for callback function.
         """
         raise NotImplementedError
@@ -96,6 +98,7 @@ class BaseWebsocketConnection(BaseModel):
         cls,
         chain: Chain,
         websocket: WebSocket,
+        callback: Optional[AsyncLanarkyCallback] = None,
         callback_kwargs: dict[str, Any] = {},
     ) -> "BaseWebsocketConnection":
         """Creates a BaseWebsocketConnection instance from a langchain chain instance.
@@ -103,6 +106,7 @@ class BaseWebsocketConnection(BaseModel):
         Args:
             chain: langchain chain instance.
             websocket: websocket instance.
+            callback: custom callback function.
             callback_kwargs: keyword arguments for callback function.
         """
         chain_executor = cls._create_chain_executor(
@@ -111,6 +115,7 @@ class BaseWebsocketConnection(BaseModel):
             WebsocketResponse(
                 sender=Sender.BOT, message=Message.NULL, message_type=MessageType.STREAM
             ),
+            callback=callback,
             **callback_kwargs,
         )
 
@@ -128,6 +133,7 @@ class WebsocketConnection(BaseWebsocketConnection):
         chain: Chain,
         websocket: WebSocket,
         response: WebsocketResponse,
+        callback: Optional[AsyncLanarkyCallback] = None,
         **callback_kwargs,
     ) -> Callable[[str], Awaitable[Any]]:
         """Creates a function to execute ``chain.acall()``.
@@ -138,12 +144,14 @@ class WebsocketConnection(BaseWebsocketConnection):
             response: WebsocketResponse instance.
             callback_kwargs: keyword arguments for callback function.
         """
+        if callback is None:
+            callback = get_websocket_callback
 
         async def wrapper(user_message: str):
             return await chain.acall(
                 inputs=user_message,
                 callbacks=[
-                    get_websocket_callback(
+                    callback(
                         chain=chain,
                         websocket=websocket,
                         response=response,
