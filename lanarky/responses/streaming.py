@@ -15,7 +15,11 @@ from langchain.chains.base import Chain
 from starlette.background import BackgroundTask
 from starlette.types import Receive, Scope, Send
 
-from lanarky.callbacks import get_streaming_callback, get_streaming_json_callback
+from lanarky.callbacks import (
+    AsyncLanarkyCallback,
+    get_streaming_callback,
+    get_streaming_json_callback,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -129,6 +133,7 @@ class StreamingResponse(_StreamingResponse):
         chain: Chain,
         inputs: Union[dict[str, Any], Any],
         as_json: bool = False,
+        callback: Optional[AsyncLanarkyCallback] = None,
         **callback_kwargs,
     ) -> Callable[[Send], Awaitable[Any]]:
         """Creates a function to execute ``chain.acall()``.
@@ -139,14 +144,15 @@ class StreamingResponse(_StreamingResponse):
             as_json: Whether to return the outputs as JSON.
             callback_kwargs: Keyword arguments to pass to the callback function.
         """
-        get_callback_fn = (
-            get_streaming_json_callback if as_json else get_streaming_callback
-        )
+        if callback is None:
+            callback = (
+                get_streaming_json_callback if as_json else get_streaming_callback
+            )
 
         async def wrapper(send: Send):
             return await chain.acall(
                 inputs=inputs,
-                callbacks=[get_callback_fn(chain, send=send, **callback_kwargs)],
+                callbacks=[callback(chain, send=send, **callback_kwargs)],
             )
 
         return wrapper
@@ -158,6 +164,7 @@ class StreamingResponse(_StreamingResponse):
         inputs: Union[dict[str, Any], Any],
         as_json: bool = False,
         background: Optional[BackgroundTask] = None,
+        callback: Optional[AsyncLanarkyCallback] = None,
         callback_kwargs: dict[str, Any] = {},
         **kwargs: Any,
     ) -> "StreamingResponse":
@@ -168,10 +175,11 @@ class StreamingResponse(_StreamingResponse):
             inputs: Inputs to pass to ``chain.acall()``.
             as_json: Whether to return the outputs as JSON.
             background: A ``BackgroundTask`` object to run in the background.
+            callback: custom callback function to use instead of using the registry.
             callback_kwargs: Keyword arguments to pass to the callback function.
         """
         chain_executor = cls._create_chain_executor(
-            chain, inputs, as_json, **callback_kwargs
+            chain, inputs, as_json, callback, **callback_kwargs
         )
 
         return cls(
