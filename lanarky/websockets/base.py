@@ -5,6 +5,7 @@ Credits:
 * `langchain-chat-websockets <https://github.com/pors/langchain-chat-websockets>`_
 """
 import logging
+from functools import partial
 from typing import Any, Awaitable, Callable, Optional
 
 from fastapi import WebSocket, WebSocketDisconnect
@@ -145,14 +146,13 @@ class WebsocketConnection(BaseWebsocketConnection):
             callback_kwargs: keyword arguments for callback function.
         """
         if callback is None:
-            callback = get_websocket_callback
+            callback = partial(get_websocket_callback, chain)
 
         async def wrapper(user_message: str):
             return await chain.acall(
                 inputs=user_message,
                 callbacks=[
                     callback(
-                        chain=chain,
                         websocket=websocket,
                         response=response,
                         **callback_kwargs,

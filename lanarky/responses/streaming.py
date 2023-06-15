@@ -145,14 +145,15 @@ class StreamingResponse(_StreamingResponse):
             callback_kwargs: Keyword arguments to pass to the callback function.
         """
         if callback is None:
-            callback = (
+            get_callback_fn = (
                 get_streaming_json_callback if as_json else get_streaming_callback
             )
+            callback = partial(get_callback_fn, chain)
 
         async def wrapper(send: Send):
             return await chain.acall(
                 inputs=inputs,
-                callbacks=[callback(chain, send=send, **callback_kwargs)],
+                callbacks=[callback(send=send, **callback_kwargs)],
             )
 
         return wrapper
