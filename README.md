@@ -16,8 +16,7 @@
 
 </div>
 
-Lanarky is an open-source framework to deploy LLM applications in production. It is built on top of [FastAPI](https://github.com/tiangolo/fastapi)
-and comes with batteries included.
+Lanarky is a [FastAPI](https://github.com/tiangolo/fastapi) framework to build production-grade LLM applications.
 
 </div>
 <details>
