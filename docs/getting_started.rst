@@ -30,5 +30,5 @@ You can get quickly started with Lanarky and deploy your first Langchain app in 
 .. image:: https://raw.githubusercontent.com/ajndkr/lanarky/main/assets/demo.gif
 
 .. seealso::
-   You can find more Langchain demos in the `examples/ <https://github.com/ajndkr/lanarky/blob/main/examples/README.md>`_
+   You can find more LangChain demos in the `examples/ <https://github.com/ajndkr/lanarky/blob/main/examples/README.md>`_
    folder of the GitHub repository.

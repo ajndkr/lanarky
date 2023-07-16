@@ -1,23 +1,23 @@
 testing
 =======
 
-.. automodule:: lanarky.testing
+.. automodule:: lanarky.plugins
    :members:
    :undoc-members:
    :show-inheritance:
 
-lanarky.testing.gradio
+lanarky.plugins.gradio
 -----------------------------
 
-.. automodule:: lanarky.testing.gradio
+.. automodule:: lanarky.plugins.gradio
    :members:
    :undoc-members:
    :show-inheritance:
 
-lanarky.testing.settings
+lanarky.plugins.settings
 -------------------------------
 
-.. automodule:: lanarky.testing.settings
+.. automodule:: lanarky.plugins.settings
    :members:
    :undoc-members:
    :show-inheritance:

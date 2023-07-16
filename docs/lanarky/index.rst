@@ -10,6 +10,6 @@ Welcome to Lanarky's API Reference!
    lanarky.responses
    lanarky.websockets
    lanarky.routing
-   lanarky.testing
+   lanarky.plugins
    lanarky.register
    lanarky.schemas

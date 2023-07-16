@@ -1,13 +1,18 @@
 🚀 Features
 ===================================
 
-Langchain Support
------------------
+Supported LLM Orchestration Frameworks
+--------------------------------------
 
-- Supports multi-mode output streaming over HTTP and Websocket
-- Supports langchain-native LLM caching strategies
+- `LangChain <https://github.com/hwchase17/langchain>`_
 
-Gradio Testing
---------------
+LangChain
+^^^^^^^^^
 
-- Simple Gradio chatbot UI for fast prototyping. Currently limited to streaming over HTTP
+- multi-mode output streaming over HTTP and Websocket
+- langchain-compatible LLM caching strategies
+
+Plugins
+--------
+
+- Gradio plugin: a simple chatbot UI for fast prototyping of API endpoints. Currently supports HTTP only
