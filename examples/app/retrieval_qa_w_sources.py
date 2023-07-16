@@ -7,7 +7,7 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 
 from lanarky import LangchainRouter
-from lanarky.testing import mount_gradio_app
+from lanarky.plugins import mount_gradio_app
 
 load_dotenv()
 

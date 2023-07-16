@@ -5,7 +5,7 @@ from langchain import ConversationChain
 from langchain.chat_models import ChatOpenAI
 
 from lanarky import LangchainRouter
-from lanarky.testing import mount_gradio_app
+from lanarky.plugins import mount_gradio_app
 
 load_dotenv()
 
