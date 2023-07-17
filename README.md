@@ -45,9 +45,11 @@ See [Roadmap](#-roadmap) for upcoming features.
 
 ## ❓ Why?
 
-Lanarky is an open-source project to provide python users an unopinionated web framework to build
-and deploy LLM applications. The framework is built on top of FastAPI due its popularity within the python
-community as a modern and high performance web framework. You can learn more about FastAPI at https://fastapi.tiangolo.com/.
+Many open-source projects for developing and deploying LLM applications have either opinionated designs,
+particularly regarding deployment, or limitations in terms of scalability. This is where Lanarky comes in.
+Lanarky is an open-source project that provides Python users with an unopinionated web framework for constructing
+and deploying LLM applications. By leveraging FastAPI as its foundation, Lanarky ensures that applications built
+with it are production-ready and can be seamlessly deployed on any cloud provider.
 
 ## 💾 Installation
 
