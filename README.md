@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/ajndkr/lanarky/main/assets/logo.png" alt="lanarky-logo" width="150">
+<img src="https://raw.githubusercontent.com/ajndkr/lanarky/main/assets/logo.png" alt="lanarky-logo" width="250">
 
 <h1> Lanarky </h1>
 
@@ -16,7 +16,7 @@
 
 </div>
 
-Lanarky is a [FastAPI](https://github.com/tiangolo/fastapi) framework to build production-grade LLM applications.
+A [FastAPI](https://github.com/tiangolo/fastapi) framework to build production-grade LLM applications.
 
 </div>
 <details>
@@ -37,18 +37,19 @@ Lanarky is a [FastAPI](https://github.com/tiangolo/fastapi) framework to build p
 ## 🚀 Features
 
 - 🌐 multi-mode token streaming
-- 💬 simple gradio chatbot UI for fast prototyping
-- 🔗 supports [LangChain](https://github.com/hwchase17/langchain) applications
+- 💬 Gradio plugin for fast prototyping
+- 🔗 supports [LangChain](https://github.com/hwchase17/langchain)
 - 🗄️ multiple LLM caching strategies
 
 See [Roadmap](#-roadmap) for upcoming features.
 
 ## ❓ Why?
 
-There are great low-code/no-code solutions in the open source to deploy your LLM projects. However,
-most of them are opinionated in terms of cloud or deployment code. This project aims to provide users
-with a cloud-agnostic and deployment-agnostic solution which can be easily integrated into existing
-backend infrastructures.
+Many open-source projects for developing and deploying LLM applications have either opinionated designs,
+particularly regarding deployment, or limitations in terms of scalability. This is where Lanarky comes in.
+Lanarky is an open-source project that provides Python users with an unopinionated web framework for constructing
+and deploying LLM applications. By leveraging FastAPI as its foundation, Lanarky ensures that applications built
+with it are production-ready and can be seamlessly deployed on any cloud provider.
 
 ## 💾 Installation
 

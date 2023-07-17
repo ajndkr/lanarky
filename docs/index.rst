@@ -28,7 +28,7 @@ Welcome to Lanarky
    :caption: API Reference
    :hidden:
 
-   lanarky/lanarky
+   lanarky/index
 
 .. image:: https://img.shields.io/github/stars/ajndkr/lanarky
    :target: https://github.com/ajndkr/lanarky/stargazers
@@ -51,16 +51,16 @@ Welcome to Lanarky
 .. image:: https://img.shields.io/twitter/follow/lanarky_io?style=social
    :target: https://twitter.com/intent/follow?screen_name=lanarky_io
 
-Lanarky is an open-source framework to deploy LLM applications in production.
-It is built on top of `FastAPI <https://github.com/tiangolo/fastapi>`_ and comes with batteries included.
+A `FastAPI <https://github.com/tiangolo/fastapi>`_ framework to build production-grade LLM applications.
 
 ❓ Why?
 -----------------
 
-There are great low-code/no-code solutions in the open source to deploy your LLM projects. However,
-most of them are opinionated in terms of cloud or deployment code. This project aims to provide users
-with a cloud-agnostic and deployment-agnostic solution which can be easily integrated into existing
-backend infrastructures.
+Many open-source projects for developing and deploying LLM applications have either opinionated designs,
+particularly regarding deployment, or limitations in terms of scalability. This is where Lanarky comes in.
+Lanarky is an open-source project that provides Python users with an unopinionated web framework for constructing
+and deploying LLM applications. By leveraging FastAPI as its foundation, Lanarky ensures that applications built
+with it are production-ready and can be seamlessly deployed on any cloud provider.
 
 💾 Installation
 -----------------
