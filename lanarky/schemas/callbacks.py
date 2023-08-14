@@ -7,6 +7,7 @@ class StreamingJSONResponse(BaseModel):
     """Streaming JSON response."""
 
     token: str = ""
+    answer: str = ""  # only returned when langchain.llm_cache is used
 
 
 class BaseRetrievalQAStreamingJSONResponse(StreamingJSONResponse):

@@ -14,6 +14,13 @@ class AsyncLanarkyCallback(AsyncCallbackHandler, BaseModel):
     """Async Callback handler for FastAPI StreamingResponse."""
 
     @property
+    def llm_cache_enabled(self) -> bool:
+        """Determine if LLM caching is enabled."""
+        import langchain
+
+        return langchain.llm_cache is not None
+
+    @property
     def always_verbose(self) -> bool:
         """Whether to call verbose callbacks even if verbose is False."""
         return True
