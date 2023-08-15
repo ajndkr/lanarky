@@ -5,7 +5,7 @@ from lanarky.register import (
     register_streaming_json_callback,
     register_websocket_callback,
 )
-from lanarky.schemas import StreamingJSONResponse
+from lanarky.schemas import AnswerStreamingJSONResponse, StreamingJSONResponse
 
 from .base import (
     AsyncStreamingJSONResponseCallback,
@@ -23,12 +23,16 @@ class AsyncLLMChainStreamingCallback(AsyncStreamingResponseCallback):
 
     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
+        self.llm_cache_used = (
+            False  # cache missed (or was never enabled) if we are here
+        )
         message = self._construct_message(token)
         await self.send(message)
 
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
-        if self.llm_cache_enabled and ANSWER_KEY in outputs:
+        # If the cache was used, we need to send the final answer.
+        if self.llm_cache_used and ANSWER_KEY in outputs:
             message = self._construct_message(outputs[ANSWER_KEY])
             await self.send(message)
 
@@ -39,12 +43,16 @@ class AsyncLLMChainWebsocketCallback(AsyncWebsocketCallback):
 
     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
+        self.llm_cache_used = (
+            False  # cache missed (or was never enabled) if we are here
+        )
         message = self._construct_message(token)
         await self.websocket.send_json(message)
 
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
-        if self.llm_cache_enabled and ANSWER_KEY in outputs:
+        # If the cache was used, we need to send the final answer.
+        if self.llm_cache_used and ANSWER_KEY in outputs:
             message = self._construct_message(outputs[ANSWER_KEY])
             await self.websocket.send_json(message)
 
@@ -55,13 +63,17 @@ class AsyncLLMChainStreamingJSONCallback(AsyncStreamingJSONResponseCallback):
 
     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
+        self.llm_cache_used = (
+            False  # cache missed (or was never enabled) if we are here
+        )
         message = self._construct_message(StreamingJSONResponse(token=token))
         await self.send(message)
 
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
-        if self.llm_cache_enabled and ANSWER_KEY in outputs:
+        # If the cache was used, we need to send the final answer.
+        if self.llm_cache_used and ANSWER_KEY in outputs:
             message = self._construct_message(
-                StreamingJSONResponse(answer=outputs[ANSWER_KEY])
+                AnswerStreamingJSONResponse(answer=outputs[ANSWER_KEY])
             )
             await self.send(message)

@@ -7,8 +7,10 @@ from lanarky.callbacks.retrieval_qa import (
     AsyncBaseRetrievalQAStreamingJSONCallback,
     AsyncBaseRetrievalQAWebsocketCallback,
 )
-from lanarky.schemas import BaseRetrievalQAStreamingJSONResponse
-from lanarky.schemas.callbacks import StreamingJSONResponse
+from lanarky.schemas import (
+    AnswerStreamingJSONResponse,
+    BaseRetrievalQAStreamingJSONResponse,
+)
 
 
 @pytest.fixture
@@ -57,7 +59,7 @@ async def test_streaming_on_chain_end_cache_enabled(send, outputs, messages):
 
     await callback.on_chain_end(outputs)
 
-    if callback.llm_cache_enabled:
+    if callback.llm_cache_used:
         callback.send.assert_has_calls(
             [call(callback._construct_message(outputs["answer"]))]
         )
@@ -99,7 +101,7 @@ async def test_websocket_on_chain_end_cache_enabled(
     )
     await callback.on_chain_end(outputs)
 
-    if callback.llm_cache_enabled:
+    if callback.llm_cache_used:
         callback.websocket.send_json.assert_has_calls(
             [call(callback._construct_message(outputs["answer"]))]
         )
@@ -143,9 +145,11 @@ async def test_streaming_json_on_chain_end_cache_enabled(send, outputs):
     answer = outputs["answer"]
 
     awaits_expected = []
-    if callback.llm_cache_enabled:
+    if callback.llm_cache_used:
         awaits_expected.append(
-            call(callback._construct_message(StreamingJSONResponse(answer=answer)))
+            call(
+                callback._construct_message(AnswerStreamingJSONResponse(answer=answer))
+            )
         )
 
     awaits_expected.append(
