@@ -21,9 +21,7 @@ anyio==3.7.0
     #   starlette
     #   watchfiles
 async-timeout==4.0.2
-    # via
-    #   aiohttp
-    #   langchain
+    # via aiohttp
 attrs==23.1.0
     # via
     #   aiohttp
@@ -45,8 +43,6 @@ cycler==0.11.0
     # via matplotlib
 dataclasses-json==0.5.7
     # via langchain
-exceptiongroup==1.1.1
-    # via anyio
 faiss-cpu==1.7.4
     # via -r requirements.in
 fastapi==0.96.0
@@ -96,8 +92,6 @@ idna==3.4
     #   httpx
     #   requests
     #   yarl
-importlib-resources==5.12.0
-    # via matplotlib
 jinja2==3.1.2
     # via
     #   altair
@@ -108,10 +102,12 @@ kiwisolver==1.4.4
     # via matplotlib
 lanarky==0.7.8
     # via -r requirements.in
-langchain==0.0.189
+langchain==0.0.236
     # via
     #   -r requirements.in
     #   lanarky
+langsmith==0.0.10
+    # via langchain
 linkify-it-py==2.0.2
     # via markdown-it-py
 markdown-it-py[linkify]==2.2.0
@@ -176,6 +172,7 @@ pydantic==1.10.8
     #   fastapi
     #   gradio
     #   langchain
+    #   langsmith
     #   openapi-schema-pydantic
 pydub==0.25.1
     # via gradio
@@ -211,6 +208,7 @@ requests==2.31.0
     #   gradio-client
     #   huggingface-hub
     #   langchain
+    #   langsmith
     #   openai
     #   tiktoken
 semantic-version==2.10.0
@@ -238,14 +236,12 @@ tqdm==4.65.0
     #   openai
 typing-extensions==4.5.0
     # via
-    #   altair
     #   gradio
     #   gradio-client
     #   huggingface-hub
     #   lanarky
     #   pydantic
     #   sqlalchemy
-    #   starlette
     #   typing-inspect
 typing-inspect==0.9.0
     # via dataclasses-json
@@ -272,5 +268,3 @@ websockets==11.0.3
     #   uvicorn
 yarl==1.9.2
     # via aiohttp
-zipp==3.15.0
-    # via importlib-resources
