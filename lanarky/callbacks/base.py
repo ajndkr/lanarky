@@ -14,6 +14,8 @@ from lanarky.schemas import StreamingJSONResponse, WebsocketResponse
 class AsyncLanarkyCallback(AsyncCallbackHandler, BaseModel):
     """Async Callback handler for FastAPI StreamingResponse."""
 
+    output_key: str = Field(default="answer")
+
     llm_cache_used: bool = Field(
         default_factory=lambda: langchain.llm_cache is not None
     )
