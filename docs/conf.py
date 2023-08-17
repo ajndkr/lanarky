@@ -71,7 +71,7 @@ html_theme_options = {
         },
         {
             "name": "Twitter",
-            "url": "https://twitter.com/ajndkr",
+            "url": "https://twitter.com/lanarky_io",
             "html": "",
             "class": "fa-brands fa-solid fa-twitter fa-2x",
         },
