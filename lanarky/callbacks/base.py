@@ -2,6 +2,7 @@ import json
 from abc import abstractmethod
 from typing import Any
 
+import langchain
 from fastapi import WebSocket
 from langchain.callbacks.base import AsyncCallbackHandler
 from pydantic import BaseModel, Field
@@ -12,6 +13,17 @@ from lanarky.schemas import StreamingJSONResponse, WebsocketResponse
 
 class AsyncLanarkyCallback(AsyncCallbackHandler, BaseModel):
     """Async Callback handler for FastAPI StreamingResponse."""
+
+    output_key: str = Field(default="answer")
+
+    llm_cache_used: bool = Field(
+        default_factory=lambda: langchain.llm_cache is not None
+    )
+
+    @property
+    def llm_cache_enabled(self) -> bool:
+        """Determine if LLM caching is enabled."""
+        return langchain.llm_cache is not None
 
     @property
     def always_verbose(self) -> bool:

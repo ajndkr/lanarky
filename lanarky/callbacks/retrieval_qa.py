@@ -37,6 +37,8 @@ class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
 
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
+        if self.llm_cache_enabled:
+            await super().on_chain_end(outputs, **kwargs)
         if SOURCE_DOCUMENTS_KEY in outputs:
             message = self._construct_message("\n\nSOURCE DOCUMENTS:\n")
             await self.send(message)
@@ -61,6 +63,8 @@ class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
 
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
+        if self.llm_cache_enabled:
+            await super().on_chain_end(outputs, **kwargs)
         if SOURCE_DOCUMENTS_KEY in outputs:
             message = self._construct_message("\n\nSOURCE DOCUMENTS:\n")
             await self.websocket.send_json(message)
@@ -83,6 +87,8 @@ class AsyncBaseRetrievalQAStreamingJSONCallback(AsyncLLMChainStreamingJSONCallba
 
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
+        if self.llm_cache_enabled:
+            await super().on_chain_end(outputs, **kwargs)
         if SOURCE_DOCUMENTS_KEY in outputs:
             source_documents = [
                 document.dict() for document in outputs[SOURCE_DOCUMENTS_KEY]
