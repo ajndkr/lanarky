@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lanarky"
-version = "0.7.14"
+version = "0.7.15"
 description = "FastAPI framework to build production-grade LLM applications"
 authors = ["Ajinkya Indulkar <26824103+ajndkr@users.noreply.github.com>"]
 readme = "README.md"
