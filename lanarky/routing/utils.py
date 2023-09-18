@@ -29,7 +29,7 @@ class LLMCacheMode(IntEnum):
 
 
 BASE_LANGCHAIN_TYPES = [
-    "LLMChain"
+    "LLMChain",
     "ConversationChain",
     "AgentExecutor",
     "RetrievalQAWithSourcesChain",
