@@ -15,7 +15,7 @@ fastapi = ">=0.97.0"
 langchain = ">=0.0.200"
 urllib3 = "<=1.26.15"  # added due to poetry errors
 python-dotenv = "^1.0.0"
-typing-extensions = "4.5.0"  # added due to https://github.com/hwchase17/langchain/issues/5113
+typing-extensions = "4.7.1"  # added due to https://github.com/hwchase17/langchain/issues/5113
 redis = {version = "^4.5.5", optional = true}
 gptcache = {version = "^0.1.31", optional = true}
 openai = {version = "^0.27.8", optional = true}
