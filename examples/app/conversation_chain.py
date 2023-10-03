@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
-from langchain import ConversationChain
+from langchain.chains import ConversationChain
 from langchain.chat_models import ChatOpenAI
 
 from lanarky import LangchainRouter
