@@ -8,16 +8,17 @@ aiofiles==23.2.1
     # via gradio
 aiohttp==3.8.5
     # via
-    #   gradio
     #   langchain
     #   openai
 aiosignal==1.3.1
     # via aiohttp
-altair==5.0.1
+altair==5.1.1
     # via gradio
 anyio==3.7.1
     # via
+    #   fastapi
     #   httpcore
+    #   langchain
     #   starlette
     #   watchfiles
 async-timeout==4.0.3
@@ -34,60 +35,60 @@ certifi==2023.7.22
     #   httpcore
     #   httpx
     #   requests
-charset-normalizer==3.2.0
+charset-normalizer==3.3.0
     # via
     #   aiohttp
     #   requests
 click==8.1.7
     # via uvicorn
-contourpy==1.1.0
+contourpy==1.1.1
     # via matplotlib
-cycler==0.11.0
+cycler==0.12.0
     # via matplotlib
-dataclasses-json==0.5.14
+dataclasses-json==0.6.1
     # via langchain
 exceptiongroup==1.1.3
     # via anyio
 faiss-cpu==1.7.4
     # via -r requirements.in
-fastapi==0.101.1
+fastapi==0.103.2
     # via
     #   -r requirements.in
     #   gradio
     #   lanarky
 ffmpy==0.3.1
     # via gradio
-filelock==3.12.2
+filelock==3.12.4
     # via huggingface-hub
-fonttools==4.42.0
+fonttools==4.43.0
     # via matplotlib
 frozenlist==1.4.0
     # via
     #   aiohttp
     #   aiosignal
-fsspec==2023.6.0
+fsspec==2023.9.2
     # via
     #   gradio-client
     #   huggingface-hub
-gradio==3.40.1
+gradio==3.46.0
     # via -r requirements.in
-gradio-client==0.4.0
+gradio-client==0.5.3
     # via gradio
-greenlet==2.0.2
+greenlet==3.0.0
     # via sqlalchemy
 h11==0.14.0
     # via
     #   httpcore
     #   uvicorn
-httpcore==0.17.3
+httpcore==0.18.0
     # via httpx
 httptools==0.6.0
     # via uvicorn
-httpx==0.24.1
+httpx==0.25.0
     # via
     #   gradio
     #   gradio-client
-huggingface-hub==0.16.4
+huggingface-hub==0.17.3
     # via
     #   gradio
     #   gradio-client
@@ -97,7 +98,7 @@ idna==3.4
     #   httpx
     #   requests
     #   yarl
-importlib-resources==6.0.1
+importlib-resources==6.1.0
     # via
     #   gradio
     #   matplotlib
@@ -105,47 +106,41 @@ jinja2==3.1.2
     # via
     #   altair
     #   gradio
-jsonschema==4.19.0
+jsonpatch==1.33
+    # via langchain
+jsonpointer==2.4
+    # via jsonpatch
+jsonschema==4.19.1
     # via altair
 jsonschema-specifications==2023.7.1
     # via jsonschema
-kiwisolver==1.4.4
+kiwisolver==1.4.5
     # via matplotlib
-lanarky==0.7.13
+lanarky==0.7.16
     # via -r requirements.in
-langchain==0.0.267
+langchain==0.0.306
     # via
     #   -r requirements.in
     #   lanarky
-langsmith==0.0.24
+langsmith==0.0.41
     # via langchain
-linkify-it-py==2.0.2
-    # via markdown-it-py
-markdown-it-py[linkify]==2.2.0
-    # via
-    #   gradio
-    #   mdit-py-plugins
 markupsafe==2.1.3
     # via
     #   gradio
     #   jinja2
 marshmallow==3.20.1
     # via dataclasses-json
-matplotlib==3.7.2
+matplotlib==3.8.0
     # via gradio
-mdit-py-plugins==0.3.3
-    # via gradio
-mdurl==0.1.2
-    # via markdown-it-py
 multidict==6.0.4
     # via
     #   aiohttp
     #   yarl
 mypy-extensions==1.0.0
     # via typing-inspect
-numexpr==2.8.5
+numexpr==2.8.7
     # via langchain
-numpy==1.25.2
+numpy==1.26.0
     # via
     #   altair
     #   contourpy
@@ -154,37 +149,36 @@ numpy==1.25.2
     #   matplotlib
     #   numexpr
     #   pandas
-openai==0.27.8
+openai==0.28.1
     # via -r requirements.in
-openapi-schema-pydantic==1.2.4
-    # via langchain
-orjson==3.9.5
+orjson==3.9.7
     # via gradio
-packaging==23.1
+packaging==23.2
     # via
+    #   altair
     #   gradio
     #   gradio-client
     #   huggingface-hub
     #   marshmallow
     #   matplotlib
-pandas==2.0.3
+pandas==2.1.1
     # via
     #   altair
     #   gradio
-pillow==10.0.0
+pillow==10.0.1
     # via
     #   gradio
     #   matplotlib
-pydantic==1.10.12
+pydantic==1.10.13
     # via
+    #   -r requirements.in
     #   fastapi
     #   gradio
     #   langchain
     #   langsmith
-    #   openapi-schema-pydantic
 pydub==0.25.1
     # via gradio
-pyparsing==3.0.9
+pyparsing==3.1.1
     # via matplotlib
 python-dateutil==2.8.2
     # via
@@ -196,7 +190,7 @@ python-dotenv==1.0.0
     #   uvicorn
 python-multipart==0.0.6
     # via gradio
-pytz==2023.3
+pytz==2023.3.post1
     # via pandas
 pyyaml==6.0.1
     # via
@@ -219,7 +213,7 @@ requests==2.31.0
     #   langsmith
     #   openai
     #   tiktoken
-rpds-py==0.9.2
+rpds-py==0.10.3
     # via
     #   jsonschema
     #   referencing
@@ -232,13 +226,13 @@ sniffio==1.3.0
     #   anyio
     #   httpcore
     #   httpx
-sqlalchemy==2.0.20
+sqlalchemy==2.0.21
     # via langchain
 starlette==0.27.0
     # via fastapi
 tenacity==8.2.3
     # via langchain
-tiktoken==0.4.0
+tiktoken==0.5.1
     # via -r requirements.in
 toolz==0.12.0
     # via altair
@@ -246,14 +240,13 @@ tqdm==4.66.1
     # via
     #   huggingface-hub
     #   openai
-typing-extensions==4.5.0
+typing-extensions==4.8.0
     # via
     #   altair
     #   fastapi
     #   gradio
     #   gradio-client
     #   huggingface-hub
-    #   lanarky
     #   pydantic
     #   sqlalchemy
     #   starlette
@@ -263,19 +256,15 @@ typing-inspect==0.9.0
     # via dataclasses-json
 tzdata==2023.3
     # via pandas
-uc-micro-py==1.0.2
-    # via linkify-it-py
-urllib3==1.26.15
-    # via
-    #   lanarky
-    #   requests
+urllib3==2.0.6
+    # via requests
 uvicorn[standard]==0.23.2
     # via
     #   -r requirements.in
     #   gradio
 uvloop==0.17.0
     # via uvicorn
-watchfiles==0.19.0
+watchfiles==0.20.0
     # via uvicorn
 websockets==11.0.3
     # via
@@ -284,5 +273,5 @@ websockets==11.0.3
     #   uvicorn
 yarl==1.9.2
     # via aiohttp
-zipp==3.16.2
+zipp==3.17.0
     # via importlib-resources
