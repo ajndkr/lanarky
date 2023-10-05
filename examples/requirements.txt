@@ -118,7 +118,7 @@ kiwisolver==1.4.5
     # via matplotlib
 lanarky==0.7.16
     # via -r requirements.in
-langchain==0.0.306
+langchain==0.0.308
     # via
     #   -r requirements.in
     #   lanarky
@@ -138,8 +138,6 @@ multidict==6.0.4
     #   yarl
 mypy-extensions==1.0.0
     # via typing-inspect
-numexpr==2.8.7
-    # via langchain
 numpy==1.26.0
     # via
     #   altair
@@ -147,7 +145,6 @@ numpy==1.26.0
     #   gradio
     #   langchain
     #   matplotlib
-    #   numexpr
     #   pandas
 openai==0.28.1
     # via -r requirements.in
