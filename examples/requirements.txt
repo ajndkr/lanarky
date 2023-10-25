@@ -112,7 +112,7 @@ kiwisolver==1.4.5
     # via matplotlib
 lanarky==0.7.16
     # via -r requirements.in
-langchain==0.0.312
+langchain==0.0.317
     # via
     #   -r requirements.in
     #   lanarky
