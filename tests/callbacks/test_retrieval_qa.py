@@ -35,9 +35,9 @@ def messages():
 
 @pytest.mark.asyncio
 async def test_streaming_on_chain_end(send, outputs, messages):
-    import langchain
+    from langchain.globals import set_llm_cache
 
-    langchain.llm_cache = None
+    set_llm_cache(None)
 
     callback = AsyncBaseRetrievalQAStreamingCallback(send=send)
 
@@ -50,10 +50,10 @@ async def test_streaming_on_chain_end(send, outputs, messages):
 
 @pytest.mark.asyncio
 async def test_streaming_on_chain_end_cache_enabled(send, outputs, messages):
-    import langchain
     from langchain.cache import InMemoryCache
+    from langchain.globals import set_llm_cache
 
-    langchain.llm_cache = InMemoryCache()
+    set_llm_cache(InMemoryCache())
 
     callback = AsyncBaseRetrievalQAStreamingCallback(send=send)
 
@@ -71,9 +71,9 @@ async def test_streaming_on_chain_end_cache_enabled(send, outputs, messages):
 
 @pytest.mark.asyncio
 async def test_websocket_on_chain_end(websocket, bot_response, outputs, messages):
-    import langchain
+    from langchain.globals import set_llm_cache
 
-    langchain.llm_cache = None
+    set_llm_cache(None)
 
     callback = AsyncBaseRetrievalQAWebsocketCallback(
         websocket=websocket,
@@ -90,10 +90,10 @@ async def test_websocket_on_chain_end(websocket, bot_response, outputs, messages
 async def test_websocket_on_chain_end_cache_enabled(
     websocket, bot_response, outputs, messages
 ):
-    import langchain
     from langchain.cache import InMemoryCache
+    from langchain.globals import set_llm_cache
 
-    langchain.llm_cache = InMemoryCache()
+    set_llm_cache(InMemoryCache())
 
     callback = AsyncBaseRetrievalQAWebsocketCallback(
         websocket=websocket,
@@ -113,9 +113,9 @@ async def test_websocket_on_chain_end_cache_enabled(
 
 @pytest.mark.asyncio
 async def test_streaming_json_on_chain_end(send, outputs):
-    import langchain
+    from langchain.globals import set_llm_cache
 
-    langchain.llm_cache = None
+    set_llm_cache(None)
 
     callback = AsyncBaseRetrievalQAStreamingJSONCallback(send=send)
 
@@ -132,10 +132,10 @@ async def test_streaming_json_on_chain_end(send, outputs):
 
 @pytest.mark.asyncio
 async def test_streaming_json_on_chain_end_cache_enabled(send, outputs):
-    import langchain
     from langchain.cache import InMemoryCache
+    from langchain.globals import set_llm_cache
 
-    langchain.llm_cache = InMemoryCache()
+    set_llm_cache(InMemoryCache())
 
     callback = AsyncBaseRetrievalQAStreamingJSONCallback(send=send)
 

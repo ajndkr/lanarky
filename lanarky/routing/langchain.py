@@ -55,12 +55,12 @@ class LangchainRouter(APIRouter):
 
     def setup_llm_cache(self) -> None:
         """Sets up the LLM cache."""
-        import langchain
+        from langchain.globals import set_llm_cache
 
         if self.llm_cache_mode == LLMCacheMode.IN_MEMORY:
             from langchain.cache import InMemoryCache
 
-            langchain.llm_cache = InMemoryCache()
+            set_llm_cache(InMemoryCache())
 
         elif self.llm_cache_mode == LLMCacheMode.REDIS:
             try:
@@ -71,9 +71,7 @@ class LangchainRouter(APIRouter):
                 )
             from langchain.cache import RedisCache
 
-            langchain.llm_cache = RedisCache(
-                redis_=Redis.from_url(**self.llm_cache_kwargs)
-            )
+            set_llm_cache(RedisCache(redis_=Redis.from_url(**self.llm_cache_kwargs)))
 
         elif self.llm_cache_mode == LLMCacheMode.GPTCACHE:
             try:
@@ -97,7 +95,7 @@ class LangchainRouter(APIRouter):
                     ),
                 )
 
-            langchain.llm_cache = GPTCache(init_gptcache)
+            set_llm_cache(GPTCache(init_gptcache))
 
         else:
             raise ValueError(f"Invalid LLM cache mode: {self.llm_cache_mode}")
