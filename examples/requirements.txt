@@ -61,7 +61,7 @@ ffmpy==0.3.1
     # via gradio
 filelock==3.13.1
     # via huggingface-hub
-fonttools==4.44.0
+fonttools==4.44.1
     # via matplotlib
 frozenlist==1.4.0
     # via
@@ -118,7 +118,7 @@ jsonschema-specifications==2023.7.1
     # via jsonschema
 kiwisolver==1.4.5
     # via matplotlib
-lanarky==0.7.16
+lanarky==0.7.17
     # via -r requirements.in
 langchain==0.0.335
     # via
@@ -173,6 +173,7 @@ pydantic==1.10.13
     #   -r requirements.in
     #   fastapi
     #   gradio
+    #   lanarky
     #   langchain
     #   langsmith
     #   openai
@@ -185,9 +186,7 @@ python-dateutil==2.8.2
     #   matplotlib
     #   pandas
 python-dotenv==1.0.0
-    # via
-    #   lanarky
-    #   uvicorn
+    # via uvicorn
 python-multipart==0.0.6
     # via gradio
 pytz==2023.3.post1
