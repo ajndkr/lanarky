@@ -70,6 +70,6 @@ def test_langchain_router_enable_llm_cache(chain):
 
     assert router.llm_cache_mode == LLMCacheMode.IN_MEMORY
 
-    import langchain
+    from langchain.globals import get_llm_cache
 
-    assert langchain.llm_cache is not None
+    assert get_llm_cache() is not None

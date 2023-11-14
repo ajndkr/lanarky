@@ -1,0 +1,70 @@
+name: Dependency Manager
+
+on:
+  workflow_dispatch: # Allow running on-demand
+  schedule:
+    # Every Sunday at 1PM UTC
+    - cron: 0 13 * * 6
+
+env:
+  PYTHON_VERSION: 3.9
+
+jobs:
+  upgrade:
+    name: Weekly dependency upgrade
+    runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: deps/weekly-upgrade
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Upgrade base dependencies
+        run: |
+          pip install -U poetry
+          poetry update
+
+      - name: Upgrade dependencies of demo examples
+        run: |
+          pip install -U pip pip-tools
+          cd examples; pip-compile --upgrade requirements.in
+
+      - name: Upgrade pre-commit hooks
+        run: |
+          pip install pre-commit
+          pre-commit autoupdate
+
+      - name: Detect changes
+        id: changes
+        run: echo "count=$(git status --porcelain=v1 2>/dev/null | wc -l)" >> $GITHUB_OUTPUT
+
+      - name: Commit & push changes
+        if: steps.changes.outputs.count > 0
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "build(deps): upgrade dependencies"
+          git push -f origin ${{ github.ref_name }}:$BRANCH_NAME
+
+      - name: Open pull request
+        if: steps.changes.outputs.count > 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR=$(gh pr list --head $BRANCH_NAME --json number -q '.[0].number')
+          if [ -z $PR ]; then
+            gh pr create \
+            --draft \
+            --head $BRANCH_NAME \
+            --title "build(deps): upgrade dependencies" \
+            --body "Full log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --label "dependencies"
+          else
+            echo "Pull request already exists, won't create a new one."
+          fi
