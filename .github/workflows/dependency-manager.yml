@@ -32,8 +32,7 @@ jobs:
       - name: Upgrade dependencies of demo examples
         run: |
           pip install -U pip pip-tools
-          cd examples
-          pip-compile --upgrade requirements.in
+          cd examples; pip-compile --upgrade requirements.in
 
       - name: Upgrade pre-commit hooks
         run: |
