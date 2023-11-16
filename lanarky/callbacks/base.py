@@ -1,10 +1,10 @@
-import json
 from abc import abstractmethod
 from typing import Any
 
 from fastapi import WebSocket
 from langchain.callbacks.base import AsyncCallbackHandler
 from langchain.globals import get_llm_cache
+from sse_starlette.sse import ServerSentEvent, ensure_bytes
 from starlette.types import Message, Send
 
 from lanarky.schemas import StreamingJSONResponse, WebsocketResponse
@@ -36,6 +36,11 @@ class AsyncLanarkyCallback(AsyncCallbackHandler):
         """Constructs a Message from a string."""
         pass
 
+    @abstractmethod
+    def _construct_chunk(self, content: Any) -> Any:
+        """Constructs a message chunk"""
+        pass
+
 
 class AsyncStreamingResponseCallback(AsyncLanarkyCallback):
     """Async Callback handler for StreamingResponse."""
@@ -47,11 +52,16 @@ class AsyncStreamingResponseCallback(AsyncLanarkyCallback):
 
     def _construct_message(self, content: str) -> Message:
         """Constructs a Message from a string."""
+        chunk = self._construct_chunk(content)
         return {
             "type": "http.response.body",
-            "body": content.encode("utf-8"),
+            "body": ensure_bytes(chunk, None),
             "more_body": True,
         }
+
+    def _construct_chunk(self, content: str) -> ServerSentEvent:
+        """Constructs a message chunk"""
+        return ServerSentEvent(data=content)
 
 
 class AsyncWebsocketCallback(AsyncLanarkyCallback):
@@ -75,14 +85,13 @@ class AsyncStreamingJSONResponseCallback(AsyncStreamingResponseCallback):
 
     def _construct_message(self, content: StreamingJSONResponse) -> Message:
         """Constructs a Message from a dictionary."""
+        chunk = self._construct_chunk(content)
         return {
             "type": "http.response.body",
-            "body": json.dumps(
-                content.model_dump(),
-                ensure_ascii=False,
-                allow_nan=False,
-                indent=None,
-                separators=(",", ":"),
-            ).encode("utf-8"),
+            "body": ensure_bytes(chunk, None),
             "more_body": True,
         }
+
+    def _construct_chunk(self, content: StreamingJSONResponse) -> ServerSentEvent:
+        """Constructs a message chunk"""
+        return ServerSentEvent(data=content.model_dump())
