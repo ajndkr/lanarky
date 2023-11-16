@@ -38,7 +38,7 @@ class AsyncLanarkyCallback(AsyncCallbackHandler):
 
     @abstractmethod
     def _construct_chunk(self, content: Any) -> Any:
-        """Constructs a chunk from a Message."""
+        """Constructs a message chunk"""
         pass
 
 
@@ -60,7 +60,7 @@ class AsyncStreamingResponseCallback(AsyncLanarkyCallback):
         }
 
     def _construct_chunk(self, content: str) -> ServerSentEvent:
-        """Constructs a chunk from a Message."""
+        """Constructs a message chunk"""
         return ServerSentEvent(data=content)
 
 
@@ -93,5 +93,5 @@ class AsyncStreamingJSONResponseCallback(AsyncStreamingResponseCallback):
         }
 
     def _construct_chunk(self, content: StreamingJSONResponse) -> ServerSentEvent:
-        """Constructs a chunk from a Message."""
+        """Constructs a message chunk"""
         return ServerSentEvent(data=content.model_dump())
