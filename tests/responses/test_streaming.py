@@ -79,7 +79,11 @@ async def test_stream_response_error(
 
     await streaming_response.stream_response(send)
 
-    assert background.kwargs["outputs"] == "Something went wrong"
+    assert background.kwargs["outputs"] == {}
+    assert (
+        isinstance(background.kwargs["error"], Exception)
+        and str(background.kwargs["error"]) == "Something went wrong"
+    )
 
 
 @pytest.mark.asyncio
