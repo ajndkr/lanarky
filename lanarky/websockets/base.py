@@ -10,7 +10,7 @@ from typing import Any, Awaitable, Callable, Optional
 
 from fastapi import WebSocket, WebSocketDisconnect
 from langchain.chains.base import Chain
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from lanarky.callbacks import AsyncLanarkyCallback, get_websocket_callback
 from lanarky.schemas import Message, MessageType, Sender, WebsocketResponse
@@ -25,8 +25,7 @@ class BaseWebsocketConnection(BaseModel):
     chain_executor: Callable[[str], Awaitable[Any]] = Field(...)
     connection_accepted: bool = Field(False)
 
-    class Config:
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     async def connect(self, accept_connection: bool = True):
         if accept_connection and self.connection_accepted:
