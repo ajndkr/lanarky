@@ -45,14 +45,14 @@ class BaseWebsocketConnection(BaseModel):
                         sender=Sender.HUMAN,
                         message=user_message,
                         message_type=MessageType.STREAM,
-                    ).dict()
+                    ).model_dump()
                 )
                 await self.websocket.send_json(
                     WebsocketResponse(
                         sender=Sender.BOT,
                         message=Message.NULL,
                         message_type=MessageType.START,
-                    ).dict()
+                    ).model_dump()
                 )
                 await self.chain_executor(user_message)
                 await self.websocket.send_json(
@@ -60,7 +60,7 @@ class BaseWebsocketConnection(BaseModel):
                         sender=Sender.BOT,
                         message=Message.NULL,
                         message_type=MessageType.END,
-                    ).dict()
+                    ).model_dump()
                 )
             except WebSocketDisconnect:
                 logger.debug("client disconnected.")
@@ -72,7 +72,7 @@ class BaseWebsocketConnection(BaseModel):
                         sender=Sender.BOT,
                         message=Message.ERROR,
                         message_type=MessageType.ERROR,
-                    ).dict()
+                    ).model_dump()
                 )
 
     @staticmethod
