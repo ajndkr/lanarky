@@ -21,9 +21,17 @@ class AsyncAgentsLanarkyCallback(AsyncLanarkyCallback):
     Adapted from `langchain/callbacks/streaming_stdout_final_only.py <https://github.com/hwchase17/langchain/blob/master/langchain/callbacks/streaming_stdout_final_only.py>`_
     """
 
-    answer_prefix_tokens: list[str] = ["Final", " Answer", ":"]
-    last_tokens: list[str] = [""] * len(answer_prefix_tokens)
-    answer_reached: bool = False
+    def __init__(
+        self,
+        answer_prefix_tokens: list[str] = ["Final", " Answer", ":"],
+        answer_reached: bool = False,
+        **kwargs: Any
+    ) -> None:
+        super().__init__(**kwargs)
+        self.answer_prefix_tokens = answer_prefix_tokens
+        self.answer_reached = answer_reached
+
+        self.last_tokens = [""] * len(answer_prefix_tokens)
 
     async def on_llm_start(
         self, serialized: dict[str, Any], prompts: list[str], **kwargs: Any

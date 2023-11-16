@@ -35,7 +35,11 @@ SOURCE_DOCUMENTS_KEY = "source_documents"
 class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
     """AsyncStreamingResponseCallback handler for BaseRetrievalQA."""
 
-    source_document_template: str = SOURCE_DOCUMENT_TEMPLATE
+    def __init__(
+        self, source_document_template: str = SOURCE_DOCUMENT_TEMPLATE, **kwargs: Any
+    ) -> None:
+        super().__init__(**kwargs)
+        self.source_document_template = source_document_template
 
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
@@ -62,7 +66,11 @@ class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
 class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
     """AsyncWebsocketCallback handler for BaseRetrievalQA."""
 
-    source_document_template: str = SOURCE_DOCUMENT_TEMPLATE
+    def __init__(
+        self, source_document_template: str = SOURCE_DOCUMENT_TEMPLATE, **kwargs: Any
+    ) -> None:
+        super().__init__(**kwargs)
+        self.source_document_template = source_document_template
 
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
