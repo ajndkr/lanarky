@@ -55,7 +55,7 @@ class AsyncStreamingResponseCallback(AsyncLanarkyCallback):
         chunk = self._construct_chunk(content)
         return {
             "type": "http.response.body",
-            "body": ensure_bytes(chunk),
+            "body": ensure_bytes(chunk, None),
             "more_body": True,
         }
 
@@ -88,7 +88,7 @@ class AsyncStreamingJSONResponseCallback(AsyncStreamingResponseCallback):
         chunk = self._construct_chunk(content)
         return {
             "type": "http.response.body",
-            "body": ensure_bytes(chunk),
+            "body": ensure_bytes(chunk, None),
             "more_body": True,
         }
 

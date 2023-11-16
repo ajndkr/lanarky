@@ -62,14 +62,14 @@ class StreamingResponse(EventSourceResponse):
             if self.background is not None:
                 self.background.kwargs.update({"outputs": {}, "error": e})
             # FIXME: use enum instead of hardcoding event name
-            data = ServerSentEvent(
+            chunk = ServerSentEvent(
                 data=dict(status_code=500, detail="Internal Server Error"),
                 event="error",
             )
             await send(
                 {
                     "type": "http.response.body",
-                    "body": ensure_bytes(data),
+                    "body": ensure_bytes(chunk, None),
                     "more_body": False,
                 }
             )
