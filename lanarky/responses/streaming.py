@@ -70,13 +70,11 @@ class StreamingResponse(EventSourceResponse):
                 {
                     "type": "http.response.body",
                     "body": ensure_bytes(chunk, None),
-                    "more_body": False,
+                    "more_body": True,
                 }
             )
 
-        async with self._send_lock:
-            self.active = False
-            await send({"type": "http.response.body", "body": b"", "more_body": False})
+        await send({"type": "http.response.body", "body": b"", "more_body": False})
 
     @staticmethod
     def _create_chain_executor(
