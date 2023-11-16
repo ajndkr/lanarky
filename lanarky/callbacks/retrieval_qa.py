@@ -1,4 +1,6 @@
-from typing import Any
+from typing import Any, cast
+
+from langchain.schema import Document
 
 from lanarky.register import (
     register_streaming_callback,
@@ -43,6 +45,7 @@ class AsyncBaseRetrievalQAStreamingCallback(AsyncLLMChainStreamingCallback):
             message = self._construct_message("\n\nSOURCE DOCUMENTS:\n")
             await self.send(message)
             for document in outputs[SOURCE_DOCUMENTS_KEY]:
+                document = cast(Document, document)
                 document_metadata = "\n".join(
                     [f"{k}: {v}" for k, v in document.metadata.items()]
                 )
@@ -69,6 +72,7 @@ class AsyncBaseRetrievalQAWebsocketCallback(AsyncLLMChainWebsocketCallback):
             message = self._construct_message("\n\nSOURCE DOCUMENTS:\n")
             await self.websocket.send_json(message)
             for document in outputs[SOURCE_DOCUMENTS_KEY]:
+                document = cast(Document, document)
                 document_metadata = "\n".join(
                     [f"{k}: {v}" for k, v in document.metadata.items()]
                 )
@@ -90,7 +94,8 @@ class AsyncBaseRetrievalQAStreamingJSONCallback(AsyncLLMChainStreamingJSONCallba
         if self.llm_cache_enabled:
             await super().on_chain_end(outputs, **kwargs)
         if SOURCE_DOCUMENTS_KEY in outputs:
-            source_documents = [
+            # NOTE: langchain is using pydantic_v1 for `Document`
+            source_documents: list[dict] = [
                 document.dict() for document in outputs[SOURCE_DOCUMENTS_KEY]
             ]
             message = self._construct_message(

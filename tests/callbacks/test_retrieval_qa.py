@@ -1,6 +1,7 @@
-from unittest.mock import MagicMock, call
+from unittest.mock import call
 
 import pytest
+from langchain.schema.document import Document
 
 from lanarky.callbacks.retrieval_qa import (
     AsyncBaseRetrievalQAStreamingCallback,
@@ -18,8 +19,8 @@ def outputs():
     return {
         "answer": "Answer for when LLM cache is enabled.",
         "source_documents": [
-            MagicMock(page_content="Page 1 content", metadata={"source": "Source 1"}),
-            MagicMock(page_content="Page 2 content", metadata={"source": "Source 2"}),
+            Document(page_content="Page 1 content", metadata={"source": "Source 1"}),
+            Document(page_content="Page 2 content", metadata={"source": "Source 2"}),
         ],
     }
 
