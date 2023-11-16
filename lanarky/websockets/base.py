@@ -1,9 +1,3 @@
-"""
-Credits:
-
-* `chat-langchain <https://github.com/hwchase17/chat-langchain>`_
-* `langchain-chat-websockets <https://github.com/pors/langchain-chat-websockets>`_
-"""
 import logging
 from functools import partial
 from typing import Any, Awaitable, Callable, Optional
