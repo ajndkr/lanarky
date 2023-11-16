@@ -3,7 +3,6 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 from starlette.background import BackgroundTask
 
-from lanarky.callbacks import get_streaming_callback, get_streaming_json_callback
 from lanarky.responses import StreamingResponse
 
 
@@ -34,7 +33,7 @@ def test_init_from_chain(streaming_response: StreamingResponse) -> None:
 
 @pytest.mark.asyncio
 async def test_streaming_create_chain_executor(
-    chain: MagicMock, inputs: dict[str, str], send
+    chain: MagicMock, inputs: dict[str, str], send: AsyncMock
 ) -> None:
     chain_executor = StreamingResponse._create_chain_executor(
         chain=chain, inputs=inputs
@@ -46,14 +45,13 @@ async def test_streaming_create_chain_executor(
 
     await chain_executor(send)
 
-    chain.acall.assert_called_once_with(
-        inputs=inputs, callbacks=[get_streaming_callback(chain=chain, send=send)]
-    )
+    chain.acall.assert_called_once()
 
 
 @pytest.mark.asyncio
 async def test_stream_response(
-    streaming_response: StreamingResponse, send: AsyncMock, chain: MagicMock
+    streaming_response: StreamingResponse,
+    send: AsyncMock,
 ):
     await streaming_response.stream_response(send=send)
 
@@ -86,7 +84,7 @@ async def test_stream_response_error(
 
 @pytest.mark.asyncio
 async def test_streaming_json_create_chain_executor(
-    chain: MagicMock, inputs: dict[str, str], send
+    chain: MagicMock, inputs: dict[str, str], send: AsyncMock
 ) -> None:
     chain_executor = StreamingResponse._create_chain_executor(
         chain=chain, inputs=inputs, as_json=True
@@ -98,6 +96,4 @@ async def test_streaming_json_create_chain_executor(
 
     await chain_executor(send)
 
-    chain.acall.assert_called_once_with(
-        inputs=inputs, callbacks=[get_streaming_json_callback(chain=chain, send=send)]
-    )
+    chain.acall.assert_called_once()

@@ -46,14 +46,14 @@ async def test_connect_accepts_websocket_connection_when_accept_connection_is_tr
             sender=Sender.HUMAN,
             message="Hello",
             message_type=MessageType.STREAM,
-        ).dict()
+        ).model_dump()
     )
     mock_websocket.send_json.assert_any_call(
         WebsocketResponse(
             sender=Sender.BOT,
             message="",
             message_type=MessageType.START,
-        ).dict()
+        ).model_dump()
     )
 
     mock_websocket.send_json.assert_any_call(
@@ -61,7 +61,7 @@ async def test_connect_accepts_websocket_connection_when_accept_connection_is_tr
             sender=Sender.BOT,
             message="",
             message_type=MessageType.END,
-        ).dict()
+        ).model_dump()
     )
 
 
@@ -79,14 +79,14 @@ async def test_connect_accepts_websocket_connection_when_accept_connection_is_fa
             sender=Sender.HUMAN,
             message="Hello",
             message_type=MessageType.STREAM,
-        ).dict()
+        ).model_dump()
     )
     mock_websocket.send_json.assert_any_call(
         WebsocketResponse(
             sender=Sender.BOT,
             message="",
             message_type=MessageType.START,
-        ).dict()
+        ).model_dump()
     )
 
     mock_websocket.send_json.assert_any_call(
@@ -94,7 +94,7 @@ async def test_connect_accepts_websocket_connection_when_accept_connection_is_fa
             sender=Sender.BOT,
             message="",
             message_type=MessageType.END,
-        ).dict()
+        ).model_dump()
     )
 
 
@@ -112,14 +112,14 @@ async def test_connect_accepts_websocket_connection_when_accept_connection_is_de
             sender=Sender.HUMAN,
             message="Hello",
             message_type=MessageType.STREAM,
-        ).dict()
+        ).model_dump()
     )
     mock_websocket.send_json.assert_any_call(
         WebsocketResponse(
             sender=Sender.BOT,
             message="",
             message_type=MessageType.START,
-        ).dict()
+        ).model_dump()
     )
 
     mock_websocket.send_json.assert_any_call(
@@ -127,7 +127,7 @@ async def test_connect_accepts_websocket_connection_when_accept_connection_is_de
             sender=Sender.BOT,
             message="",
             message_type=MessageType.END,
-        ).dict()
+        ).model_dump()
     )
 
 
@@ -147,14 +147,14 @@ async def test_no_accept_after_websocket_connection_already_accepted(
             sender=Sender.HUMAN,
             message="Hello",
             message_type=MessageType.STREAM,
-        ).dict()
+        ).model_dump()
     )
     mock_websocket.send_json.assert_any_call(
         WebsocketResponse(
             sender=Sender.BOT,
             message="",
             message_type=MessageType.START,
-        ).dict()
+        ).model_dump()
     )
 
     mock_websocket.send_json.assert_any_call(
@@ -162,5 +162,5 @@ async def test_no_accept_after_websocket_connection_already_accepted(
             sender=Sender.BOT,
             message="",
             message_type=MessageType.END,
-        ).dict()
+        ).model_dump()
     )

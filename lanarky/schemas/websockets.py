@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Union
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class Sender(str, Enum):
@@ -35,5 +35,4 @@ class WebsocketResponse(BaseModel):
     message: Union[Message, str]
     message_type: MessageType
 
-    class Config:
-        use_enum_values = True
+    model_config = ConfigDict(use_enum_values=True)

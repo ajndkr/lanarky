@@ -152,7 +152,7 @@ def create_langchain_base_endpoint(
     ) -> response_model:
         """Base chat endpoint."""
         return await langchain_object.acall(
-            inputs=request.dict(), return_only_outputs=True
+            inputs=request.model_dump(), return_only_outputs=True
         )
 
     return endpoint
@@ -174,7 +174,7 @@ def create_langchain_streaming_endpoint(
     ) -> StreamingResponse:
         """Streaming chat endpoint."""
         return StreamingResponse.from_chain(
-            langchain_object, request.dict(), media_type="text/event-stream"
+            langchain_object, request.model_dump(), media_type="text/event-stream"
         )
 
     return endpoint
@@ -197,7 +197,7 @@ def create_langchain_streaming_json_endpoint(
         """Streaming JSON chat endpoint."""
         return StreamingResponse.from_chain(
             langchain_object,
-            request.dict(),
+            request.model_dump(),
             as_json=True,
             media_type="text/event-stream",
         )

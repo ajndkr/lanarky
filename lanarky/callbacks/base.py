@@ -5,18 +5,18 @@ from typing import Any
 from fastapi import WebSocket
 from langchain.callbacks.base import AsyncCallbackHandler
 from langchain.globals import get_llm_cache
-from pydantic import BaseModel, Field
 from starlette.types import Message, Send
 
 from lanarky.schemas import StreamingJSONResponse, WebsocketResponse
 
 
-class AsyncLanarkyCallback(AsyncCallbackHandler, BaseModel):
+class AsyncLanarkyCallback(AsyncCallbackHandler):
     """Async Callback handler for FastAPI StreamingResponse."""
 
-    output_key: str = Field(default="answer")
-
-    llm_cache_used: bool = Field(default_factory=lambda: get_llm_cache() is not None)
+    def __init__(self, output_key: str = "answer", **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.output_key = output_key
+        self.llm_cache_used = get_llm_cache() is not None
 
     @property
     def llm_cache_enabled(self) -> bool:
@@ -40,7 +40,10 @@ class AsyncLanarkyCallback(AsyncCallbackHandler, BaseModel):
 class AsyncStreamingResponseCallback(AsyncLanarkyCallback):
     """Async Callback handler for StreamingResponse."""
 
-    send: Send = Field(...)
+    def __init__(self, send: Send, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+
+        self.send = send
 
     def _construct_message(self, content: str) -> Message:
         """Constructs a Message from a string."""
@@ -54,25 +57,28 @@ class AsyncStreamingResponseCallback(AsyncLanarkyCallback):
 class AsyncWebsocketCallback(AsyncLanarkyCallback):
     """Async Callback handler for WebsocketConnection."""
 
-    websocket: WebSocket = Field(...)
-    response: WebsocketResponse = Field(...)
+    def __init__(
+        self, websocket: WebSocket, response: WebsocketResponse, **kwargs: Any
+    ) -> None:
+        super().__init__(**kwargs)
+
+        self.websocket = websocket
+        self.response = response
 
     def _construct_message(self, content: str) -> dict:
         """Constructs a WebsocketResponse from a string."""
-        return {**self.response.dict(), **{"message": content}}
+        return {**self.response.model_dump(), **{"message": content}}
 
 
 class AsyncStreamingJSONResponseCallback(AsyncStreamingResponseCallback):
     """Async Callback handler for StreamingJSONResponse."""
-
-    send: Send = Field(...)
 
     def _construct_message(self, content: StreamingJSONResponse) -> Message:
         """Constructs a Message from a dictionary."""
         return {
             "type": "http.response.body",
             "body": json.dumps(
-                content.dict(),
+                content.model_dump(),
                 ensure_ascii=False,
                 allow_nan=False,
                 indent=None,

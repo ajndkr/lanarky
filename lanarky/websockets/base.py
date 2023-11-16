@@ -1,16 +1,10 @@
-"""
-Credits:
-
-* `chat-langchain <https://github.com/hwchase17/chat-langchain>`_
-* `langchain-chat-websockets <https://github.com/pors/langchain-chat-websockets>`_
-"""
 import logging
 from functools import partial
 from typing import Any, Awaitable, Callable, Optional
 
 from fastapi import WebSocket, WebSocketDisconnect
 from langchain.chains.base import Chain
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from lanarky.callbacks import AsyncLanarkyCallback, get_websocket_callback
 from lanarky.schemas import Message, MessageType, Sender, WebsocketResponse
@@ -25,8 +19,7 @@ class BaseWebsocketConnection(BaseModel):
     chain_executor: Callable[[str], Awaitable[Any]] = Field(...)
     connection_accepted: bool = Field(False)
 
-    class Config:
-        arbitrary_types_allowed = True
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     async def connect(self, accept_connection: bool = True):
         if accept_connection and self.connection_accepted:
@@ -45,14 +38,14 @@ class BaseWebsocketConnection(BaseModel):
                         sender=Sender.HUMAN,
                         message=user_message,
                         message_type=MessageType.STREAM,
-                    ).dict()
+                    ).model_dump()
                 )
                 await self.websocket.send_json(
                     WebsocketResponse(
                         sender=Sender.BOT,
                         message=Message.NULL,
                         message_type=MessageType.START,
-                    ).dict()
+                    ).model_dump()
                 )
                 await self.chain_executor(user_message)
                 await self.websocket.send_json(
@@ -60,7 +53,7 @@ class BaseWebsocketConnection(BaseModel):
                         sender=Sender.BOT,
                         message=Message.NULL,
                         message_type=MessageType.END,
-                    ).dict()
+                    ).model_dump()
                 )
             except WebSocketDisconnect:
                 logger.debug("client disconnected.")
@@ -72,7 +65,7 @@ class BaseWebsocketConnection(BaseModel):
                         sender=Sender.BOT,
                         message=Message.ERROR,
                         message_type=MessageType.ERROR,
-                    ).dict()
+                    ).model_dump()
                 )
 
     @staticmethod
