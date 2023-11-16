@@ -2,8 +2,8 @@ import logging
 from functools import partial
 from typing import Any, Awaitable, Callable, Optional, Union
 
-from fastapi.responses import StreamingResponse as _StreamingResponse
 from langchain.chains.base import Chain
+from sse_starlette.sse import EventSourceResponse, ServerSentEvent, ensure_bytes
 from starlette.background import BackgroundTask
 from starlette.types import Receive, Send
 
@@ -16,7 +16,7 @@ from lanarky.callbacks import (
 logger = logging.getLogger(__name__)
 
 
-class StreamingResponse(_StreamingResponse):
+class StreamingResponse(EventSourceResponse):
     """StreamingResponse class wrapper for langchain chains."""
 
     def __init__(
@@ -56,20 +56,27 @@ class StreamingResponse(_StreamingResponse):
         try:
             outputs = await self.chain_executor(send)
             if self.background is not None:
-                self.background.kwargs["outputs"] = outputs
+                self.background.kwargs.update({"outputs": outputs})
         except Exception as e:
+            logger.error(f"chain execution error: {e}")
             if self.background is not None:
-                self.background.kwargs["outputs"] = str(e)
+                self.background.kwargs.update({"outputs": {}, "error": e})
+            # FIXME: use enum instead of hardcoding event name
+            data = ServerSentEvent(
+                data=dict(status_code=500, detail="Internal Server Error"),
+                event="error",
+            )
             await send(
                 {
                     "type": "http.response.body",
-                    "body": str(e).encode(self.charset),
+                    "body": ensure_bytes(data),
                     "more_body": False,
                 }
             )
-            return
 
-        await send({"type": "http.response.body", "body": b"", "more_body": False})
+        async with self._send_lock:
+            self.active = False
+            await send({"type": "http.response.body", "body": b"", "more_body": False})
 
     @staticmethod
     def _create_chain_executor(
