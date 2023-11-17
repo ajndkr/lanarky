@@ -18,7 +18,7 @@ You can choose any other environment manager of your choice.
 
 ```bash
 pip install poetry
-poetry install
+poetry install --all-extras
 ```
 
 ## CI/CD
