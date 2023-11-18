@@ -24,6 +24,7 @@ langchain = {version = "^0.0.337", optional = true}
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.3"
 ipykernel = "^6.26.0"
+pyclean = "^2.7.5"
 uvicorn = {extras = ["standard"], version = "<1"}
 
 [tool.poetry.group.tests.dependencies]

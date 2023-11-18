@@ -1603,6 +1603,17 @@ files = [
 tests = ["pytest"]
 
 [[package]]
+name = "pyclean"
+version = "2.7.5"
+description = "Pure Python cross-platform pyclean. Clean up your Python bytecode."
+optional = false
+python-versions = "*"
+files = [
+    {file = "pyclean-2.7.5-py3-none-any.whl", hash = "sha256:d0162d2515ee7eef8903cfac3e7c84e114b7423ebd098d1f56c93ee2dc01d214"},
+    {file = "pyclean-2.7.5.tar.gz", hash = "sha256:5c5eb5771f46d2becd6ac085b0ff6ad17be315af4a01f9dd5e05b0582bb3d441"},
+]
+
+[[package]]
 name = "pycparser"
 version = "2.21"
 description = "C parser in Python"
@@ -2909,4 +2920,4 @@ redis = ["redis"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "5e01043e8a9a6268851048beebffc74715b2ab7cecff240e7a4164009b9b0a52"
+content-hash = "c4a1b28bc39a1c4af5d4164fb1023905f666268ce0edaba076c0b3a2c0dfcbdf"
