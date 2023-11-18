@@ -1,4 +1,4 @@
-.PHONY: help tests pre-commit
+.PHONY: help tests coverage pre-commit
 help:	## shows this help message
 	@echo "Usage:\n\tmake <target>"
 	@echo "\nAvailable targets:"
@@ -16,9 +16,3 @@ coverage:	## run unit tests with coverage
 
 pre-commit:	## run pre-commit hooks
 	poetry run pre-commit run --all-files
-
-build-docs: clean-docs	## build documentation
-	poetry run sphinx-autobuild -b html --host 0.0.0.0 --port 8000 docs docs/_build/html
-
-clean-docs: ## clean documentation
-	rm -rf docs/_build
