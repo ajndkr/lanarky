@@ -201,17 +201,6 @@ tests = ["attrs[tests-no-zope]", "zope-interface"]
 tests-no-zope = ["cloudpickle", "hypothesis", "mypy (>=1.1.1)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
 
 [[package]]
-name = "cachetools"
-version = "5.3.2"
-description = "Extensible memoizing collections and decorators"
-optional = true
-python-versions = ">=3.7"
-files = [
-    {file = "cachetools-5.3.2-py3-none-any.whl", hash = "sha256:861f35a13a451f94e301ce2bec7cac63e881232ccce7ed67fab9b5df4d3beaa1"},
-    {file = "cachetools-5.3.2.tar.gz", hash = "sha256:086ee420196f7b2ab9ca2db2520aca326318b68fe5ba8bc4d49cca91add450f2"},
-]
-
-[[package]]
 name = "certifi"
 version = "2023.11.17"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -742,22 +731,6 @@ files = [
 ]
 
 [[package]]
-name = "gptcache"
-version = "0.1.42"
-description = "GPTCache, a powerful caching library that can be used to speed up and lower the cost of chat applications that rely on the LLM service. GPTCache works as a memcache for AIGC applications, similar to how Redis works for traditional applications."
-optional = true
-python-versions = ">=3.8.1"
-files = [
-    {file = "gptcache-0.1.42-py3-none-any.whl", hash = "sha256:8da93cd9fdc3a1c09aae25b688823b4a5bc28dcfa4522e33617f3f7a9e5b8bb0"},
-    {file = "gptcache-0.1.42.tar.gz", hash = "sha256:17339c41d992bd47c623c716be3bd915dba2687a0fa52aa4ab4ed9cc7cc2b256"},
-]
-
-[package.dependencies]
-cachetools = "*"
-numpy = "*"
-requests = "*"
-
-[[package]]
 name = "greenlet"
 version = "3.0.1"
 description = "Lightweight in-process concurrent programming"
@@ -944,13 +917,13 @@ files = [
 
 [[package]]
 name = "identify"
-version = "2.5.31"
+version = "2.5.32"
 description = "File identification library for Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "identify-2.5.31-py2.py3-none-any.whl", hash = "sha256:90199cb9e7bd3c5407a9b7e81b4abec4bb9d249991c79439ec8af740afc6293d"},
-    {file = "identify-2.5.31.tar.gz", hash = "sha256:7736b3c7a28233637e3c36550646fc6389bedd74ae84cb788200cc8e2dd60b75"},
+    {file = "identify-2.5.32-py2.py3-none-any.whl", hash = "sha256:0b7656ef6cba81664b783352c73f8c24b39cf82f926f78f4550eda928e5e0545"},
+    {file = "identify-2.5.32.tar.gz", hash = "sha256:5d9979348ec1a21c768ae07e0a652924538e8bce67313a73cb0f681cf08ba407"},
 ]
 
 [package.extras]
@@ -1605,13 +1578,13 @@ tests = ["pytest"]
 
 [[package]]
 name = "pyclean"
-version = "2.7.5"
+version = "2.7.6"
 description = "Pure Python cross-platform pyclean. Clean up your Python bytecode."
 optional = false
 python-versions = "*"
 files = [
-    {file = "pyclean-2.7.5-py3-none-any.whl", hash = "sha256:d0162d2515ee7eef8903cfac3e7c84e114b7423ebd098d1f56c93ee2dc01d214"},
-    {file = "pyclean-2.7.5.tar.gz", hash = "sha256:5c5eb5771f46d2becd6ac085b0ff6ad17be315af4a01f9dd5e05b0582bb3d441"},
+    {file = "pyclean-2.7.6-py3-none-any.whl", hash = "sha256:db5f74f6d2fedb79366e3260b260f5ab0053e1df28af14fc2c860800bf00fe96"},
+    {file = "pyclean-2.7.6.tar.gz", hash = "sha256:cde95ad4fbc194e970fd7ad009e82718f6c1d1309b195be9018d334d79661cca"},
 ]
 
 [[package]]
@@ -1763,13 +1736,13 @@ typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 
 [[package]]
 name = "pygments"
-version = "2.17.0"
+version = "2.17.1"
 description = "Pygments is a syntax highlighting package written in Python."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pygments-2.17.0-py3-none-any.whl", hash = "sha256:cd0c46944b2551af02ecc15961050182ea120d3895000e2676160820f3421527"},
-    {file = "pygments-2.17.0.tar.gz", hash = "sha256:edaa0fa2453d055d0ac94449d1f73ec7bc52c5e318204da1377c1392978c4a8d"},
+    {file = "pygments-2.17.1-py3-none-any.whl", hash = "sha256:1b37f1b1e1bff2af52ecaf28cc601e2ef7077000b227a0675da25aef85784bc4"},
+    {file = "pygments-2.17.1.tar.gz", hash = "sha256:e45a0e74bf9c530f564ca81b8952343be986a29f6afe7f5ad95c5f06b7bdf5e8"},
 ]
 
 [package.extras]
@@ -2048,24 +2021,6 @@ files = [
 
 [package.dependencies]
 cffi = {version = "*", markers = "implementation_name == \"pypy\""}
-
-[[package]]
-name = "redis"
-version = "4.6.0"
-description = "Python client for Redis database and key-value store"
-optional = true
-python-versions = ">=3.7"
-files = [
-    {file = "redis-4.6.0-py3-none-any.whl", hash = "sha256:e2b03db868160ee4591de3cb90d40ebb50a90dd302138775937f6a42b7ed183c"},
-    {file = "redis-4.6.0.tar.gz", hash = "sha256:585dc516b9eb042a619ef0a39c3d7d55fe81bdb4df09a52c9cdde0d07bf1aa7d"},
-]
-
-[package.dependencies]
-async-timeout = {version = ">=4.0.2", markers = "python_full_version <= \"3.11.2\""}
-
-[package.extras]
-hiredis = ["hiredis (>=1.0.0)"]
-ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==20.0.1)", "requests (>=2.26.0)"]
 
 [[package]]
 name = "regex"
@@ -2914,12 +2869,12 @@ docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.link
 testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy (>=0.9.1)", "pytest-ruff"]
 
 [extras]
-gptcache = ["gptcache"]
+gptcache = []
 langchain = ["langchain"]
 openai = ["openai", "tiktoken"]
-redis = ["redis"]
+redis = []
 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "12d69cb73001329bb9a849ddd135f3342e2ea38b7ac31ba46f4cbedae583195a"
+content-hash = "8fc2beee99595c167f065c9b26092675b82424bf25c9d084c6160c74176b871b"
