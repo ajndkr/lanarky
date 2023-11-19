@@ -4,6 +4,7 @@ from typing import Any, Callable
 from fastapi import Depends
 from langchain.agents import AgentExecutor
 from langchain.chains.base import Chain
+from langchain.schema.document import Document
 from pydantic import BaseModel, create_model
 from starlette.routing import compile_path
 
@@ -28,7 +29,10 @@ def build_factory_endpoint(
     if not isinstance(chain, Chain):
         raise TypeError("factory endpoint must return a Chain instance")
 
-    request_model = create_request_model(path, chain)
+    # index 1 of `compile_path` contains path_format output
+    model_prefix = compile_model_prefix(compile_path(path)[1], chain)
+
+    request_model = create_request_model(path, model_prefix)
     callbacks = get_callbacks(chain)
 
     async def factory_endpoint(
@@ -41,10 +45,7 @@ def build_factory_endpoint(
     return factory_endpoint
 
 
-def create_request_model(path: str, chain: Chain) -> BaseModel:
-    # index 1 of `compile_path` contains path_format output
-    model_prefix = compile_model_prefix(compile_path(path)[1], chain)
-
+def create_request_model(path: str, chain: Chain, prefix: str = "") -> BaseModel:
     request_fields = {}
 
     for key in chain.input_keys:
@@ -55,7 +56,25 @@ def create_request_model(path: str, chain: Chain) -> BaseModel:
         else:
             request_fields[key] = (str, ...)
 
-    return create_model(f"{model_prefix}Request", **request_fields)
+    prefix = prefix or chain.__class__.__name__
+
+    return create_model(f"{prefix}Request", **request_fields)
+
+
+def create_response_model(chain: Chain, prefix: str = None) -> BaseModel:
+    response_fields = {}
+
+    for key in chain.output_keys:
+        # TODO: add support for other output key types
+        # based on demand
+        if key == "source_documents":
+            response_fields[key] = (list[Document], ...)
+        else:
+            response_fields[key] = (str, ...)
+
+    prefix = prefix or chain.__class__.__name__
+
+    return create_model(f"{prefix}Response", **response_fields)
 
 
 def compile_model_prefix(path: str, chain: Chain) -> str:
