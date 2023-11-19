@@ -32,7 +32,7 @@ def build_factory_endpoint(
     # index 1 of `compile_path` contains path_format output
     model_prefix = compile_model_prefix(compile_path(path)[1], chain)
 
-    request_model = create_request_model(path, model_prefix)
+    request_model = create_request_model(chain, model_prefix)
     callbacks = get_callbacks(chain)
 
     async def factory_endpoint(
@@ -45,7 +45,7 @@ def build_factory_endpoint(
     return factory_endpoint
 
 
-def create_request_model(path: str, chain: Chain, prefix: str = "") -> BaseModel:
+def create_request_model(chain: Chain, prefix: str = "") -> BaseModel:
     request_fields = {}
 
     for key in chain.input_keys:

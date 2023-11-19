@@ -9,7 +9,7 @@ from lanarky.adapters.langchain.utils import create_request_model, create_respon
 def Depends(
     dependency: Optional[Callable[..., Any]],
     *,
-    dependency_kwargs: dict[str, Any],
+    dependency_kwargs: dict[str, Any] = {},
     use_cache: bool = True
 ) -> params.Depends:
     """Dependency injection for langchain.
@@ -34,6 +34,6 @@ def Depends(
         request: request_model,
         chain: Chain = params.Depends(dependency, use_cache=use_cache),
     ) -> response_model:
-        return chain.acall(inputs=request.model_dump(), **dependency_kwargs)
+        return await chain.acall(inputs=request.model_dump(), **dependency_kwargs)
 
     return params.Depends(chain_dependency, use_cache=use_cache)

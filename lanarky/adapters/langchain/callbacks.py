@@ -94,11 +94,11 @@ def get_token_data(token: str, mode: TokenStreamMode) -> Union[str, dict[str, An
 
 
 class ChainStreamingCallbackHandler(StreamingCallbackHandler):
-    async def on_llm_start(self, **kwargs) -> None:
+    async def on_llm_start(self, *args, **kwargs) -> None:
         message = self._construct_message(data="", event=Events.START)
         await self.send(message)
 
-    async def on_chain_end(self, **kwargs) -> None:
+    async def on_chain_end(self, *args, **kwargs) -> None:
         message = self._construct_message(data="", event=Events.END)
         await self.send(message)
 
@@ -121,7 +121,7 @@ class TokenStreamingCallbackHandler(StreamingCallbackHandler):
             raise ValueError(f"Invalid stream mode: {mode}")
         self.mode = mode
 
-    async def on_chain_start(self, **kwargs: Any) -> None:
+    async def on_chain_start(self, *args, **kwargs: Any) -> None:
         """Run when chain starts running."""
         self.streaming = False
 
@@ -143,7 +143,7 @@ class TokenStreamingCallbackHandler(StreamingCallbackHandler):
 
         Final output is streamed only if LLM cache is enabled.
         """
-        if self.llm_cache_used and self.streaming:
+        if self.llm_cache_used or not self.streaming:
             if self.output_key in outputs:
                 message = self._construct_message(
                     data=get_token_data(outputs[self.output_key], self.mode),
@@ -272,11 +272,11 @@ class WebSocketCallbackHandler(LanarkyCallbackHandler):
 
 
 class ChainWebSocketCallbackHandler(WebSocketCallbackHandler):
-    async def on_llm_start(self, **kwargs) -> None:
+    async def on_llm_start(self, *args, **kwargs) -> None:
         message = self._construct_message(data="", event=Events.START)
         await self.websocket.send_json(message)
 
-    async def on_chain_end(self, **kwargs) -> None:
+    async def on_chain_end(self, *args, **kwargs) -> None:
         message = self._construct_message(data="", event=Events.END)
         await self.websocket.send_json(message)
 
@@ -289,7 +289,7 @@ class TokenWebSocketCallbackHandler(WebSocketCallbackHandler):
 
         self.output_key = output_key
 
-    async def on_chain_start(self, **kwargs: Any) -> None:
+    async def on_chain_start(self, *args, **kwargs: Any) -> None:
         """Run when chain starts running."""
         self.streaming = False
 
@@ -311,7 +311,7 @@ class TokenWebSocketCallbackHandler(WebSocketCallbackHandler):
 
         Final output is streamed only if LLM cache is enabled.
         """
-        if self.llm_cache_used and self.streaming:
+        if self.llm_cache_used or not self.streaming:
             if self.output_key in outputs:
                 message = self._construct_message(
                     data=get_token_data(outputs[self.output_key], self.mode),
