@@ -1,0 +1,42 @@
+name: Bug report
+description: Create a report to help us improve
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Scenario
+      description: Describe the scenario in which you encountered the bug
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Describe what actually happened
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: Describe what you expected to happen
+    validations:
+      required: true
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Acceptance criteria
+      description: Describe the acceptance criteria(s) for this bug
+      value: |
+        - [ ]
+    validations:
+      required: false
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribute
+      description: Would you like to fix this bug?
+      options:
+        - label: Yes, I can fix this bug and open a PR

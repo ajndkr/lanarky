@@ -1,0 +1,29 @@
+name: Feature Request
+description: Suggest a new idea for this project
+title: "feat: "
+labels: ["feature"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the feature you are requesting
+      placeholder: "As **[the actor]**, I want **[the something]** so I can **[the goal]**"
+    validations:
+      required: true
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Acceptance criteria
+      description: Describe the acceptance criteria(s) for this bug.
+      value: |
+        - [ ]
+    validations:
+      required: false
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribute
+      description: Would you like to contribute to this feature?
+      options:
+        - label: Yes, I can implement this feature and open a PR
