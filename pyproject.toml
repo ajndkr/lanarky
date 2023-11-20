@@ -10,7 +10,7 @@ license = "MIT"
 packages = [{include = "lanarky"}]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.9,<3.12"
 fastapi = ">=0.97.0"
 pydantic = ">=1,<3"
 sse-starlette = "^1.6.5"
@@ -18,6 +18,7 @@ loguru = "^0.7.2"
 openai = {version = "^1", optional = true}
 tiktoken = {version = "^0.4.0", optional = true}
 langchain = {version = "^0.0.337", optional = true}
+llama-index = {version = "^0.9.4", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.3"
@@ -34,9 +35,8 @@ coveralls = "^3.3.1"
 
 [tool.poetry.extras]
 langchain = ["langchain"]
+llama-index = ["llama-index"]
 openai = ["openai", "tiktoken"]
-redis = ["redis"]
-gptcache = ["gptcache"]
 
 [build-system]
 requires = ["poetry-core"]
