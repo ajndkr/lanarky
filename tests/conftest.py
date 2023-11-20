@@ -1,38 +1,29 @@
-from unittest.mock import AsyncMock, MagicMock, create_autospec
+from typing import Iterator, Type
+from unittest.mock import AsyncMock, create_autospec
 
 import pytest
-from fastapi import WebSocket, WebSocketDisconnect
-from langchain.chains.llm import LLMChain
 from starlette.types import Send
 
-from lanarky.schemas import Message, MessageType, Sender, WebsocketResponse
+from lanarky.websockets import WebSocket, WebSocketDisconnect
 
 
 @pytest.fixture(scope="function")
-def send():
+def send() -> Send:
     return AsyncMock(spec=Send)
 
 
 @pytest.fixture(scope="function")
-def websocket():
-    return AsyncMock(spec=WebSocket)
+def body_iterator() -> Iterator[bytes]:
+    async def iterator():
+        yield b"Chunk 1"
+        yield b"Chunk 2"
+
+    return iterator()
 
 
 @pytest.fixture(scope="function")
-def bot_response():
-    return WebsocketResponse(
-        sender=Sender.BOT, message=Message.NULL, message_type=MessageType.STREAM
-    )
-
-
-@pytest.fixture
-def chain():
-    return MagicMock(spec=LLMChain)
-
-
-@pytest.fixture
-def mock_websocket():
-    websocket = create_autospec(WebSocket)
+def websocket() -> Type[WebSocket]:
+    websocket: Type[WebSocket] = create_autospec(WebSocket)
     websocket.accept = AsyncMock()
     websocket.receive_text = AsyncMock(side_effect=["Hello", WebSocketDisconnect()])
     websocket.send_json = AsyncMock()
