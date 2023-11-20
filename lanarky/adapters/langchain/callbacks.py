@@ -239,7 +239,7 @@ class WebSocketCallbackHandler(LanarkyCallbackHandler):
 
     def __init__(
         self,
-        mode: TokenStreamMode = TokenStreamMode.TEXT,
+        mode: TokenStreamMode = TokenStreamMode.JSON,
         websocket: WebSocket = None,
         *args,
         **kwargs,
@@ -295,7 +295,7 @@ class TokenWebSocketCallbackHandler(WebSocketCallbackHandler):
 
     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
-        if self.streaming:
+        if not self.streaming:
             self.streaming = True
 
         if self.llm_cache_used:  # cache missed (or was never enabled) if we are here
