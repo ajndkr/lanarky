@@ -1,5 +1,5 @@
 import re
-from typing import Any, Callable
+from typing import Any, Awaitable, Callable
 
 from fastapi import Depends
 from langchain.agents import AgentExecutor
@@ -10,30 +10,29 @@ from starlette.routing import compile_path
 
 from lanarky.adapters.langchain.callbacks import (
     ChainStreamingCallbackHandler,
+    ChainWebSocketCallbackHandler,
     FinalTokenStreamingCallbackHandler,
+    FinalTokenWebSocketCallbackHandler,
     SourceDocumentsStreamingCallbackHandler,
+    SourceDocumentsWebSocketCallbackHandler,
     TokenStreamingCallbackHandler,
+    TokenWebSocketCallbackHandler,
 )
 from lanarky.adapters.langchain.responses import StreamingResponse
 from lanarky.logging import logger
+from lanarky.websockets import WebSocket, WebsocketSession
 
 
-def build_factory_endpoint(
+def build_factory_api_endpoint(
     path: str, endpoint: Callable[..., Any]
-) -> Callable[..., Any]:
-    try:
-        chain = endpoint()
-    except TypeError:
-        raise TypeError("set default values for all factory endpoint parameters")
-
-    if not isinstance(chain, Chain):
-        raise TypeError("factory endpoint must return a Chain instance")
+) -> Callable[..., Awaitable[Any]]:
+    chain = compile_chain_factory(endpoint)
 
     # index 1 of `compile_path` contains path_format output
     model_prefix = compile_model_prefix(compile_path(path)[1], chain)
-
     request_model = create_request_model(chain, model_prefix)
-    callbacks = get_callbacks(chain)
+
+    callbacks = get_streaming_callbacks(chain)
 
     async def factory_endpoint(
         request: request_model, chain: Chain = Depends(endpoint)
@@ -43,6 +42,38 @@ def build_factory_endpoint(
         )
 
     return factory_endpoint
+
+
+def build_factory_websocket_endpoint(
+    path: str, endpoint: Callable[..., Any]
+) -> Callable[..., Awaitable[Any]]:
+    chain = compile_chain_factory(endpoint)
+
+    # index 1 of `compile_path` contains path_format output
+    model_prefix = compile_model_prefix(compile_path(path)[1], chain)
+    request_model = create_request_model(chain, model_prefix)
+
+    async def factory_endpoint(websocket: WebSocket, chain: Chain = Depends(endpoint)):
+        callbacks = get_websocket_callbacks(chain, websocket)
+        async with WebsocketSession().connect(websocket) as session:
+            async for data in session:
+                await chain.acall(
+                    inputs=request_model(**data).model_dump(),
+                    callbacks=callbacks,
+                )
+
+    return factory_endpoint
+
+
+def compile_chain_factory(endpoint):
+    try:
+        chain = endpoint()
+    except TypeError:
+        raise TypeError("set default values for all factory endpoint parameters")
+
+    if not isinstance(chain, Chain):
+        raise TypeError("factory endpoint must return a Chain instance")
+    return chain
 
 
 def create_request_model(chain: Chain, prefix: str = "") -> BaseModel:
@@ -87,7 +118,7 @@ def compile_model_prefix(path: str, chain: Chain) -> str:
     return f"{path_prefix}{chain_prefix}"
 
 
-def get_callbacks(chain: Chain) -> list[Callable]:
+def get_streaming_callbacks(chain: Chain) -> list[Callable]:
     callbacks = []
 
     if "source_documents" in chain.output_keys:
@@ -97,7 +128,7 @@ def get_callbacks(chain: Chain) -> list[Callable]:
         logger.warning(
             f"""multiple output keys found: {set(chain.output_keys) - {'source_documents'}}.
 
-        Only the first output key will be used for streaming. For more complex API logic, define the API endpoint logic manually.
+        Only the first output key will be used for streaming tokens. For more complex API logic, define the endpoint function manually.
         """
         )
 
@@ -108,6 +139,35 @@ def get_callbacks(chain: Chain) -> list[Callable]:
             [
                 TokenStreamingCallbackHandler(chain.output_keys[0]),
                 ChainStreamingCallbackHandler(),
+            ]
+        )
+
+    return callbacks
+
+
+def get_websocket_callbacks(chain: Chain, websocket: WebSocket) -> list[Callable]:
+    callbacks = []
+
+    if "source_documents" in chain.output_keys:
+        callbacks.append(SourceDocumentsWebSocketCallbackHandler(websocket=websocket))
+
+    if len(set(chain.output_keys) - {"source_documents"}) > 1:
+        logger.warning(
+            f"""multiple output keys found: {set(chain.output_keys) - {'source_documents'}}.
+
+        Only the first output key will be used for sending tokens. For more complex websocket logic, define the endpoint function manually.
+        """
+        )
+
+    if isinstance(chain, AgentExecutor):
+        callbacks.append(FinalTokenWebSocketCallbackHandler(websocket=websocket))
+    else:
+        callbacks.extend(
+            [
+                TokenWebSocketCallbackHandler(
+                    output_key=chain.output_keys[0], websocket=websocket
+                ),
+                ChainWebSocketCallbackHandler(websocket=websocket),
             ]
         )
 
