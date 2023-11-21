@@ -45,6 +45,8 @@ nav:
   - Home: index.md
 
 markdown_extensions:
+  attr_list: null
+  md_in_html: null
   toc:
     permalink: true
   markdown.extensions.codehilite:
