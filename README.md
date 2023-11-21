@@ -1,6 +1,7 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/ajndkr/lanarky/main/assets/logo.png" alt="lanarky-logo" width="250">
+<img src="assets/logo-light-mode.png#gh-light-mode-only" alt="lanarky-logo-light-mode" width="500">
+<img src="assets/logo-dark-mode.png#gh-dark-mode-only" alt="lanarky-logo-dark-mode" width="500">
 
 <h4>The web framework for building LLM microservices.</h4>
 
