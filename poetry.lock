@@ -3562,4 +3562,4 @@ openai = ["openai", "tiktoken"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "c1356f463ade778e8024c5ecda82f93329bf031a5b4a4751599430a167e1398e"
+content-hash = "9d0d7ef842bbff3c1bea75b799624b70ce03b78072f30450d22aff69cf8153b8"
