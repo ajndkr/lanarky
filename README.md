@@ -6,7 +6,6 @@
 <h4>The web framework for building LLM microservices.</h4>
 
 [![Stars](https://img.shields.io/github/stars/ajndkr/lanarky)](https://github.com/ajndkr/lanarky/stargazers)
-[![Documentation](https://img.shields.io/badge/documentation-ReadTheDocs-blue.svg)](https://lanarky.readthedocs.io/en/latest/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/lanarky/blob/main/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/LanarkyAPI?style=social)](https://twitter.com/intent/follow?screen_name=LanarkyAPI)
 
