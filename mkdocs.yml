@@ -1,0 +1,70 @@
+site_name: Lanarky
+site_url: https://lanarky.ajndkr.com/
+site_author: Ajinkya Indulkar
+site_description: The web framework for building LLM microservices
+repo_name: ajndkr/lanarky
+repo_url: https://github.com/ajndkr/lanarky
+copyright: Copyright &copy; 2023 Ajinkya Indulkar
+
+edit_uri: ""
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: lanarky
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+  features:
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - navigation.indexes
+    - content.tooltips
+    - navigation.path
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - navigation.tabs
+  icon:
+    repo: fontawesome/brands/github-alt
+  logo: assets/icon.svg
+  favicon: assets/favicon.png
+  language: en
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+nav:
+  - Home: index.md
+
+markdown_extensions:
+  toc:
+    permalink: true
+  markdown.extensions.codehilite:
+    guess_lang: false
+  mdx_include:
+    base_path: docs
+  admonition: null
+  codehilite: null
+  extra: null
+  pymdownx.tabbed:
+    alternate_style: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ajndkr
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/lanarky/
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/LanarkyAPI
+
+extra_css:
+  - stylesheets/extra.css
