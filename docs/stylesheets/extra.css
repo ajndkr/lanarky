@@ -33,3 +33,13 @@
 .md-nav .md-nav__link {
   color: #0c9a78;
 }
+
+[data-md-color-scheme="lanarky"] img[src$="#only-dark"],
+[data-md-color-scheme="lanarky"] img[src$="#gh-dark-mode-only"] {
+  display: none; /* Hide dark images in light mode */
+}
+
+[data-md-color-scheme="slate"] img[src$="#only-light"],
+[data-md-color-scheme="slate"] img[src$="#gh-light-mode-only"] {
+  display: none; /* Hide light images in dark mode */
+}
