@@ -33,6 +33,11 @@ pytest-cov = "^4.1.0"
 pytest-asyncio = "^0.21.0"
 coveralls = "^3.3.1"
 
+
+[tool.poetry.group.docs.dependencies]
+mkdocs-material = "^9.4.10"
+mdx-include = "^1.4.2"
+
 [tool.poetry.extras]
 langchain = ["langchain"]
 llama-index = ["llama-index"]
