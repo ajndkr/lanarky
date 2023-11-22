@@ -16,9 +16,23 @@
 
 </div>
 
+Lanarky is a **python (3.9+)** web framework for developers who want to build microservices using LLMs.
+Here are some of its key features:
+
+- **LLM-first**: Unlike other web frameworks, lanarky is built specifically for LLM developers.
+  It's unopinionated in terms of how you build your microservices and guarantees zero vendor lock-in
+  with any LLM tooling frameworks or cloud providers
+- **Fast & Modern**: Built on top of FastAPI, lanarky offers all the FastAPI features you know and love.
+  If you are new to FastAPI, visit [fastapi.tiangolo.com](https://fastapi.tiangolo.com) to learn more
+- **Streaming**: Streaming a special requirement when building microservices for chatbot-like applications.
+  Lanarky has got you covered with built-in streaming support over **HTTP** and **WebSockets**.
+- **Open-source**: Lanarky is open-source and free to use. Forever.
+
+To learn more about lanarky and get started, you can find the full documentation on [lanarky.ajndkr.com](https://lanarky.ajndkr.com)
+
 ## Installation
 
-The library is available on PyPI and can be installed via `pip`.
+The library is available on PyPI and can be installed via `pip`:
 
 ```bash
 pip install lanarky
