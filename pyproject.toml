@@ -33,11 +33,11 @@ pytest-cov = "^4.1.0"
 pytest-asyncio = "^0.21.0"
 coveralls = "^3.3.1"
 
-
 [tool.poetry.group.docs.dependencies]
 mkdocs = "^1.5.3"
 mkdocs-material = "^9.4.10"
 mdx-include = "^1.4.2"
+termynal = "^0.11.1"
 
 [tool.poetry.extras]
 langchain = ["langchain"]
