@@ -42,22 +42,24 @@ theme:
     code: Roboto Mono
 
 nav:
-  - Home: index.md
+  - Lanarky: index.md
+  - Getting Started: getting-started.md
 
 markdown_extensions:
-  attr_list: null
-  md_in_html: null
-  toc:
-    permalink: true
-  markdown.extensions.codehilite:
-    guess_lang: false
-  mdx_include:
-    base_path: docs
-  admonition: null
-  codehilite: null
-  extra: null
-  pymdownx.tabbed:
-    alternate_style: true
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - mdx_include:
+      base_path: docs
+  - admonition
+  - codehilite
+  - extra
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
 
 extra:
   social:
@@ -70,3 +72,6 @@ extra:
 
 extra_css:
   - stylesheets/extra.css
+
+plugins:
+  - termynal
