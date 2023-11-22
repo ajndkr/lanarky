@@ -127,7 +127,7 @@ class TokenStreamingCallbackHandler(StreamingCallbackHandler):
 
     async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
-        if self.streaming:
+        if not self.streaming:
             self.streaming = True
 
         if self.llm_cache_used:  # cache missed (or was never enabled) if we are here
