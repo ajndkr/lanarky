@@ -1,9 +1,9 @@
-name: Deploy Docs
+name: Docs
 
 on:
   push:
     branches:
-      - feat/add-mkdocs
+      - main
 
 permissions:
   contents: write
@@ -12,7 +12,7 @@ env:
   PYTHON_VERSION: 3.9
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -39,9 +39,7 @@ jobs:
           restore-keys: |
             mkdocs-material-
 
-      - name: Deploy Docs
+      - name: Deploy GitHub Pages
         run: |
-          python -m pip install --upgrade pip poetry
-          poetry install --only docs
-          pip install mkdocs-material mdx-include
+          pip install mkdocs-material mdx-include termynal
           mkdocs gh-deploy --force
