@@ -3,8 +3,10 @@ hide:
   - navigation
 ---
 
-This is a quick tutorial on getting started with Lanarky. Given their popularity, we will use LangChain
-as the LLM tooling framework and OpenAI as the LLM provider to build our first LLM microservice.
+This is a quick tutorial on getting started with Lanarky.
+
+We will use LangChain as the LLM tooling framework and OpenAI as the LLM provider to
+build our first LLM microservice.
 
 ## Install Dependencies
 
@@ -71,10 +73,15 @@ from httpx_sse import connect_sse
 
 @click.command()
 @click.option("--input", required=True)
-def main(input: str):
+@click.option("--streaming", is_flag=True)
+def main(input: str, streaming: bool):
+    url = f"http://localhost:8000/chat?streaming={str(streaming).lower()}"
     with httpx.Client() as client:
         with connect_sse(
-            client, "POST", "http://localhost:8000/chat", json={"input": input}
+            client,
+            "POST",
+            url,
+            json={"input": input},
         ) as event_source:
             for sse in event_source.iter_sse():
                 print(sse.event, sse.data)
@@ -84,7 +91,15 @@ if __name__ == "__main__":
     main()
 ```
 
-Run the client:
+Stream output:
+
+<!-- termynal -->
+
+```
+$ python client.py --input hi --streaming
+```
+
+Recieve all output at once:
 
 <!-- termynal -->
 
