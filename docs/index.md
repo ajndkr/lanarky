@@ -35,8 +35,8 @@ Here are some of its key features:
   with any LLM tooling frameworks or cloud providers
 - **Fast & Modern**: Built on top of FastAPI, lanarky offers all the FastAPI features you know and love.
   If you are new to FastAPI, visit [fastapi.tiangolo.com](https://fastapi.tiangolo.com) to learn more
-- **Streaming**: Streaming a special requirement when building microservices for chatbot-like applications.
-  Lanarky has got you covered with built-in streaming support over **HTTP** and **WebSockets**.
+- **Streaming**: Streaming is essential for many real-time LLM applications, like chatbots. Lanarky has
+  got you covered with built-in streaming support over **HTTP** and **WebSockets**.
 - **Open-source**: Lanarky is open-source and free to use. Forever.
 
 <!-- termynal -->
