@@ -6,7 +6,7 @@
 [![Documentation](https://img.shields.io/badge/documentation-ReadTheDocs-blue.svg)](https://lanarky.readthedocs.io/en/latest/)
 [![Code Coverage](https://coveralls.io/repos/github/ajndkr/lanarky/badge.svg?branch=main)](https://coveralls.io/github/ajndkr/lanarky?branch=main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/lanarky/blob/main/LICENSE)
-[![Twitter](https://img.shields.io/twitter/follow/lanarky_io?style=social)](https://twitter.com/intent/follow?screen_name=lanarky_io)
+[![Twitter](https://img.shields.io/twitter/follow/LanarkyAPI?style=social)](https://twitter.com/intent/follow?screen_name=LanarkyAPI)
 
 [![PyPI version](https://badge.fury.io/py/lanarky.svg)](https://pypi.org/project/lanarky/)
 [![PyPI stats](https://img.shields.io/pypi/dm/lanarky.svg)](https://pypistats.org/packages/lanarky)
@@ -131,6 +131,6 @@ The library is released under the [MIT License](https://github.com/ajndkr/lanark
 ## ✨ Want to build LLM applications with us?
 
 Are you interested in building LLM applications with us? We would love to hear from you! Reach out to us on
-Twitter [@lanarky_io](https://twitter.com/lanarky_io).
+Twitter [@LanarkyAPI](https://twitter.com/LanarkyAPI).
 
 Let's connect and explore the possibilities of working together to create amazing LLM applications with Lanarky!
