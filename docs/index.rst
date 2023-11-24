@@ -48,8 +48,8 @@ Welcome to Lanarky
 .. image:: https://img.shields.io/pypi/dm/lanarky.svg
    :target: https://pypistats.org/packages/lanarky
 
-.. image:: https://img.shields.io/twitter/follow/lanarky_io?style=social
-   :target: https://twitter.com/intent/follow?screen_name=lanarky_io
+.. image:: https://img.shields.io/twitter/follow/LanarkyAPI?style=social
+   :target: https://twitter.com/intent/follow?screen_name=LanarkyAPI
 
 A `FastAPI <https://github.com/tiangolo/fastapi>`_ framework to build production-grade LLM applications.
 
@@ -94,6 +94,6 @@ The library is released under the `MIT License <https://github.com/ajndkr/lanark
 ------------------------------------------
 
 Are you interested in building LLM applications with us? We would love to hear from you! Reach out to us on
-Twitter `@lanarky_io <https://twitter.com/lanarky_io>`_.
+Twitter `@LanarkyAPI <https://twitter.com/LanarkyAPI>`_.
 
 Let's connect and explore the possibilities of working together to create amazing LLM applications with Lanarky!

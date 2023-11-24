@@ -71,7 +71,7 @@ html_theme_options = {
         },
         {
             "name": "Twitter",
-            "url": "https://twitter.com/lanarky_io",
+            "url": "https://twitter.com/LanarkyAPI",
             "html": "",
             "class": "fa-brands fa-solid fa-twitter fa-2x",
         },
