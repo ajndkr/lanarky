@@ -2,14 +2,11 @@ from enum import Enum
 from typing import Any
 
 from fastapi import status
-from sse_starlette.sse import EventSourceResponse, ServerSentEvent, ensure_bytes
+from sse_starlette.sse import EventSourceResponse
 from starlette.types import Send
 
+from lanarky.events import Events, ServerSentEvent, ensure_bytes
 from lanarky.logging import logger
-
-
-class Events(str, Enum):
-    ERROR = "error"
 
 
 class HTTPStatusDetail(str, Enum):

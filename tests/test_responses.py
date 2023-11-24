@@ -5,13 +5,8 @@ import pytest
 from fastapi import status
 from starlette.types import Send
 
-from lanarky.responses import (
-    Events,
-    HTTPStatusDetail,
-    ServerSentEvent,
-    StreamingResponse,
-    ensure_bytes,
-)
+from lanarky.events import Events, ServerSentEvent, ensure_bytes
+from lanarky.responses import HTTPStatusDetail, StreamingResponse
 
 
 @pytest.fixture

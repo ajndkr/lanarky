@@ -8,8 +8,9 @@ from langchain.callbacks.streaming_stdout_final_only import (
 )
 from langchain.globals import get_llm_cache
 from pydantic import BaseModel
-from sse_starlette.sse import ServerSentEvent, ensure_bytes
 from starlette.types import Message, Send
+
+from lanarky.events import ServerSentEvent, ensure_bytes
 
 
 class LanarkyCallbackHandler(AsyncCallbackHandler):
