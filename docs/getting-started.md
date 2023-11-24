@@ -27,19 +27,23 @@ We will use the `ConversationChain` from LangChain library to build our first LL
 
 ```python
 import os
-from fastapi import FastAPI
+
 from langchain.chains import ConversationChain
 from langchain.chat_models import ChatOpenAI
+
+from lanarky import Lanarky
 from lanarky.adapters.langchain.routing import LangchainAPIRouter
 
 os.environ["OPENAI_API_KEY"] = "add-your-openai-api-key-here"
 
-app = FastAPI()
+app = Lanarky()
 langchain_router = LangchainAPIRouter()
+
 
 @langchain_router.post("/chat")
 def chat(streaming: bool = True) -> ConversationChain:
     return ConversationChain(llm=ChatOpenAI(streaming=streaming))
+
 
 app.include_router(langchain_router)
 ```
