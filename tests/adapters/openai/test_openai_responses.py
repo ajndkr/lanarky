@@ -1,45 +1,44 @@
-from typing import Iterator, Type
-from unittest.mock import MagicMock, call
+from typing import Type
+from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
-from fastapi import status
 from starlette.types import Send
 
+from lanarky.adapters.openai.resources import ChatCompletionResource
+from lanarky.adapters.openai.responses import (
+    HTTPStatusDetail,
+    StreamingResponse,
+    status,
+)
 from lanarky.events import Events, ServerSentEvent, ensure_bytes
-from lanarky.responses import HTTPStatusDetail, StreamingResponse
 
 
 @pytest.fixture
-def streaming_response(body_iterator: Iterator[bytes]) -> Type[StreamingResponse]:
-    return StreamingResponse(content=body_iterator)
+def resource() -> Type[ChatCompletionResource]:
+    return MagicMock(spec=ChatCompletionResource)
 
 
 @pytest.mark.asyncio
 async def test_stream_response_successful(
-    send: Send, streaming_response: Type[StreamingResponse]
+    send: Send, resource: Type[ChatCompletionResource]
 ):
-    await streaming_response.stream_response(send)
+    resource.stream_response.__aiter__ = AsyncMock(return_value="")
+
+    response = StreamingResponse(
+        resource=resource,
+        messages=[],
+    )
+
+    await response.stream_response(send)
+
+    resource.stream_response.assert_called_once()
 
     expected_calls = [
         call(
             {
                 "type": "http.response.start",
-                "status": streaming_response.status_code,
-                "headers": streaming_response.raw_headers,
-            }
-        ),
-        call(
-            {
-                "type": "http.response.body",
-                "body": b"Chunk 1",
-                "more_body": True,
-            }
-        ),
-        call(
-            {
-                "type": "http.response.body",
-                "body": b"Chunk 2",
-                "more_body": True,
+                "status": response.status_code,
+                "headers": response.raw_headers,
             }
         ),
         call(
@@ -55,20 +54,26 @@ async def test_stream_response_successful(
 
 
 @pytest.mark.asyncio
-async def test_stream_response_exception(
-    send: Send, streaming_response: Type[StreamingResponse]
+async def test_stream_response_error(
+    send: Send, resource: Type[ChatCompletionResource]
 ):
-    streaming_response.body_iterator = MagicMock()
-    streaming_response.body_iterator.__aiter__.side_effect = Exception("Some error")
+    resource.stream_response = AsyncMock(side_effect=Exception("Some error occurred"))
 
-    await streaming_response.stream_response(send)
+    response = StreamingResponse(
+        resource=resource,
+        messages=[],
+    )
+
+    await response.stream_response(send)
+
+    resource.stream_response.assert_called_once()
 
     expected_calls = [
         call(
             {
                 "type": "http.response.start",
-                "status": streaming_response.status_code,
-                "headers": streaming_response.raw_headers,
+                "status": response.status_code,
+                "headers": response.raw_headers,
             }
         ),
         call(

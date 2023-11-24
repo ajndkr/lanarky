@@ -18,7 +18,6 @@ loguru = "^0.7.2"
 openai = {version = "^1", optional = true}
 tiktoken = {version = "^0.4.0", optional = true}
 langchain = {version = "^0.0.337", optional = true}
-llama-index = {version = "^0.9.4", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.3"
@@ -40,9 +39,8 @@ mdx-include = "^1.4.2"
 termynal = "^0.11.1"
 
 [tool.poetry.extras]
-langchain = ["langchain"]
-llama-index = ["llama-index"]
 openai = ["openai", "tiktoken"]
+langchain = ["langchain"]
 
 [build-system]
 requires = ["poetry-core"]

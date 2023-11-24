@@ -2,13 +2,12 @@ from typing import Any
 
 from fastapi import status
 from langchain.chains.base import Chain
-from sse_starlette.sse import ServerSentEvent
 from starlette.types import Send
 
+from lanarky.events import Events, ServerSentEvent, ensure_bytes
 from lanarky.logging import logger
-from lanarky.responses import Events, HTTPStatusDetail
+from lanarky.responses import HTTPStatusDetail
 from lanarky.responses import StreamingResponse as _StreamingResponse
-from lanarky.responses import ensure_bytes
 
 
 class StreamingResponse(_StreamingResponse):

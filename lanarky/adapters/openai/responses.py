@@ -1,32 +1,27 @@
-from enum import Enum
-from typing import Any
-
 from fastapi import status
-from sse_starlette.sse import EventSourceResponse
 from starlette.types import Send
 
+from lanarky.adapters.openai.resources import Message
 from lanarky.events import Events, ServerSentEvent, ensure_bytes
 from lanarky.logging import logger
+from lanarky.responses import HTTPStatusDetail
+from lanarky.responses import StreamingResponse as _StreamingResponse
+
+from .resources import OpenAIResource
 
 
-class HTTPStatusDetail(str, Enum):
-    INTERNAL_SERVER_ERROR = "Internal Server Error"
-
-
-class StreamingResponse(EventSourceResponse):
-    """Base class for all streaming responses.
-
-    ``StreamingResponse`` follows the EventSource protocol:
-    https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events#interfaces
-    """
-
+class StreamingResponse(_StreamingResponse):
     def __init__(
         self,
-        content: Any = iter(()),
+        resource: OpenAIResource,
+        messages: list[Message],
         *args,
         **kwargs,
     ) -> None:
-        super().__init__(content=content, *args, **kwargs)
+        super().__init__(*args, **kwargs)
+
+        self.resource = resource
+        self.messages = messages
 
     async def stream_response(self, send: Send) -> None:
         await send(
@@ -38,14 +33,20 @@ class StreamingResponse(EventSourceResponse):
         )
 
         try:
-            async for data in self.body_iterator:
-                chunk = ensure_bytes(data, self.sep)
-                logger.debug(f"chunk: {chunk.decode()}")
+            async for data in self.resource.stream_response(self.messages):
+                chunk = ServerSentEvent(
+                    data=data,
+                    event=Events.COMPLETION,
+                )
                 await send(
-                    {"type": "http.response.body", "body": chunk, "more_body": True}
+                    {
+                        "type": "http.response.body",
+                        "body": ensure_bytes(chunk, None),
+                        "more_body": True,
+                    }
                 )
         except Exception as e:
-            logger.error(f"body iterator error: {e}")
+            logger.error(f"openai error: {e}")
             chunk = ServerSentEvent(
                 data=dict(
                     status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
