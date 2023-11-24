@@ -10,8 +10,8 @@ def test_get_logger_default():
     assert isinstance(logger, loguru._logger.Logger)
 
 
-def test_get_logger_custom_handler():
-    custom_handler = "test.log"
+def test_get_logger_custom_handler(tmpdir):
+    custom_handler = tmpdir.join("test.log")
     logger = get_logger(handler=custom_handler, format="{time} - {message}")
 
     assert logger is not None
@@ -21,10 +21,10 @@ def test_get_logger_custom_handler():
         assert handler._name == f"'{custom_handler}'"
 
 
-def test_get_logger_kwargs():
+def test_get_logger_kwargs(tmpdir):
     import logging
 
-    custom_handler = "test.log"
+    custom_handler = tmpdir.join("test.log")
     level = logging.WARNING
     logger = get_logger(handler=custom_handler, level=level)
 
