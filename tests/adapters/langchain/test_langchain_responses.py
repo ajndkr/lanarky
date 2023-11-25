@@ -6,6 +6,7 @@ from langchain.chains.base import Chain
 from starlette.background import BackgroundTask
 from starlette.types import Send
 
+from lanarky.adapters.langchain.callbacks import TokenStreamingCallbackHandler
 from lanarky.adapters.langchain.responses import (
     HTTPStatusDetail,
     StreamingResponse,
@@ -23,7 +24,7 @@ def chain() -> Type[Chain]:
 async def test_stream_response_successful(send: Send, chain: Type[Chain]):
     response = StreamingResponse(
         chain=chain,
-        config={"callbacks": []},
+        config={"callbacks": [TokenStreamingCallbackHandler(output_key="dummy")]},
         background=BackgroundTask(lambda: None),
     )
 
