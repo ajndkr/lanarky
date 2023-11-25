@@ -9,8 +9,6 @@ from pydantic import BaseModel, create_model
 from starlette.routing import compile_path
 
 from lanarky.adapters.langchain.callbacks import (
-    ChainStreamingCallbackHandler,
-    ChainWebSocketCallbackHandler,
     FinalTokenStreamingCallbackHandler,
     FinalTokenWebSocketCallbackHandler,
     SourceDocumentsStreamingCallbackHandler,
@@ -137,8 +135,7 @@ def get_streaming_callbacks(chain: Chain) -> list[Callable]:
     else:
         callbacks.extend(
             [
-                TokenStreamingCallbackHandler(chain.output_keys[0]),
-                ChainStreamingCallbackHandler(),
+                TokenStreamingCallbackHandler(output_key=chain.output_keys[0]),
             ]
         )
 
@@ -167,7 +164,6 @@ def get_websocket_callbacks(chain: Chain, websocket: WebSocket) -> list[Callable
                 TokenWebSocketCallbackHandler(
                     output_key=chain.output_keys[0], websocket=websocket
                 ),
-                ChainWebSocketCallbackHandler(websocket=websocket),
             ]
         )
 
