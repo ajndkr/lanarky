@@ -4,7 +4,7 @@ from unittest.mock import AsyncMock, create_autospec
 import pytest
 from starlette.types import Send
 
-from lanarky.websockets import WebSocket, WebSocketDisconnect
+from lanarky.websockets import WebSocket
 
 
 @pytest.fixture(scope="function")
@@ -24,8 +24,5 @@ def body_iterator() -> Iterator[bytes]:
 @pytest.fixture(scope="function")
 def websocket() -> Type[WebSocket]:
     websocket: Type[WebSocket] = create_autospec(WebSocket)
-    websocket.accept = AsyncMock()
-    websocket.receive_text = AsyncMock(side_effect=["Hello", WebSocketDisconnect()])
     websocket.send_json = AsyncMock()
-    websocket.send_text = AsyncMock()
     return websocket

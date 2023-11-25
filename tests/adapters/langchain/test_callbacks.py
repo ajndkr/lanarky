@@ -1,10 +1,11 @@
-from typing import Type
 from unittest.mock import MagicMock, patch
 
 import pytest
+from langchain.schema.document import Document
 from starlette.types import Send
 
 from lanarky.adapters.langchain import callbacks
+from lanarky.websockets import WebSocket
 
 
 def test_always_verbose():
@@ -16,16 +17,16 @@ def test_llm_cache_used():
     callback = callbacks.LanarkyCallbackHandler()
     assert callback.llm_cache_used is False
 
-    from langchain.cache import InMemoryCache
-    from langchain.globals import set_llm_cache
+    with patch("lanarky.adapters.langchain.callbacks.get_llm_cache") as get_llm_cache:
+        from langchain.cache import InMemoryCache
 
-    set_llm_cache(InMemoryCache())
+        get_llm_cache.return_value = InMemoryCache()
 
-    callback = callbacks.LanarkyCallbackHandler()
-    assert callback.llm_cache_used is True
+        callback = callbacks.LanarkyCallbackHandler()
+        assert callback.llm_cache_used is True
 
 
-def test_streaming_callback_send(send: Send):
+def test_streaming_callback(send: Send):
     callback = callbacks.StreamingCallbackHandler()
 
     assert callback.send is None
@@ -37,7 +38,19 @@ def test_streaming_callback_send(send: Send):
         callback.send = "non_callable_value"
 
 
-def test_streaming_callback_construct_message():
+def test_websocket_callback(websocket: WebSocket):
+    callback = callbacks.WebSocketCallbackHandler()
+
+    assert callback.websocket is None
+
+    callback.websocket = websocket
+    assert callback.websocket == websocket
+
+    with pytest.raises(ValueError):
+        callback.websocket = "non_websocket_value"
+
+
+def test_callbacks_construct_message():
     callback = callbacks.StreamingCallbackHandler()
 
     with patch("lanarky.adapters.langchain.callbacks.ServerSentEvent") as sse, patch(
@@ -58,84 +71,198 @@ def test_streaming_callback_construct_message():
 
         assert result == expected_return_value
 
+    callback = callbacks.WebSocketCallbackHandler()
+
+    data = "test_data"
+    event = "test_event"
+
+    expected_return_value = dict(data=data, event=event)
+
+    assert callback._construct_message(data, event) == expected_return_value
+
+
+def test_get_token():
+    with pytest.raises(ValueError):
+        callbacks.get_token_data(token="test_token", mode="wrong_mode")
+
+    assert callbacks.get_token_data(token="test_token", mode="text") == "test_token"
+    assert callbacks.get_token_data(token="test_token", mode="json") == {
+        "token": "test_token"
+    }
+
 
 @pytest.mark.asyncio
-async def test_chain_streaming(send: Send):
-    callback = callbacks.ChainStreamingCallbackHandler(send=send)
+async def test_token_callbacks(send: Send, websocket: WebSocket):
+    with pytest.raises(ValueError):
+        callbacks.TokenStreamingCallbackHandler(mode="wrong_mode", output_key="dummy")
+
+    callback = callbacks.TokenStreamingCallbackHandler(send=send, output_key="dummy")
+
+    await callback.on_chain_start()
+    assert not callback.streaming
+
+    await callback.on_llm_new_token("test_token")
+    assert callback.streaming
+    assert not callback.llm_cache_used
+    callback.send.assert_awaited()
+
+    callback.llm_cache_used = True
+    await callback.on_llm_new_token("test_token")
+    assert not callback.llm_cache_used
+
+    send.reset_mock()
+    callback = callbacks.TokenStreamingCallbackHandler(send=send, output_key="dummy")
+    outputs = {"dummy": "output_data"}
+    await callback.on_chain_end(outputs)
+    callback.send.assert_awaited()
+
+    send.reset_mock()
+    callback = callbacks.TokenStreamingCallbackHandler(send=send, output_key="dummy")
+    callback.llm_cache_used = False
+    callback.streaming = True
+    await callback.on_chain_end(outputs)
+    callback.send.assert_not_awaited()
+
+    send.reset_mock()
+    callback = callbacks.TokenStreamingCallbackHandler(send=send, output_key="dummy")
+    callback.streaming = False
+    with pytest.raises(KeyError):
+        await callback.on_chain_end({"wrong_key": "output_data"})
+
+    with pytest.raises(ValueError):
+        callbacks.TokenWebSocketCallbackHandler(mode="wrong_mode", output_key="dummy")
+
+    callback = callbacks.TokenWebSocketCallbackHandler(
+        websocket=websocket, output_key="dummy"
+    )
+
+    await callback.on_chain_start()
+    assert not callback.streaming
+
+    await callback.on_llm_new_token("test_token")
+    assert callback.streaming
+    assert not callback.llm_cache_used
+    callback.websocket.send_json.assert_awaited()
+
+    callback.llm_cache_used = True
+    await callback.on_llm_new_token("test_token")
+    assert not callback.llm_cache_used
+
+    websocket.send_json.reset_mock()
+    callback = callbacks.TokenWebSocketCallbackHandler(
+        websocket=websocket, output_key="dummy"
+    )
+    outputs = {"dummy": "output_data"}
+    await callback.on_chain_end(outputs)
+    callback.websocket.send_json.assert_awaited()
+
+    websocket.send_json.reset_mock()
+    callback = callbacks.TokenWebSocketCallbackHandler(
+        websocket=websocket, output_key="dummy"
+    )
+    callback.llm_cache_used = False
+    callback.streaming = True
+    await callback.on_chain_end(outputs)
+    callback.websocket.send_json.assert_not_awaited()
+
+    websocket.send_json.reset_mock()
+    callback = callbacks.TokenWebSocketCallbackHandler(
+        websocket=websocket, output_key="dummy"
+    )
+    callback.streaming = False
+    with pytest.raises(KeyError):
+        await callback.on_chain_end({"wrong_key": "output_data"})
+
+
+@pytest.mark.asyncio
+async def test_source_documents_callbacks(send: Send, websocket: WebSocket):
+    callback = callbacks.SourceDocumentsStreamingCallbackHandler(send=send)
+
+    outputs = {"source_documents": "output_data"}
+    with pytest.raises(ValueError):
+        await callback.on_chain_end(outputs)
+
+    outputs = {"source_documents": ["output_data"]}
+    with pytest.raises(ValueError):
+        await callback.on_chain_end(outputs)
+
+    outputs = {"source_documents": [Document(page_content="test_content")]}
+    await callback.on_chain_end(outputs)
+    callback.send.assert_awaited()
+
+    send.reset_mock()
+    outputs = {"dummy": "output_data"}
+    await callback.on_chain_end(outputs)
+    callback.send.assert_not_awaited()
+
+    callback = callbacks.SourceDocumentsWebSocketCallbackHandler(websocket=websocket)
+
+    outputs = {"source_documents": "output_data"}
+    with pytest.raises(ValueError):
+        await callback.on_chain_end(outputs)
+
+    outputs = {"source_documents": ["output_data"]}
+    with pytest.raises(ValueError):
+        await callback.on_chain_end(outputs)
+
+    outputs = {"source_documents": [Document(page_content="test_content")]}
+    await callback.on_chain_end(outputs)
+    callback.websocket.send_json.assert_awaited()
+
+    websocket.send_json.reset_mock()
+    outputs = {"dummy": "output_data"}
+    await callback.on_chain_end(outputs)
+    callback.websocket.send_json.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_final_token_callbacks(send: Send, websocket: WebSocket):
+    callback = callbacks.FinalTokenStreamingCallbackHandler(
+        send=send, stream_prefix=True
+    )
 
     await callback.on_llm_start()
+    assert not callback.answer_reached
+    assert not callback.streaming
 
+    await callback.on_llm_new_token("test_token")
+    assert callback.streaming
+
+    callback.check_if_answer_reached = MagicMock(return_value=True)
+    await callback.on_llm_new_token("test_token")
+    assert callback.answer_reached
     callback.send.assert_awaited()
 
-    await callback.on_chain_end()
+    send.reset_mock()
+    callback = callbacks.FinalTokenStreamingCallbackHandler(
+        send=send, stream_prefix=True
+    )
+    callback.check_if_answer_reached = MagicMock(return_value=False)
+    await callback.on_llm_new_token("test_token")
+    assert not callback.answer_reached
+    callback.send.assert_not_awaited()
 
-    callback.send.assert_awaited()
-
-
-@pytest.fixture
-def token_streaming_callback(
-    send: Send,
-) -> Type[callbacks.TokenStreamingCallbackHandler]:
-    return callbacks.TokenStreamingCallbackHandler(
-        send=send, output_key="output_key_test", mode=callbacks.TokenStreamMode.JSON
+    callback = callbacks.FinalTokenWebSocketCallbackHandler(
+        websocket=websocket, stream_prefix=True
     )
 
+    await callback.on_llm_start()
+    assert not callback.answer_reached
+    assert not callback.streaming
 
-@pytest.mark.asyncio
-async def test_token_streaming_callback_on_chain_start(
-    token_streaming_callback: Type[callbacks.TokenStreamingCallbackHandler],
-):
-    await token_streaming_callback.on_chain_start()
-    assert not token_streaming_callback.streaming
+    await callback.on_llm_new_token("test_token")
+    assert callback.streaming
 
+    callback.check_if_answer_reached = MagicMock(return_value=True)
+    await callback.on_llm_new_token("test_token")
+    assert callback.answer_reached
+    callback.websocket.send_json.assert_awaited()
 
-@pytest.mark.asyncio
-async def test_token_streaming_callback_on_llm_new_token(
-    token_streaming_callback: Type[callbacks.TokenStreamingCallbackHandler],
-):
-    token_streaming_callback.streaming = True
-    token_streaming_callback.llm_cache_used = True
-
-    await token_streaming_callback.on_llm_new_token("test_token")
-    assert token_streaming_callback.streaming
-    assert (
-        not token_streaming_callback.llm_cache_used
-    )  # Check that llm_cache_used is set to False
-
-    token_streaming_callback._construct_message = MagicMock()
-
-    await token_streaming_callback.on_llm_new_token("another_test_token")
-
-    expected_data = callbacks.get_token_data(
-        token="another_test_token", mode=token_streaming_callback.mode
+    websocket.send_json.reset_mock()
+    callback = callbacks.FinalTokenWebSocketCallbackHandler(
+        websocket=websocket, stream_prefix=True
     )
-    token_streaming_callback._construct_message.assert_called_with(
-        data=expected_data, event=callbacks.Events.COMPLETION
-    )
-
-
-@pytest.mark.asyncio
-async def test_token_streaming_callback_on_chain_end(
-    token_streaming_callback: Type[callbacks.TokenStreamingCallbackHandler],
-):
-    token_streaming_callback.streaming = True
-    token_streaming_callback.llm_cache_used = True
-
-    outputs = {"output_key_test": "output_data"}
-
-    token_streaming_callback._construct_message = MagicMock()
-
-    await token_streaming_callback.on_chain_end(outputs)
-
-    expected_data = callbacks.get_token_data(
-        token="output_data", mode=token_streaming_callback.mode
-    )
-
-    token_streaming_callback._construct_message.assert_called_with(
-        data=expected_data, event=callbacks.Events.COMPLETION
-    )
-    token_streaming_callback.send.assert_awaited()
-
-    token_streaming_callback.output_key = "non_existing_key"
-    with pytest.raises(KeyError):
-        await token_streaming_callback.on_chain_end(outputs)
+    callback.check_if_answer_reached = MagicMock(return_value=False)
+    await callback.on_llm_new_token("test_token")
+    assert not callback.answer_reached
+    callback.websocket.send_json.assert_not_awaited()
