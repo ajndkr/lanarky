@@ -10,6 +10,7 @@ tests:			## run unit tests with coverage
 	poetry run pytest \
 	--cov=lanarky --cov-report=term-missing:skip-covered \
 	-p pytest_asyncio -v
+	find . -type d -name '__pycache__' -exec rm -r {} +
 
 coverage:		## run unit tests with coverage
 	poetry run coveralls
