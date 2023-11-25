@@ -17,3 +17,15 @@ coverage:		## run unit tests with coverage
 
 pre-commit:		## run pre-commit hooks
 	poetry run pre-commit run --all-files
+
+bump:			## bump version
+	@read -p "Enter version bump (patch|minor|major): " arg; \
+	if [ "$$arg" != "patch" ] && [ "$$arg" != "minor" ] && [ "$$arg" != "major" ]; then \
+		echo "Usage: make bump (patch|minor|major)"; \
+		exit 1; \
+	fi; \
+	current_version=$$(poetry version -s); \
+	poetry version $$arg; \
+	new_version=$$(poetry version -s); \
+	git add pyproject.toml; \
+	git commit -m "bump(ver): $$current_version → $$new_version";
