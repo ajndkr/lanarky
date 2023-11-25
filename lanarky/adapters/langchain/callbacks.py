@@ -7,23 +7,23 @@ from langchain.callbacks.streaming_stdout_final_only import (
     FinalStreamingStdOutCallbackHandler,
 )
 from langchain.globals import get_llm_cache
+from langchain.schema.document import Document
 from pydantic import BaseModel
 from starlette.types import Message, Send
 
-from lanarky.events import ServerSentEvent, ensure_bytes
+from lanarky.events import Events, ServerSentEvent, ensure_bytes
+
+
+class LangchainEvents(str, Enum):
+    SOURCE_DOCUMENTS = "source_documents"
 
 
 class LanarkyCallbackHandler(AsyncCallbackHandler):
     """Base callback handler for Lanarky applications."""
 
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
         self.llm_cache_used = get_llm_cache() is not None
-
-    @property
-    def llm_cache_enabled(self) -> bool:
-        """Determine if LLM caching is enabled."""
-        return get_llm_cache() is not None
 
     @property
     def always_verbose(self) -> bool:
@@ -31,23 +31,16 @@ class LanarkyCallbackHandler(AsyncCallbackHandler):
         return True
 
 
-class Events(str, Enum):
-    START = "start"
-    COMPLETION = "completion"
-    SOURCE_DOCUMENTS = "source_documents"
-    END = "end"
-
-
 class StreamingCallbackHandler(LanarkyCallbackHandler):
     """Callback handler for streaming responses."""
 
     def __init__(
         self,
+        *,
         send: Send = None,
-        *args,
         **kwargs,
     ) -> None:
-        super().__init__(*args, **kwargs)
+        super().__init__(**kwargs)
 
         self._send = send
         self.streaming = None
@@ -88,20 +81,13 @@ class TokenEventData(BaseModel):
 
 def get_token_data(token: str, mode: TokenStreamMode) -> Union[str, dict[str, Any]]:
     """Get token data based on mode."""
+    if mode not in list(TokenStreamMode):
+        raise ValueError(f"Invalid stream mode: {mode}")
+
     if mode == TokenStreamMode.TEXT:
         return token
     else:
         return TokenEventData(token=token).model_dump()
-
-
-class ChainStreamingCallbackHandler(StreamingCallbackHandler):
-    async def on_llm_start(self, *args, **kwargs) -> None:
-        message = self._construct_message(data="", event=Events.START)
-        await self.send(message)
-
-    async def on_chain_end(self, *args, **kwargs) -> None:
-        message = self._construct_message(data="", event=Events.END)
-        await self.send(message)
 
 
 class TokenStreamingCallbackHandler(StreamingCallbackHandler):
@@ -109,12 +95,12 @@ class TokenStreamingCallbackHandler(StreamingCallbackHandler):
 
     def __init__(
         self,
+        *,
         output_key: str,
         mode: TokenStreamMode = TokenStreamMode.JSON,
-        *args,
         **kwargs,
     ) -> None:
-        super().__init__(*args, **kwargs)
+        super().__init__(**kwargs)
 
         self.output_key = output_key
 
@@ -167,6 +153,11 @@ class SourceDocumentsStreamingCallbackHandler(StreamingCallbackHandler):
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
         if "source_documents" in outputs:
+            if not isinstance(outputs["source_documents"], list):
+                raise ValueError("source_documents must be a list")
+            if not isinstance(outputs["source_documents"][0], Document):
+                raise ValueError("source_documents must be a list of Document")
+
             # NOTE: langchain is using pydantic_v1 for `Document`
             source_documents: list[dict] = [
                 document.dict() for document in outputs["source_documents"]
@@ -175,7 +166,7 @@ class SourceDocumentsStreamingCallbackHandler(StreamingCallbackHandler):
                 data=SourceDocumentsEventData(
                     source_documents=source_documents
                 ).model_dump(),
-                event=Events.SOURCE_DOCUMENTS,
+                event=LangchainEvents.SOURCE_DOCUMENTS,
             )
             await self.send(message)
 
@@ -190,13 +181,13 @@ class FinalTokenStreamingCallbackHandler(
 
     def __init__(
         self,
+        *,
         answer_prefix_tokens: Optional[list[str]] = None,
         strip_tokens: bool = True,
         stream_prefix: bool = False,
-        *args,
         **kwargs,
     ) -> None:
-        super().__init__(*args, **kwargs)
+        super().__init__(output_key=None, **kwargs)
 
         FinalStreamingStdOutCallbackHandler.__init__(
             self,
@@ -222,7 +213,7 @@ class FinalTokenStreamingCallbackHandler(
             self.answer_reached = True
             if self.stream_prefix:
                 message = self._construct_message(
-                    data=get_token_data(self.last_tokens, self.mode),
+                    data=get_token_data("".join(self.last_tokens), self.mode),
                     event=Events.COMPLETION,
                 )
                 await self.send(message)
@@ -240,12 +231,12 @@ class WebSocketCallbackHandler(LanarkyCallbackHandler):
 
     def __init__(
         self,
+        *,
         mode: TokenStreamMode = TokenStreamMode.JSON,
         websocket: WebSocket = None,
-        *args,
         **kwargs,
     ) -> None:
-        super().__init__(*args, **kwargs)
+        super().__init__(**kwargs)
 
         if mode not in list(TokenStreamMode):
             raise ValueError(f"Invalid stream mode: {mode}")
@@ -255,7 +246,7 @@ class WebSocketCallbackHandler(LanarkyCallbackHandler):
         self.streaming = None
 
     @property
-    def websocket(self) -> Send:
+    def websocket(self) -> WebSocket:
         return self._websocket
 
     @websocket.setter
@@ -272,21 +263,11 @@ class WebSocketCallbackHandler(LanarkyCallbackHandler):
         return dict(data=data, event=event)
 
 
-class ChainWebSocketCallbackHandler(WebSocketCallbackHandler):
-    async def on_llm_start(self, *args, **kwargs) -> None:
-        message = self._construct_message(data="", event=Events.START)
-        await self.websocket.send_json(message)
-
-    async def on_chain_end(self, *args, **kwargs) -> None:
-        message = self._construct_message(data="", event=Events.END)
-        await self.websocket.send_json(message)
-
-
 class TokenWebSocketCallbackHandler(WebSocketCallbackHandler):
     """Callback handler for sending tokens in websocket sessions."""
 
-    def __init__(self, output_key: str, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+    def __init__(self, *, output_key: str, **kwargs) -> None:
+        super().__init__(**kwargs)
 
         self.output_key = output_key
 
@@ -329,6 +310,11 @@ class SourceDocumentsWebSocketCallbackHandler(WebSocketCallbackHandler):
     async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
         """Run when chain ends running."""
         if "source_documents" in outputs:
+            if not isinstance(outputs["source_documents"], list):
+                raise ValueError("source_documents must be a list")
+            if not isinstance(outputs["source_documents"][0], Document):
+                raise ValueError("source_documents must be a list of Document")
+
             # NOTE: langchain is using pydantic_v1 for `Document`
             source_documents: list[dict] = [
                 document.dict() for document in outputs["source_documents"]
@@ -337,7 +323,7 @@ class SourceDocumentsWebSocketCallbackHandler(WebSocketCallbackHandler):
                 data=SourceDocumentsEventData(
                     source_documents=source_documents
                 ).model_dump(),
-                event=Events.SOURCE_DOCUMENTS,
+                event=LangchainEvents.SOURCE_DOCUMENTS,
             )
             await self.websocket.send_json(message)
 
@@ -352,13 +338,13 @@ class FinalTokenWebSocketCallbackHandler(
 
     def __init__(
         self,
+        *,
         answer_prefix_tokens: Optional[list[str]] = None,
         strip_tokens: bool = True,
         stream_prefix: bool = False,
-        *args,
         **kwargs,
     ) -> None:
-        super().__init__(*args, **kwargs)
+        super().__init__(output_key=None, **kwargs)
 
         FinalStreamingStdOutCallbackHandler.__init__(
             self,
@@ -384,7 +370,7 @@ class FinalTokenWebSocketCallbackHandler(
             self.answer_reached = True
             if self.stream_prefix:
                 message = self._construct_message(
-                    data=get_token_data(self.last_tokens, self.mode),
+                    data=get_token_data("".join(self.last_tokens), self.mode),
                     event=Events.COMPLETION,
                 )
                 await self.websocket.send_json(message)
