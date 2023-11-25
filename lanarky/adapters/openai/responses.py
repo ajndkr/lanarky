@@ -33,21 +33,22 @@ class StreamingResponse(_StreamingResponse):
         )
 
         try:
-            async for data in self.resource.stream_response(self.messages):
-                chunk = ServerSentEvent(
-                    data=data,
+            data = await self.resource.stream_response(self.messages)
+            async for chunk in data:
+                event_body = ServerSentEvent(
+                    data=chunk,
                     event=Events.COMPLETION,
                 )
                 await send(
                     {
                         "type": "http.response.body",
-                        "body": ensure_bytes(chunk, None),
+                        "body": ensure_bytes(event_body, None),
                         "more_body": True,
                     }
                 )
         except Exception as e:
             logger.error(f"openai error: {e}")
-            chunk = ServerSentEvent(
+            error_event_body = ServerSentEvent(
                 data=dict(
                     status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                     detail=HTTPStatusDetail.INTERNAL_SERVER_ERROR,
@@ -57,7 +58,7 @@ class StreamingResponse(_StreamingResponse):
             await send(
                 {
                     "type": "http.response.body",
-                    "body": ensure_bytes(chunk, None),
+                    "body": ensure_bytes(error_event_body, None),
                     "more_body": True,
                 }
             )
