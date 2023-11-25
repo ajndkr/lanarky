@@ -41,3 +41,13 @@ To run the pre-commit hooks on all files, run the following command:
 ```bash
 make pre-commit
 ```
+
+## Bump Version
+
+Lanarky uses Makefile to bump versions:
+
+```bash
+make bump
+```
+
+Note: The make recipe bumps version and auto-commits the changes.
