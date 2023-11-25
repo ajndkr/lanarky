@@ -1,4 +1,3 @@
-from typing import Type
 from unittest.mock import AsyncMock, MagicMock, call
 
 import pytest
@@ -13,15 +12,10 @@ from lanarky.adapters.openai.responses import (
 from lanarky.events import Events, ServerSentEvent, ensure_bytes
 
 
-@pytest.fixture
-def resource() -> Type[ChatCompletionResource]:
-    return MagicMock(spec=ChatCompletionResource)
-
-
 @pytest.mark.asyncio
-async def test_stream_response_successful(
-    send: Send, resource: Type[ChatCompletionResource]
-):
+async def test_stream_response_successful(send: Send):
+    resource = MagicMock(spec=ChatCompletionResource)
+    resource.stream_response = AsyncMock()
     resource.stream_response.__aiter__ = AsyncMock(return_value="")
 
     response = StreamingResponse(
@@ -54,9 +48,8 @@ async def test_stream_response_successful(
 
 
 @pytest.mark.asyncio
-async def test_stream_response_error(
-    send: Send, resource: Type[ChatCompletionResource]
-):
+async def test_stream_response_error(send: Send):
+    resource = MagicMock(spec=ChatCompletionResource)
     resource.stream_response = AsyncMock(side_effect=Exception("Some error occurred"))
 
     response = StreamingResponse(

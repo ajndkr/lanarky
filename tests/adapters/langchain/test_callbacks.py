@@ -1,5 +1,5 @@
 from typing import Type
-from unittest.mock import AsyncMock, patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 from starlette.types import Send
@@ -37,7 +37,7 @@ def test_streaming_callback_send(send: Send):
         callback.send = "non_callable_value"
 
 
-def ttest_streaming_callback_construct_message():
+def test_streaming_callback_construct_message():
     callback = callbacks.StreamingCallbackHandler()
 
     with patch("lanarky.adapters.langchain.callbacks.ServerSentEvent") as sse, patch(
@@ -102,7 +102,7 @@ async def test_token_streaming_callback_on_llm_new_token(
         not token_streaming_callback.llm_cache_used
     )  # Check that llm_cache_used is set to False
 
-    token_streaming_callback._construct_message = AsyncMock()
+    token_streaming_callback._construct_message = MagicMock()
 
     await token_streaming_callback.on_llm_new_token("another_test_token")
 
@@ -123,7 +123,7 @@ async def test_token_streaming_callback_on_chain_end(
 
     outputs = {"output_key_test": "output_data"}
 
-    token_streaming_callback._construct_message = AsyncMock()
+    token_streaming_callback._construct_message = MagicMock()
 
     await token_streaming_callback.on_chain_end(outputs)
 
