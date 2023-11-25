@@ -1,10 +1,16 @@
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, create_autospec, patch
 
 import pytest
+from langchain.agents import AgentExecutor
+from langchain.chains import ConversationChain
 from langchain.schema.document import Document
 from starlette.types import Send
 
 from lanarky.adapters.langchain import callbacks
+from lanarky.adapters.langchain.utils import (
+    get_streaming_callbacks,
+    get_websocket_callbacks,
+)
 from lanarky.websockets import WebSocket
 
 
@@ -266,3 +272,28 @@ async def test_final_token_callbacks(send: Send, websocket: WebSocket):
     await callback.on_llm_new_token("test_token")
     assert not callback.answer_reached
     callback.websocket.send_json.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_get_callbacks(websocket: WebSocket):
+    def chain_factory():
+        chain: ConversationChain = create_autospec(ConversationChain)
+        chain.input_keys = ["input"]
+        chain.output_keys = ["response", "source_documents"]
+        return chain
+
+    streaming_callbacks = get_streaming_callbacks(chain_factory())
+    assert len(streaming_callbacks) == 2
+
+    def agent_factory():
+        agent: AgentExecutor = create_autospec(AgentExecutor)
+        return agent
+
+    websocket_callbacks = get_streaming_callbacks(agent_factory())
+    assert len(websocket_callbacks) == 1
+
+    websocket_callbacks = get_websocket_callbacks(chain_factory(), websocket)
+    assert len(websocket_callbacks) == 2
+
+    websocket_callbacks = get_websocket_callbacks(agent_factory(), websocket)
+    assert len(websocket_callbacks) == 1
