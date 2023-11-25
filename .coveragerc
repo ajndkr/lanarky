@@ -1,2 +1,3 @@
 [run]
-omit = lanarky/adapters/langchain/__init__.py
+omit =
+    lanarky/adapters/*/__init__.py
