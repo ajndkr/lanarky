@@ -44,6 +44,29 @@ theme:
 nav:
   - Lanarky: index.md
   - Getting Started: getting-started.md
+  - Learn:
+      - learn/index.md
+      - Streaming: learn/streaming.md
+      - WebSockets: learn/websockets.md
+      - Adapters:
+          - learn/adapters/index.md
+          - OpenAI:
+              - learn/adapters/openai/index.md
+              - learn/adapters/openai/streaming.md
+              - learn/adapters/openai/websockets.md
+              - learn/adapters/openai/router.md
+              - learn/adapters/openai/dependencies.md
+          - LangChain:
+              - learn/adapters/langchain/index.md
+              - learn/adapters/langchain/callbacks.md
+              - learn/adapters/langchain/streaming.md
+              - learn/adapters/langchain/websockets.md
+              - learn/adapters/langchain/router.md
+              - learn/adapters/langchain/dependencies.md
+  - Deployment:
+      - deployment/index.md
+      - deployment/docker.md
+      - GCP: deployment/gcp.md
 
 markdown_extensions:
   - attr_list
