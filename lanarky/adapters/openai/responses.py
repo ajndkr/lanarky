@@ -33,8 +33,7 @@ class StreamingResponse(_StreamingResponse):
         )
 
         try:
-            data = await self.resource.stream_response(self.messages)
-            async for chunk in data:
+            async for chunk in self.resource.stream_response(self.messages):
                 event_body = ServerSentEvent(
                     data=chunk,
                     event=Events.COMPLETION,
