@@ -94,23 +94,23 @@ Since we have exposed only `stream` as the query parameter, we can test 2 scenar
 
 ```
 $ python client.py --input "hi" --stream
-$ completion:
-$ completion: Well
-$ completion: ,
-$ completion:  hello
-$ completion:  there
-$ completion: !
-$ completion:  How
-$ completion:  can
-$ completion:  I
-$ completion:  sass
-$ completion: ...
-$ completion:  I
-$ completion:  mean
-$ completion:  assist
-$ completion:  you
-$ completion:  today
-$ completion: ?
+completion:
+completion: Well
+completion: ,
+completion:  hello
+completion:  there
+completion: !
+completion:  How
+completion:  can
+completion:  I
+completion:  sass
+completion: ...
+completion:  I
+completion:  mean
+completion:  assist
+completion:  you
+completion:  today
+completion: ?
 ```
 
 2.  Recieve all output at once:
@@ -119,7 +119,7 @@ $ completion: ?
 
 ```
 $ python client.py --input "hi"
-$ completion: Oh, hello there! What can I sass...I mean assist you with today?
+completion: Oh, hello there! What can I sass...I mean assist you with today?
 ```
 
 ## Next Steps
