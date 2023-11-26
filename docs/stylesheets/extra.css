@@ -47,3 +47,7 @@
 [data-md-color-scheme="slate"] img[src$="#gh-light-mode-only"] {
   display: none;
 }
+
+.md-typeset .md-button--primary {
+  color: #303841;
+}

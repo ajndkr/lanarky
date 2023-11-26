@@ -121,3 +121,12 @@ $ completion: ?
 $ python client.py --input "hi"
 $ completion: Oh, hello there! What can I sass...I mean assist you with today?
 ```
+
+## Next Steps
+
+Congrats on building your first LLM microservice with Lanarky!
+
+Now that you have a basic understanding of how Lanarky works, let's learn more about
+the core concepts of Lanarky.
+
+[Let's Learn!](./learn/index.md){ .md-button .md-button--primary }

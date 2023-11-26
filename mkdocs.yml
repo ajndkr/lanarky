@@ -52,17 +52,15 @@ nav:
           - learn/adapters/index.md
           - OpenAI:
               - learn/adapters/openai/index.md
-              - learn/adapters/openai/streaming.md
-              - learn/adapters/openai/websockets.md
-              - learn/adapters/openai/router.md
-              - learn/adapters/openai/dependencies.md
+              - OpenAI API Router: learn/adapters/openai/router.md
+              - Dependency Injection: learn/adapters/openai/dependency.md
+              - FastAPI Backport: learn/adapters/openai/fastapi.md
           - LangChain:
               - learn/adapters/langchain/index.md
+              - LangChain API Router: learn/adapters/langchain/router.md
+              - Dependency Injection: learn/adapters/langchain/dependency.md
+              - FastAPI Backport: learn/adapters/langchain/fastapi.md
               - learn/adapters/langchain/callbacks.md
-              - learn/adapters/langchain/streaming.md
-              - learn/adapters/langchain/websockets.md
-              - learn/adapters/langchain/router.md
-              - learn/adapters/langchain/dependencies.md
   - Deployment:
       - deployment/index.md
       - deployment/docker.md
