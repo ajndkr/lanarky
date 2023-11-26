@@ -5,8 +5,6 @@ hide:
 
 Let's build our first LLM microservice with Lanarky!
 
-## Install Dependencies
-
 We need to first install some extra dependencies as we will use OpenAI as the LLM
 provider.
 
