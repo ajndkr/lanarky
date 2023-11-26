@@ -44,7 +44,6 @@ class ChatCompletionResource(OpenAIResource):
 
     async def stream_response(self, messages: list[dict]) -> Generator[str, None, None]:
         messages = self._prepare_messages(messages)
-        print(messages)
         data = await self._client.chat.completions.create(
             messages=messages,
             model=self.model,
