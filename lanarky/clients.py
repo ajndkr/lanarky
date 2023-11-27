@@ -50,13 +50,22 @@ class WebSocketClient:
                 message = message.encode("utf-8")
             self.websocket.send(message)
 
-    def receive(self):
+    def receive(self, mode: DataMode = None):
+        mode = mode or self.mode
         if self.websocket:
             response = self.websocket.recv()
-            if self.mode == DataMode.JSON:
+            if mode == DataMode.JSON:
                 response = json.loads(response)
-            elif self.mode == DataMode.TEXT:
+            elif mode == DataMode.TEXT:
                 response = str(response)
-            elif self.mode == DataMode.BYTES:
+            elif mode == DataMode.BYTES:
                 response = response.decode("utf-8")
             return response
+
+    def stream_response(self):
+        if self.websocket:
+            while True:
+                response = self.receive(mode=DataMode.JSON)
+                if response["event"] == "end":
+                    break
+                yield response
