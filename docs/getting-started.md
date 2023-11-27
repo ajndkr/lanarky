@@ -52,7 +52,7 @@ $ pip install uvicorn
 $ uvicorn app:app --reload
 ```
 
-!!! info
+!!! tip
 
     Swagger docs will be available at [http://localhost:8000/docs](http://localhost:8000/docs).
 

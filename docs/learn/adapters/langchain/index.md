@@ -3,7 +3,7 @@
 The **LangChain Adapter** allows Lanarky users to build microservices using the
 [LangChain](https://www.langchain.com/) framework.
 
-To enable this adapter, we need to install some extra dependencies:
+To enable this adapter, install lanarky with extra dependencies:
 
 <!-- termynal -->
 

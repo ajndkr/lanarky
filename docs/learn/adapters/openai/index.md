@@ -3,7 +3,7 @@
 The **OpenAI Adapter** allows Lanarky users to build microservices using the
 [OpenAI Python SDK](https://platform.openai.com/docs/api-reference?lang=python).
 
-To enable this adapter, we need to install some extra dependencies:
+To enable this adapter, install lanarky with extra dependencies:
 
 <!-- termynal -->
 
@@ -21,6 +21,6 @@ $ pip install lanarky[openai]
 
 Here's an overview of the supported features:
 
-- [`OpenAIAPIRouter`](./router.md): Lanarky router for OpenAI
+- [OpenAI API Router](./router.md): Lanarky router for OpenAI
 - [Dependency Injection](./dependency.md): use OpenAI as a dependency in your microservice
 - [FastAPI Backport](./fastapi.md): low-level modules for FastAPI users

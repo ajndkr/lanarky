@@ -24,14 +24,18 @@ theme:
   features:
     - search.suggest
     - search.highlight
-    - content.tabs.link
-    - navigation.indexes
-    - content.tooltips
     - navigation.path
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - navigation.tracking
+    - content.tabs.link
+    - content.tooltips
     - content.code.annotate
     - content.code.copy
     - content.code.select
-    - navigation.tabs
   icon:
     repo: fontawesome/brands/github-alt
   logo: assets/icon.svg
