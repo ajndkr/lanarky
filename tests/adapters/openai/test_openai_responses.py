@@ -14,9 +14,11 @@ from lanarky.events import Events, ServerSentEvent, ensure_bytes
 
 @pytest.mark.asyncio
 async def test_stream_response_successful(send: Send):
+    async def async_generator():
+        yield ""
+
     resource = MagicMock(spec=ChatCompletionResource)
-    resource.stream_response = AsyncMock()
-    resource.stream_response.__aiter__ = AsyncMock(return_value="")
+    resource.stream_response.__aiter__ = MagicMock(return_value=async_generator())
 
     response = StreamingResponse(
         resource=resource,

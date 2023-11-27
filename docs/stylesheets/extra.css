@@ -47,3 +47,11 @@
 [data-md-color-scheme="slate"] img[src$="#gh-light-mode-only"] {
   display: none;
 }
+
+.md-typeset .md-button--primary {
+  color: #303841;
+}
+
+.md-nav--primary .md-nav__item--active > .md-nav__link {
+  color: #f25353;
+}

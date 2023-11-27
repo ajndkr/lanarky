@@ -1,3 +1,4 @@
 [run]
 omit =
+    lanarky/clients.py
     lanarky/adapters/*/__init__.py

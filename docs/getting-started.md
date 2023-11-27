@@ -3,22 +3,18 @@ hide:
   - navigation
 ---
 
-This is a quick tutorial on getting started with Lanarky.
+Let's build our first LLM microservice with Lanarky!
 
-We will use LangChain as the LLM tooling framework and OpenAI as the LLM provider to
-build our first LLM microservice.
-
-## Install Dependencies
+We need to first install some extra dependencies as we will use OpenAI as the LLM
+provider.
 
 <!-- termynal -->
 
 ```
-$ pip install lanarky[langchain,openai]
+$ pip install lanarky[openai]
 ```
 
-## Example
-
-We will use the `ConversationChain` from LangChain library to build our first LLM microservice.
+## Application
 
 !!! info
 
@@ -28,27 +24,26 @@ We will use the `ConversationChain` from LangChain library to build our first LL
 ```python
 import os
 
-from langchain.chains import ConversationChain
-from langchain.chat_models import ChatOpenAI
-
 from lanarky import Lanarky
-from lanarky.adapters.langchain.routing import LangchainAPIRouter
+from lanarky.adapters.openai.resources import ChatCompletionResource
+from lanarky.adapters.openai.routing import OpenAIAPIRouter
 
 os.environ["OPENAI_API_KEY"] = "add-your-openai-api-key-here"
 
 app = Lanarky()
-langchain_router = LangchainAPIRouter()
+router = OpenAIAPIRouter()
 
 
-@langchain_router.post("/chat")
-def chat(streaming: bool = True) -> ConversationChain:
-    return ConversationChain(llm=ChatOpenAI(streaming=streaming))
+@router.post("/chat")
+def chat(stream: bool = True) -> ChatCompletionResource:
+    system = "You are a sassy assistant"
+    return ChatCompletionResource(stream=stream, system=system)
 
 
-app.include_router(langchain_router)
+app.include_router(router)
 ```
 
-Run the application:
+Run application:
 
 <!-- termynal -->
 
@@ -57,56 +52,81 @@ $ pip install uvicorn
 $ uvicorn app:app --reload
 ```
 
-View the Swagger docs at [http://localhost:8000/docs](http://localhost:8000/docs).
+!!! tip
 
-## Testing
+    Swagger docs will be available at [http://localhost:8000/docs](http://localhost:8000/docs).
 
-<!-- termynal -->
+## Client
 
-```
-$ pip install httpx-sse
-```
+Now that the application script is running, we will setup a client script for testing.
 
-Create `client.py` script:
+Create `client.py`:
 
 ```python
 import click
-import httpx
-from httpx_sse import connect_sse
+
+from lanarky.clients import StreamingClient
 
 
 @click.command()
 @click.option("--input", required=True)
-@click.option("--streaming", is_flag=True)
-def main(input: str, streaming: bool):
-    url = f"http://localhost:8000/chat?streaming={str(streaming).lower()}"
-    with httpx.Client() as client:
-        with connect_sse(
-            client,
-            "POST",
-            url,
-            json={"input": input},
-        ) as event_source:
-            for sse in event_source.iter_sse():
-                print(sse.event, sse.data)
+@click.option("--stream", is_flag=True)
+def main(input: str, stream: bool):
+    client = StreamingClient()
+    for event in client.stream_response(
+        "POST",
+        "/chat",
+        params={"stream": str(stream).lower()},
+        json={"messages": [dict(role="user", content=input)]},
+    ):
+        print(f"{event.event}: {event.data}")
 
 
 if __name__ == "__main__":
     main()
 ```
 
-Stream output:
+Since we have exposed only `stream` as the query parameter, we can test 2 scenarios:
+
+1. Recieve output as it is generated:
 
 <!-- termynal -->
 
 ```
-$ python client.py --input hi --streaming
+$ python client.py --input "hi" --stream
+completion:
+completion: Well
+completion: ,
+completion:  hello
+completion:  there
+completion: !
+completion:  How
+completion:  can
+completion:  I
+completion:  sass
+completion: ...
+completion:  I
+completion:  mean
+completion:  assist
+completion:  you
+completion:  today
+completion: ?
 ```
 
-Recieve all output at once:
+2.  Recieve all output at once:
 
 <!-- termynal -->
 
 ```
-$ python client.py --input hi
+$ python client.py --input "hi"
+completion: Oh, hello there! What can I sass...I mean assist you with today?
 ```
+
+## Next Steps
+
+Congrats on building your first LLM microservice with Lanarky!
+
+Now that you have a basic understanding of how Lanarky works, let's learn more about
+the core concepts of Lanarky.
+
+[Let's Learn!](./learn/index.md){ .md-button .md-button--primary }
