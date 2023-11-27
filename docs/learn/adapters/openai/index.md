@@ -11,7 +11,7 @@ To enable this adapter, install lanarky with extra dependencies:
 $ pip install lanarky[openai]
 ```
 
-!!! info
+!!! tip
 
     To use OpenAI, you need to create an openai account and generate an API key.
     Visit [openai.com](https://openai.com) for more information.
@@ -22,5 +22,8 @@ $ pip install lanarky[openai]
 Here's an overview of the supported features:
 
 - [OpenAI API Router](./router.md): Lanarky router for OpenAI
+
+Additionally, we will cover some advanced topics:
+
 - [Dependency Injection](./dependency.md): use OpenAI as a dependency in your microservice
 - [FastAPI Backport](./fastapi.md): low-level modules for FastAPI users

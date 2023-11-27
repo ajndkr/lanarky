@@ -9,6 +9,6 @@ We will cover the following adapters in depth:
 - [LangChain](./langchain/index.md): build microservices using the
   [LangChain](https://www.langchain.com/)
 
-!!! note
+!!! note "Note from Author"
 
-    The **Adapters API** is still in active development. We will add more adapters in the future.
+    The **Adapters API** is still in active development. I will add more adapters in the future.

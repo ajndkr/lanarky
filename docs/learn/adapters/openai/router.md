@@ -171,7 +171,7 @@ someone who loves to dance to the beat of your own drum and has a
 mischievous sense of humor. Am I close?
 ```
 
-!!! note
+!!! note "Note from Author"
 
-    If you want to build more complex logic, we recommend using the low-level modules
+    If you want to build more complex logic, I recommend using the low-level modules
     to define the endpoint from scratch: [Learn more](./fastapi.md)
