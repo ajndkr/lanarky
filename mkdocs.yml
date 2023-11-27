@@ -67,10 +67,6 @@ nav:
               - Advanced:
                   - Dependency Injection: learn/adapters/langchain/dependency.md
                   - FastAPI Backport: learn/adapters/langchain/fastapi.md
-  - Deployment:
-      - deployment/index.md
-      - deployment/docker.md
-      - GCP: deployment/gcp.md
 
 markdown_extensions:
   - attr_list
