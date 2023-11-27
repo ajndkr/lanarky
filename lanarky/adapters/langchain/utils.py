@@ -16,7 +16,8 @@ from lanarky.adapters.langchain.callbacks import (
     TokenStreamingCallbackHandler,
     TokenWebSocketCallbackHandler,
 )
-from lanarky.adapters.langchain.responses import StreamingResponse
+from lanarky.adapters.langchain.responses import HTTPStatusDetail, StreamingResponse
+from lanarky.events import Events
 from lanarky.logging import logger
 from lanarky.websockets import WebSocket, WebsocketSession
 
@@ -55,10 +56,26 @@ def build_factory_websocket_endpoint(
         callbacks = get_websocket_callbacks(chain, websocket)
         async with WebsocketSession().connect(websocket) as session:
             async for data in session:
-                await chain.acall(
-                    inputs=request_model(**data).model_dump(),
-                    callbacks=callbacks,
-                )
+                try:
+                    await chain.acall(
+                        inputs=request_model(**data).model_dump(),
+                        callbacks=callbacks,
+                    )
+                except Exception as e:
+                    logger.error(f"langchain error: {e}")
+                    await websocket.send_json(
+                        dict(
+                            data=dict(
+                                status=500,
+                                detail=HTTPStatusDetail(
+                                    code=500,
+                                    message="Internal Server Error",
+                                ),
+                            ),
+                            event=Events.ERROR,
+                        )
+                    )
+                await websocket.send_json(dict(data="", event=Events.END))
 
     return factory_endpoint
 

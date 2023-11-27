@@ -65,12 +65,7 @@ def build_factory_websocket_endpoint(
                             event=Events.ERROR,
                         )
                     )
-                await websocket.send_json(
-                    dict(
-                        data="",
-                        event=Events.END,
-                    )
-                )
+                await websocket.send_json(dict(data="", event=Events.END))
 
     return factory_endpoint
 
