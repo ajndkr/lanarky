@@ -56,13 +56,13 @@ nav:
           - learn/adapters/index.md
           - OpenAI:
               - learn/adapters/openai/index.md
-              - OpenAI API Router: learn/adapters/openai/router.md
+              - Router: learn/adapters/openai/router.md
               - Advanced:
                   - Dependency Injection: learn/adapters/openai/dependency.md
                   - FastAPI Backport: learn/adapters/openai/fastapi.md
           - LangChain:
               - learn/adapters/langchain/index.md
-              - LangChain API Router: learn/adapters/langchain/router.md
+              - Router: learn/adapters/langchain/router.md
               - learn/adapters/langchain/callbacks.md
               - Advanced:
                   - Dependency Injection: learn/adapters/langchain/dependency.md

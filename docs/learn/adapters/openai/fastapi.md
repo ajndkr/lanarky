@@ -79,9 +79,9 @@ class ChatInput(BaseModel):
     messages: list[Message]
 
 
-def chat_completion_factory(stream: bool = True) -> ChatCompletionResource:
+def chat_completion_factory() -> ChatCompletionResource:
     system = "You are a sassy assistant"
-    return ChatCompletionResource(system=system, stream=stream)
+    return ChatCompletionResource(system=system, stream=True)
 
 
 @app.websocket("/ws")

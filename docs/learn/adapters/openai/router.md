@@ -108,9 +108,9 @@ router = OpenAIAPIRouter()
 
 
 @router.websocket("/ws")
-def chat(stream: bool = True) -> ChatCompletionResource:
+def chat() -> ChatCompletionResource:
     system = "You are a sassy assistant"
-    return ChatCompletionResource(stream=stream, system=system)
+    return ChatCompletionResource(stream=True, system=system)
 
 
 app.include_router(router)

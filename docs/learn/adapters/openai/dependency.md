@@ -1,3 +1,8 @@
+---
+hide:
+  - toc
+---
+
 FastAPI offers a powerful [Dependency Injection](https://fastapi.tiangolo.com/tutorial/dependencies/)
 system that allows you to inject dependencies into your API endpoints. Lanarky extends this functionality
 by offering OpenAI as a dependency.
@@ -61,7 +66,7 @@ import httpx
 @click.command()
 @click.option("--input", required=True)
 def main(input: str):
-    url = "http://localhost:8001/"
+    url = "http://localhost:8000/"
 
     with httpx.Client() as client:
         response = client.post(
