@@ -48,21 +48,24 @@ def build_factory_websocket_endpoint(
                     async for chunk in resource.stream_response(
                         **request_model(**data).model_dump()
                     ):
-                        chunk_message = dict(
-                            data=chunk,
-                            event=Events.COMPLETION,
+                        await websocket.send_json(
+                            dict(
+                                data=chunk,
+                                event=Events.COMPLETION,
+                            )
                         )
-                        await websocket.send_json(chunk_message)
                 except Exception as e:
                     logger.error(f"openai error: {e}")
-                    error_message = dict(
-                        data=dict(
-                            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                            detail=HTTPStatusDetail.INTERNAL_SERVER_ERROR,
-                        ),
-                        event=Events.ERROR,
+                    await websocket.send_json(
+                        dict(
+                            data=dict(
+                                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                                detail=HTTPStatusDetail.INTERNAL_SERVER_ERROR,
+                            ),
+                            event=Events.ERROR,
+                        )
                     )
-                    await websocket.send_json(error_message)
+                await websocket.send_json(dict(data="", event=Events.END))
 
     return factory_endpoint
 

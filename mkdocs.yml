@@ -24,14 +24,18 @@ theme:
   features:
     - search.suggest
     - search.highlight
-    - content.tabs.link
-    - navigation.indexes
-    - content.tooltips
     - navigation.path
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - navigation.tracking
+    - content.tabs.link
+    - content.tooltips
     - content.code.annotate
     - content.code.copy
     - content.code.select
-    - navigation.tabs
   icon:
     repo: fontawesome/brands/github-alt
   logo: assets/icon.svg
@@ -44,6 +48,25 @@ theme:
 nav:
   - Lanarky: index.md
   - Getting Started: getting-started.md
+  - Learn:
+      - learn/index.md
+      - Streaming: learn/streaming.md
+      - WebSockets: learn/websockets.md
+      - Adapters:
+          - learn/adapters/index.md
+          - OpenAI:
+              - learn/adapters/openai/index.md
+              - Router: learn/adapters/openai/router.md
+              - Advanced:
+                  - Dependency Injection: learn/adapters/openai/dependency.md
+                  - FastAPI Backport: learn/adapters/openai/fastapi.md
+          - LangChain:
+              - learn/adapters/langchain/index.md
+              - Router: learn/adapters/langchain/router.md
+              - learn/adapters/langchain/callbacks.md
+              - Advanced:
+                  - Dependency Injection: learn/adapters/langchain/dependency.md
+                  - FastAPI Backport: learn/adapters/langchain/fastapi.md
 
 markdown_extensions:
   - attr_list
