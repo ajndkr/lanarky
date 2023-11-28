@@ -62,9 +62,7 @@ class StreamingCallbackHandler(LanarkyCallbackHandler):
             raise ValueError("value must be a Callable")
         self._send = value
 
-    def _construct_message(
-        self, data: Union[str, dict[str, Any]], event: Optional[str] = None
-    ) -> Message:
+    def _construct_message(self, data: str, event: Optional[str] = None) -> Message:
         """Constructs message payload.
 
         Args:
@@ -103,7 +101,7 @@ def get_token_data(token: str, mode: TokenStreamMode) -> Union[str, dict[str, An
     if mode == TokenStreamMode.TEXT:
         return token
     else:
-        return TokenEventData(token=token).model_dump()
+        return TokenEventData(token=token).model_dump_json()
 
 
 class TokenStreamingCallbackHandler(StreamingCallbackHandler):
@@ -146,6 +144,7 @@ class TokenStreamingCallbackHandler(StreamingCallbackHandler):
         message = self._construct_message(
             data=get_token_data(token, self.mode), event=Events.COMPLETION
         )
+        print("message", message)
         await self.send(message)
 
     async def on_chain_end(
@@ -192,7 +191,7 @@ class SourceDocumentsStreamingCallbackHandler(StreamingCallbackHandler):
             message = self._construct_message(
                 data=SourceDocumentsEventData(
                     source_documents=source_documents
-                ).model_dump(),
+                ).model_dump_json(),
                 event=LangchainEvents.SOURCE_DOCUMENTS,
             )
             await self.send(message)
@@ -299,9 +298,7 @@ class WebSocketCallbackHandler(LanarkyCallbackHandler):
             raise ValueError("value must be a WebSocket")
         self._websocket = value
 
-    def _construct_message(
-        self, data: Union[str, dict[str, Any]], event: Optional[str] = None
-    ) -> Message:
+    def _construct_message(self, data: str, event: Optional[str] = None) -> Message:
         """Constructs message payload.
 
         Args:
@@ -380,7 +377,7 @@ class SourceDocumentsWebSocketCallbackHandler(WebSocketCallbackHandler):
             message = self._construct_message(
                 data=SourceDocumentsEventData(
                     source_documents=source_documents
-                ).model_dump(),
+                ).model_dump_json(),
                 event=LangchainEvents.SOURCE_DOCUMENTS,
             )
             await self.websocket.send_json(message)
