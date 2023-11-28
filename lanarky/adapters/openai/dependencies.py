@@ -12,12 +12,12 @@ def Depends(
     dependency_kwargs: dict[str, Any] = {},
     use_cache: bool = True
 ) -> params.Depends:
-    """Dependency injection for openai.
+    """Dependency injection for OpenAI.
 
     Args:
         dependency: a "dependable" resource factory callable.
         dependency_kwargs: kwargs to pass to resource dependency.
-        use_cache: use_cache parameter of ``fastapi.Depends``.
+        use_cache: use_cache parameter of `fastapi.Depends`.
     """
     try:
         resource = dependency()

@@ -41,5 +41,5 @@ jobs:
 
       - name: Deploy GitHub Pages
         run: |
-          pip install mkdocs-material mdx-include termynal
+          pip install 'mkdocs-material[imaging]' mdx-include termynal 'mkdocstrings[python]'
           mkdocs gh-deploy --force

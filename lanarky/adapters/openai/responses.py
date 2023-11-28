@@ -1,3 +1,5 @@
+from typing import Any
+
 from fastapi import status
 from starlette.types import Send
 
@@ -11,19 +13,37 @@ from .resources import OpenAIResource
 
 
 class StreamingResponse(_StreamingResponse):
+    """StreamingResponse class for OpenAI resources."""
+
     def __init__(
         self,
         resource: OpenAIResource,
         messages: list[Message],
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: dict[str, Any],
     ) -> None:
+        """Constructor method.
+
+        Args:
+            resource: An OpenAIResource instance.
+            messages: A list of `Message` instances.
+            *args: Positional arguments to pass to the parent constructor.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         super().__init__(*args, **kwargs)
 
         self.resource = resource
         self.messages = messages
 
     async def stream_response(self, send: Send) -> None:
+        """Stream chat completions.
+
+        If an exception occurs while iterating over the OpenAI resource, an
+        internal server error is sent to the client.
+
+        Args:
+            send: The ASGI send callable.
+        """
         await send(
             {
                 "type": "http.response.start",

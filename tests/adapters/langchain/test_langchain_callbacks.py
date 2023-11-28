@@ -92,9 +92,10 @@ def test_get_token():
         callbacks.get_token_data(token="test_token", mode="wrong_mode")
 
     assert callbacks.get_token_data(token="test_token", mode="text") == "test_token"
-    assert callbacks.get_token_data(token="test_token", mode="json") == {
-        "token": "test_token"
-    }
+    assert (
+        callbacks.get_token_data(token="test_token", mode="json")
+        == '{"token":"test_token"}'
+    )
 
 
 @pytest.mark.asyncio

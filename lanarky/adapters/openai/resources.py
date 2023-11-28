@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Generator
+from typing import Any, Generator
 
 from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletion, ChatCompletionChunk
@@ -17,15 +17,21 @@ class SystemMessage(BaseModel):
 
 
 class OpenAIResource:
+    """Base class for OpenAI resources."""
+
     def __init__(self, client: AsyncOpenAI = None):
         self._client = client or AsyncOpenAI()
 
     @abstractmethod
-    async def stream_response(self, *args, **kwargs) -> Generator[str, None, None]:
+    async def stream_response(
+        self, *args: Any, **kwargs: dict[str, Any]
+    ) -> Generator[str, None, None]:
         ...
 
 
 class ChatCompletionResource(OpenAIResource):
+    """OpenAIResource class for chat completions."""
+
     def __init__(
         self,
         *,
@@ -33,8 +39,17 @@ class ChatCompletionResource(OpenAIResource):
         model: str = "gpt-3.5-turbo",
         stream: bool = False,
         system: str = None,
-        **create_kwargs,
+        **create_kwargs: dict[str, Any],
     ):
+        """Constructor method.
+
+        Args:
+            client: An AsyncOpenAI instance.
+            model: The model to use for completions.
+            stream: Whether to stream completions.
+            system: A system message to prepend to the messages.
+            **create_kwargs: Keyword arguments to pass to the `chat.completions.create` method.
+        """
         super().__init__(client=client)
 
         self.model = model
@@ -43,6 +58,15 @@ class ChatCompletionResource(OpenAIResource):
         self.create_kwargs = create_kwargs
 
     async def stream_response(self, messages: list[dict]) -> Generator[str, None, None]:
+        """Stream chat completions.
+
+        If `stream` attribute is False, the generator will yield only one completion.
+        Otherwise, it will yield chunk completions.
+
+        Args:
+            messages: A list of messages to use for the completion.
+                message format: {"role": "user", "content": "Hello, world!"}
+        """
         messages = self._prepare_messages(messages)
         data = await self._client.chat.completions.create(
             messages=messages,
@@ -63,6 +87,15 @@ class ChatCompletionResource(OpenAIResource):
             yield data.choices[0].message.content
 
     async def __call__(self, messages: list[dict]) -> ChatCompletion:
+        """Create a chat completion.
+
+        Args:
+            messages: A list of messages to use for the completion.
+                message format: {"role": "user", "content": "Hello, world!"}
+
+        Returns:
+            A ChatCompletion instance.
+        """
         messages = self._prepare_messages(messages)
         return await self._client.chat.completions.create(
             messages=messages,

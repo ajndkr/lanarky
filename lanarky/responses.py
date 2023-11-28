@@ -14,21 +14,34 @@ class HTTPStatusDetail(str, Enum):
 
 
 class StreamingResponse(EventSourceResponse):
-    """Base class for all streaming responses.
+    """`Response` class for streaming server-sent events.
 
-    ``StreamingResponse`` follows the EventSource protocol:
-    https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events#interfaces
+    Follows the
+    [EventSource protocol](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events#interfaces)
     """
 
     def __init__(
         self,
         content: Any = iter(()),
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: dict[str, Any],
     ) -> None:
+        """Constructor method.
+
+        Args:
+            content: The content to stream.
+        """
         super().__init__(content=content, *args, **kwargs)
 
     async def stream_response(self, send: Send) -> None:
+        """Streams data chunks to client by iterating over `content`.
+
+        If an exception occurs while iterating over `content`, an
+        internal server error is sent to the client.
+
+        Args:
+            send: The send function from the ASGI framework.
+        """
         await send(
             {
                 "type": "http.response.start",

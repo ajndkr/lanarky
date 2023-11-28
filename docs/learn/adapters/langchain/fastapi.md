@@ -64,7 +64,7 @@ async def chat(
 The `/chat` endpoint is similar to the one we created using `LangChainAPIRouter` in the
 [LangChain API Router](./router.md) guide. Besides the `StreamingResponse` class, we also use
 the `TokenStreamingCallbackHandler` callback handler to stream the intermediate tokens back to
-the client. Check out [Callbacks](../../callbacks.md) to learn more about the lanarky callback
+the client. Check out [Callbacks](./callbacks.md) to learn more about the lanarky callback
 handlers.
 
 !!! tip

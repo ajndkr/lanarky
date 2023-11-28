@@ -9,14 +9,24 @@ from .utils import build_factory_api_endpoint, build_factory_websocket_endpoint
 
 
 class OpenAIAPIRoute(APIRoute):
+    """APIRoute class for OpenAI resources."""
+
     def __init__(
         self,
         path: str,
         endpoint: Callable[..., Any],
         *,
         response_model: Any = Default(None),
-        **kwargs,
+        **kwargs: dict[str, Any],
     ) -> None:
+        """Constructor method.
+
+        Args:
+            path: The path for the route.
+            endpoint: The endpoint to call when the route is requested.
+            response_model: The response model to use for the route.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         # NOTE: OpenAIAPIRoute is initialised again when
         # router is included in app. This is a hack to
         # build the factory endpoint only once.
@@ -30,14 +40,24 @@ class OpenAIAPIRoute(APIRoute):
 
 
 class OpenAIAPIWebSocketRoute(APIWebSocketRoute):
+    """APIWebSocketRoute class for OpenAI resources."""
+
     def __init__(
         self,
         path: str,
         endpoint: Callable[..., Any],
         *,
         name: Optional[str] = None,
-        **kwargs,
+        **kwargs: dict[str, Any],
     ) -> None:
+        """Constructor method.
+
+        Args:
+            path: The path for the route.
+            endpoint: The endpoint to call when the route is requested.
+            name: The name of the route.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         super().__init__(path, endpoint, name=name, **kwargs)
         # NOTE: OpenAIAPIRoute is initialised again when
         # router is included in app. This is a hack to
@@ -50,7 +70,11 @@ class OpenAIAPIWebSocketRoute(APIWebSocketRoute):
 
 
 class OpenAIAPIRouter(APIRouter):
-    def __init__(self, *, route_class: type[APIRoute] = OpenAIAPIRoute, **kwargs):
+    """APIRouter class for OpenAI resources."""
+
+    def __init__(
+        self, *, route_class: type[APIRoute] = OpenAIAPIRoute, **kwargs: dict[str, Any]
+    ):
         super().__init__(route_class=route_class, **kwargs)
 
     def add_api_websocket_route(

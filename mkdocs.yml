@@ -67,6 +67,15 @@ nav:
               - Advanced:
                   - Dependency Injection: learn/adapters/langchain/dependency.md
                   - FastAPI Backport: learn/adapters/langchain/fastapi.md
+  - API Reference:
+      - reference/index.md
+      - Lanarky: reference/lanarky.md
+      - Streaming: reference/streaming.md
+      - WebSockets: reference/websockets.md
+      - Adapters:
+          - OpenAI: reference/adapters/openai.md
+          - LangChain: reference/adapters/langchain.md
+      - Miscellaneous: reference/misc.md
 
 markdown_extensions:
   - attr_list
@@ -92,9 +101,23 @@ extra:
       link: https://pypi.org/project/lanarky/
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/LanarkyAPI
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/6qUfrQAEeE
 
 extra_css:
   - stylesheets/extra.css
 
 plugins:
+  - social
   - termynal
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_root_heading: false
+            inherited_members: true
+            members_order: source
+            separate_signature: true
+            filters: ["!^_"]
+            merge_init_into_class: true
+            show_source: false

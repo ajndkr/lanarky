@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from enum import Enum
+from typing import Generator
 
 from fastapi.websockets import WebSocket, WebSocketDisconnect
 
@@ -13,8 +14,27 @@ class DataMode(str, Enum):
 
 
 class WebsocketSession:
+    """Class to handle websocket connections.
+
+    Supports 3 data modes: JSON, TEXT, and BYTES.
+
+    To know more about WebSockets, read the
+    [FastAPI documentation](https://fastapi.tiangolo.com/advanced/websockets/).
+    """
+
     @asynccontextmanager
-    async def connect(self, websocket: WebSocket, mode: DataMode = DataMode.JSON):
+    async def connect(
+        self, websocket: WebSocket, mode: DataMode = DataMode.JSON
+    ) -> Generator:
+        """Connect to a websocket and yield data from it.
+
+        Args:
+            websocket: The websocket to connect to.
+            mode: The data mode to use. Defaults to DataMode.JSON.
+
+        Yields:
+            Any: data from client side.
+        """
         await websocket.accept()
         try:
             if mode == DataMode.JSON:

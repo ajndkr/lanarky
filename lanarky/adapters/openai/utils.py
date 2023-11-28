@@ -16,6 +16,12 @@ from .responses import HTTPStatusDetail, StreamingResponse, status
 def build_factory_api_endpoint(
     path: str, endpoint: Callable[..., Any]
 ) -> Callable[..., Awaitable[Any]]:
+    """Build a factory endpoint for API routes.
+
+    Args:
+        path: The path for the route.
+        endpoint: openai resource factory function.
+    """
     resource = compile_openai_resource_factory(endpoint)
 
     # index 1 of `compile_path` contains path_format output
@@ -33,6 +39,12 @@ def build_factory_api_endpoint(
 def build_factory_websocket_endpoint(
     path: str, endpoint: Callable[..., Any]
 ) -> Callable[..., Awaitable[Any]]:
+    """Build a factory endpoint for WebSocket routes.
+
+    Args:
+        path: The path for the route.
+        endpoint: openai resource factory function.
+    """
     resource = compile_openai_resource_factory(endpoint)
 
     # index 1 of `compile_path` contains path_format output
@@ -70,7 +82,15 @@ def build_factory_websocket_endpoint(
     return factory_endpoint
 
 
-def compile_openai_resource_factory(endpoint):
+def compile_openai_resource_factory(endpoint: Callable[..., Any]) -> OpenAIResource:
+    """Compile an OpenAI resource factory function.
+
+    Args:
+        endpoint: openai resource factory function.
+
+    Returns:
+        An OpenAIResource instance.
+    """
     try:
         resource = endpoint()
     except TypeError:
@@ -82,6 +102,12 @@ def compile_openai_resource_factory(endpoint):
 
 
 def compile_model_prefix(path: str, resource: OpenAIResource) -> str:
+    """Compile a prefix for pydantic models.
+
+    Args:
+        path: The path for the route.
+        resource: An OpenAIResource instance.
+    """
     # Remove placeholders like '{item}' using regex
     path_wo_params = re.sub(r"\{.*?\}", "", path)
     path_prefix = "".join([part.capitalize() for part in path_wo_params.split("/")])
@@ -97,6 +123,10 @@ def create_request_model(
     """Create a pydantic model for incoming requests.
 
     Note: Support limited to ChatCompletion resource.
+
+    Args:
+        resource: An OpenAIResource instance.
+        prefix: A prefix for the model name.
     """
     if not isinstance(resource, ChatCompletionResource):
         raise TypeError("resource must be a ChatCompletion instance")
@@ -114,6 +144,10 @@ def create_response_model(
     """Create a pydantic model for responses.
 
     Note: Support limited to ChatCompletion resource.
+
+    Args:
+        resource: An OpenAIResource instance.
+        prefix: A prefix for the model name.
     """
     if not isinstance(resource, ChatCompletionResource):
         raise TypeError("resource must be a ChatCompletion instance")

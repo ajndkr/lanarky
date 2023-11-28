@@ -44,6 +44,8 @@ to the router to build a streaming endpoint. The additional parameters such as
 To receive the events, we will use the following client script:
 
 ```python
+import json
+
 import click
 
 from lanarky.clients import StreamingClient
@@ -60,7 +62,7 @@ def main(input: str, stream: bool):
         params={"streaming": str(stream).lower()},
         json={"input": input},
     ):
-        print(f"{event.event}: {event.data}")
+        print(f"{event.event}: {json.loads(event.data)['token']}", end="", flush=True)
 
 
 if __name__ == "__main__":
@@ -81,7 +83,7 @@ Then run the client script:
 
 ```
 $ python client.py --input "hi"
-completion: {'token': 'Hello! How can I assist you today?'}
+completion: Hello! How can I assist you today?
 ```
 
 ## Websocket
@@ -116,6 +118,7 @@ function and send it to the router to build a websocket endpoint.
 To communicate with the server, we will use the following client script:
 
 ```python
+import json
 from lanarky.clients import WebSocketClient
 
 
@@ -127,7 +130,7 @@ def main():
             session.send(dict(input=user_input))
             print("Received: ", end="")
             for chunk in session.stream_response():
-                print(chunk["data"]["token"], end="", flush=True)
+                print(json.loads(chunk["data"])["token"], end="", flush=True)
 
 
 if __name__ == "__main__":
