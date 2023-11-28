@@ -1,3 +1,5 @@
+from typing import Any
+
 from fastapi import status
 from starlette.types import Send
 
@@ -17,8 +19,8 @@ class StreamingResponse(_StreamingResponse):
         self,
         resource: OpenAIResource,
         messages: list[Message],
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 

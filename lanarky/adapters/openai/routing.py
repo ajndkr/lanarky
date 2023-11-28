@@ -17,7 +17,7 @@ class OpenAIAPIRoute(APIRoute):
         endpoint: Callable[..., Any],
         *,
         response_model: Any = Default(None),
-        **kwargs,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 
@@ -48,7 +48,7 @@ class OpenAIAPIWebSocketRoute(APIWebSocketRoute):
         endpoint: Callable[..., Any],
         *,
         name: Optional[str] = None,
-        **kwargs,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 
@@ -72,7 +72,9 @@ class OpenAIAPIWebSocketRoute(APIWebSocketRoute):
 class OpenAIAPIRouter(APIRouter):
     """APIRouter class for OpenAI resources."""
 
-    def __init__(self, *, route_class: type[APIRoute] = OpenAIAPIRoute, **kwargs):
+    def __init__(
+        self, *, route_class: type[APIRoute] = OpenAIAPIRoute, **kwargs: dict[str, Any]
+    ):
         super().__init__(route_class=route_class, **kwargs)
 
     def add_api_websocket_route(

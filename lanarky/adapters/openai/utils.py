@@ -82,7 +82,7 @@ def build_factory_websocket_endpoint(
     return factory_endpoint
 
 
-def compile_openai_resource_factory(endpoint):
+def compile_openai_resource_factory(endpoint: Callable[..., Any]) -> OpenAIResource:
     """Compile an OpenAI resource factory function.
 
     Args:

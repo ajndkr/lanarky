@@ -23,8 +23,8 @@ class StreamingResponse(EventSourceResponse):
     def __init__(
         self,
         content: Any = iter(()),
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 

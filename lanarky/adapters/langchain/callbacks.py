@@ -21,7 +21,7 @@ class LangchainEvents(str, Enum):
 class LanarkyCallbackHandler(AsyncCallbackHandler):
     """Base callback handler for Lanarky applications."""
 
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs: dict[str, Any]) -> None:
         super().__init__(**kwargs)
         self.llm_cache_used = get_llm_cache() is not None
 
@@ -38,7 +38,7 @@ class StreamingCallbackHandler(LanarkyCallbackHandler):
         self,
         *,
         send: Send = None,
-        **kwargs,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 
@@ -114,7 +114,7 @@ class TokenStreamingCallbackHandler(StreamingCallbackHandler):
         *,
         output_key: str,
         mode: TokenStreamMode = TokenStreamMode.JSON,
-        **kwargs,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 
@@ -131,11 +131,11 @@ class TokenStreamingCallbackHandler(StreamingCallbackHandler):
             raise ValueError(f"Invalid stream mode: {mode}")
         self.mode = mode
 
-    async def on_chain_start(self, *args, **kwargs: Any) -> None:
+    async def on_chain_start(self, *args: Any, **kwargs: dict[str, Any]) -> None:
         """Run when chain starts running."""
         self.streaming = False
 
-    async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
+    async def on_llm_new_token(self, token: str, **kwargs: dict[str, Any]) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
         if not self.streaming:
             self.streaming = True
@@ -148,7 +148,9 @@ class TokenStreamingCallbackHandler(StreamingCallbackHandler):
         )
         await self.send(message)
 
-    async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
+    async def on_chain_end(
+        self, outputs: dict[str, Any], **kwargs: dict[str, Any]
+    ) -> None:
         """Run when chain ends running.
 
         Final output is streamed only if LLM cache is enabled.
@@ -173,7 +175,9 @@ class SourceDocumentsEventData(BaseModel):
 class SourceDocumentsStreamingCallbackHandler(StreamingCallbackHandler):
     """Callback handler for streaming source documents."""
 
-    async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
+    async def on_chain_end(
+        self, outputs: dict[str, Any], **kwargs: dict[str, Any]
+    ) -> None:
         """Run when chain ends running."""
         if "source_documents" in outputs:
             if not isinstance(outputs["source_documents"], list):
@@ -208,7 +212,7 @@ class FinalTokenStreamingCallbackHandler(
         answer_prefix_tokens: Optional[list[str]] = None,
         strip_tokens: bool = True,
         stream_prefix: bool = False,
-        **kwargs,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 
@@ -227,12 +231,12 @@ class FinalTokenStreamingCallbackHandler(
             stream_prefix=stream_prefix,
         )
 
-    async def on_llm_start(self, *args, **kwargs) -> None:
+    async def on_llm_start(self, *args: Any, **kwargs: dict[str, Any]) -> None:
         """Run when LLM starts running."""
         self.answer_reached = False
         self.streaming = False
 
-    async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
+    async def on_llm_new_token(self, token: str, **kwargs: dict[str, Any]) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
         if not self.streaming:
             self.streaming = True
@@ -266,7 +270,7 @@ class WebSocketCallbackHandler(LanarkyCallbackHandler):
         *,
         mode: TokenStreamMode = TokenStreamMode.JSON,
         websocket: WebSocket = None,
-        **kwargs,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 
@@ -310,7 +314,7 @@ class WebSocketCallbackHandler(LanarkyCallbackHandler):
 class TokenWebSocketCallbackHandler(WebSocketCallbackHandler):
     """Callback handler for sending tokens in websocket sessions."""
 
-    def __init__(self, *, output_key: str, **kwargs) -> None:
+    def __init__(self, *, output_key: str, **kwargs: dict[str, Any]) -> None:
         """Constructor method.
 
         Args:
@@ -321,11 +325,11 @@ class TokenWebSocketCallbackHandler(WebSocketCallbackHandler):
 
         self.output_key = output_key
 
-    async def on_chain_start(self, *args, **kwargs: Any) -> None:
+    async def on_chain_start(self, *args: Any, **kwargs: dict[str, Any]) -> None:
         """Run when chain starts running."""
         self.streaming = False
 
-    async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
+    async def on_llm_new_token(self, token: str, **kwargs: dict[str, Any]) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
         if not self.streaming:
             self.streaming = True
@@ -338,7 +342,9 @@ class TokenWebSocketCallbackHandler(WebSocketCallbackHandler):
         )
         await self.websocket.send_json(message)
 
-    async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
+    async def on_chain_end(
+        self, outputs: dict[str, Any], **kwargs: dict[str, Any]
+    ) -> None:
         """Run when chain ends running.
 
         Final output is streamed only if LLM cache is enabled.
@@ -357,7 +363,9 @@ class TokenWebSocketCallbackHandler(WebSocketCallbackHandler):
 class SourceDocumentsWebSocketCallbackHandler(WebSocketCallbackHandler):
     """Callback handler for sending source documents in websocket sessions."""
 
-    async def on_chain_end(self, outputs: dict[str, Any], **kwargs: Any) -> None:
+    async def on_chain_end(
+        self, outputs: dict[str, Any], **kwargs: dict[str, Any]
+    ) -> None:
         """Run when chain ends running."""
         if "source_documents" in outputs:
             if not isinstance(outputs["source_documents"], list):
@@ -392,7 +400,7 @@ class FinalTokenWebSocketCallbackHandler(
         answer_prefix_tokens: Optional[list[str]] = None,
         strip_tokens: bool = True,
         stream_prefix: bool = False,
-        **kwargs,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 
@@ -416,7 +424,7 @@ class FinalTokenWebSocketCallbackHandler(
         self.answer_reached = False
         self.streaming = False
 
-    async def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
+    async def on_llm_new_token(self, token: str, **kwargs: dict[str, Any]) -> None:
         """Run on new LLM token. Only available when streaming is enabled."""
         if not self.streaming:
             self.streaming = True

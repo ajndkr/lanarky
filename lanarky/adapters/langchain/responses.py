@@ -17,8 +17,8 @@ class StreamingResponse(_StreamingResponse):
         self,
         chain: Chain,
         config: dict[str, Any],
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 

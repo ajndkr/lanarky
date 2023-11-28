@@ -26,7 +26,9 @@ class StreamingClient:
         self.base_url = base_url
         self.client = client or httpx.Client()
 
-    def stream_response(self, method: str, path: str, **kwargs) -> Generator:
+    def stream_response(
+        self, method: str, path: str, **kwargs: dict[str, Any]
+    ) -> Generator:
         """Stream data from the server.
 
         Args:

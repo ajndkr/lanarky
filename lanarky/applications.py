@@ -17,7 +17,9 @@ class Lanarky(FastAPI):
     [FastAPI documentation](https://fastapi.tiangolo.com/reference/fastapi/).
     """
 
-    def __init__(self: AppType, *, title: str = "Lanarky", **kwargs: Any) -> None:
+    def __init__(
+        self: AppType, *, title: str = "Lanarky", **kwargs: dict[str, Any]
+    ) -> None:
         """Constructor method.
 
         Args:

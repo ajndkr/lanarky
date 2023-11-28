@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from enum import Enum
+from typing import Generator
 
 from fastapi.websockets import WebSocket, WebSocketDisconnect
 
@@ -22,7 +23,9 @@ class WebsocketSession:
     """
 
     @asynccontextmanager
-    async def connect(self, websocket: WebSocket, mode: DataMode = DataMode.JSON):
+    async def connect(
+        self, websocket: WebSocket, mode: DataMode = DataMode.JSON
+    ) -> Generator:
         """Connect to a websocket and yield data from it.
 
         Args:

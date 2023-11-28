@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Generator
+from typing import Any, Generator
 
 from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletion, ChatCompletionChunk
@@ -23,7 +23,9 @@ class OpenAIResource:
         self._client = client or AsyncOpenAI()
 
     @abstractmethod
-    async def stream_response(self, *args, **kwargs) -> Generator[str, None, None]:
+    async def stream_response(
+        self, *args: Any, **kwargs: dict[str, Any]
+    ) -> Generator[str, None, None]:
         ...
 
 
@@ -37,7 +39,7 @@ class ChatCompletionResource(OpenAIResource):
         model: str = "gpt-3.5-turbo",
         stream: bool = False,
         system: str = None,
-        **create_kwargs,
+        **create_kwargs: dict[str, Any],
     ):
         """Constructor method.
 

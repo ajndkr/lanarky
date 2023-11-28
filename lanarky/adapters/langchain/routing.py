@@ -17,7 +17,7 @@ class LangchainAPIRoute(APIRoute):
         endpoint: Callable[..., Any],
         *,
         response_model: Any = Default(None),
-        **kwargs,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 
@@ -48,7 +48,7 @@ class LangchainAPIWebSocketRoute(APIWebSocketRoute):
         endpoint: Callable[..., Any],
         *,
         name: Optional[str] = None,
-        **kwargs,
+        **kwargs: dict[str, Any],
     ) -> None:
         """Constructor method.
 
