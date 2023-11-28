@@ -8,6 +8,7 @@
 [![Stars](https://img.shields.io/github/stars/ajndkr/lanarky)](https://github.com/ajndkr/lanarky/stargazers)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ajndkr/lanarky/blob/main/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/LanarkyAPI?style=social)](https://twitter.com/intent/follow?screen_name=LanarkyAPI)
+[![Discord](https://img.shields.io/badge/join-Discord-7289da.svg)](https://discord.gg/6qUfrQAEeE)
 
 [![Python](https://img.shields.io/pypi/pyversions/lanarky.svg)](https://pypi.org/project/lanarky/)
 [![Coverage](https://coveralls.io/repos/github/ajndkr/lanarky/badge.svg?branch=main)](https://coveralls.io/github/ajndkr/lanarky?branch=main)

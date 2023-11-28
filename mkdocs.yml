@@ -101,6 +101,8 @@ extra:
       link: https://pypi.org/project/lanarky/
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/LanarkyAPI
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/6qUfrQAEeE
 
 extra_css:
   - stylesheets/extra.css
