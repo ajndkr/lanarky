@@ -17,6 +17,8 @@ class SystemMessage(BaseModel):
 
 
 class OpenAIResource:
+    """Base class for OpenAI resources."""
+
     def __init__(self, client: AsyncOpenAI = None):
         self._client = client or AsyncOpenAI()
 
@@ -26,6 +28,8 @@ class OpenAIResource:
 
 
 class ChatCompletionResource(OpenAIResource):
+    """OpenAIResource class for chat completions."""
+
     def __init__(
         self,
         *,
@@ -35,6 +39,15 @@ class ChatCompletionResource(OpenAIResource):
         system: str = None,
         **create_kwargs,
     ):
+        """Constructor method.
+
+        Args:
+            client: An AsyncOpenAI instance.
+            model: The model to use for completions.
+            stream: Whether to stream completions.
+            system: A system message to prepend to the messages.
+            **create_kwargs: Keyword arguments to pass to the `chat.completions.create` method.
+        """
         super().__init__(client=client)
 
         self.model = model
@@ -43,6 +56,15 @@ class ChatCompletionResource(OpenAIResource):
         self.create_kwargs = create_kwargs
 
     async def stream_response(self, messages: list[dict]) -> Generator[str, None, None]:
+        """Stream chat completions.
+
+        If `stream` attribute is False, the generator will yield only one completion.
+        Otherwise, it will yield chunk completions.
+
+        Args:
+            messages: A list of messages to use for the completion.
+                message format: {"role": "user", "content": "Hello, world!"}
+        """
         messages = self._prepare_messages(messages)
         data = await self._client.chat.completions.create(
             messages=messages,
@@ -63,6 +85,15 @@ class ChatCompletionResource(OpenAIResource):
             yield data.choices[0].message.content
 
     async def __call__(self, messages: list[dict]) -> ChatCompletion:
+        """Create a chat completion.
+
+        Args:
+            messages: A list of messages to use for the completion.
+                message format: {"role": "user", "content": "Hello, world!"}
+
+        Returns:
+            A ChatCompletion instance.
+        """
         messages = self._prepare_messages(messages)
         return await self._client.chat.completions.create(
             messages=messages,

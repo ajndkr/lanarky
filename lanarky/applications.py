@@ -13,14 +13,24 @@ from fastapi.responses import HTMLResponse, JSONResponse
 class Lanarky(FastAPI):
     """The main application class.
 
-    To know more about the FastAPI parameters, read the FastAPI documentation:
-    https://fastapi.tiangolo.com/reference/fastapi/
+    To know more about the FastAPI parameters, read the
+    [FastAPI documentation](https://fastapi.tiangolo.com/reference/fastapi/).
     """
 
     def __init__(self: AppType, *, title: str = "Lanarky", **kwargs: Any) -> None:
+        """Constructor method.
+
+        Args:
+            title: The title of the application.
+            **kwargs: Additional arguments to pass to the FastAPI constructor.
+        """
         super().__init__(title=title, **kwargs)
 
     def setup(self) -> None:  # pragma: no cover
+        """Setup the application.
+
+        Overrides the `setup` method of the FastAPI class.
+        """
         if self.openapi_url:
             urls = (server_data.get("url") for server_data in self.servers)
             server_urls = {url for url in urls if url}

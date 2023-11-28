@@ -12,12 +12,12 @@ def Depends(
     dependency_kwargs: dict[str, Any] = {},
     use_cache: bool = True
 ) -> params.Depends:
-    """Dependency injection for langchain.
+    """Dependency injection for LangChain.
 
     Args:
         dependency: a "dependable" chain factory callable.
         dependency_kwargs: kwargs to pass to chain dependency.
-        use_cache: use_cache parameter of ``fastapi.Depends``.
+        use_cache: use_cache parameter of `fastapi.Depends`.
     """
     try:
         chain = dependency()

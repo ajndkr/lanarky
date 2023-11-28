@@ -9,6 +9,8 @@ from .utils import build_factory_api_endpoint, build_factory_websocket_endpoint
 
 
 class LangchainAPIRoute(APIRoute):
+    """APIRoute class for LangChain."""
+
     def __init__(
         self,
         path: str,
@@ -17,6 +19,14 @@ class LangchainAPIRoute(APIRoute):
         response_model: Any = Default(None),
         **kwargs,
     ) -> None:
+        """Constructor method.
+
+        Args:
+            path: The path for the route.
+            endpoint: The endpoint to call when the route is requested.
+            response_model: The response model to use for the route.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         # NOTE: LangchainAPIRoute is initialised again when
         # router is included in app. This is a hack to
         # build the factory endpoint only once.
@@ -30,6 +40,8 @@ class LangchainAPIRoute(APIRoute):
 
 
 class LangchainAPIWebSocketRoute(APIWebSocketRoute):
+    """APIWebSocketRoute class for LangChain."""
+
     def __init__(
         self,
         path: str,
@@ -38,6 +50,14 @@ class LangchainAPIWebSocketRoute(APIWebSocketRoute):
         name: Optional[str] = None,
         **kwargs,
     ) -> None:
+        """Constructor method.
+
+        Args:
+            path: The path for the route.
+            endpoint: The endpoint to call when the route is requested.
+            name: The name of the route.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         super().__init__(path, endpoint, name=name, **kwargs)
         # NOTE: LangchainAPIRoute is initialised again when
         # router is included in app. This is a hack to
@@ -50,6 +70,8 @@ class LangchainAPIWebSocketRoute(APIWebSocketRoute):
 
 
 class LangchainAPIRouter(APIRouter):
+    """APIRouter class for LangChain."""
+
     def __init__(self, *, route_class: type[APIRoute] = LangchainAPIRoute, **kwargs):
         super().__init__(route_class=route_class, **kwargs)
 

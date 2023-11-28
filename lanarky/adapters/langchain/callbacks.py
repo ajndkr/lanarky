@@ -40,6 +40,12 @@ class StreamingCallbackHandler(LanarkyCallbackHandler):
         send: Send = None,
         **kwargs,
     ) -> None:
+        """Constructor method.
+
+        Args:
+            send: The ASGI send callable.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         super().__init__(**kwargs)
 
         self._send = send
@@ -59,7 +65,12 @@ class StreamingCallbackHandler(LanarkyCallbackHandler):
     def _construct_message(
         self, data: Union[str, dict[str, Any]], event: Optional[str] = None
     ) -> Message:
-        """Constructs message payload"""
+        """Constructs message payload.
+
+        Args:
+            data: The data payload.
+            event: The event name.
+        """
         chunk = ServerSentEvent(data=data, event=event)
         return {
             "type": "http.response.body",
@@ -80,7 +91,12 @@ class TokenEventData(BaseModel):
 
 
 def get_token_data(token: str, mode: TokenStreamMode) -> Union[str, dict[str, Any]]:
-    """Get token data based on mode."""
+    """Get token data based on mode.
+
+    Args:
+        token: The token to use.
+        mode: The stream mode.
+    """
     if mode not in list(TokenStreamMode):
         raise ValueError(f"Invalid stream mode: {mode}")
 
@@ -100,6 +116,13 @@ class TokenStreamingCallbackHandler(StreamingCallbackHandler):
         mode: TokenStreamMode = TokenStreamMode.JSON,
         **kwargs,
     ) -> None:
+        """Constructor method.
+
+        Args:
+            output_key: chain output key.
+            mode: The stream mode.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         super().__init__(**kwargs)
 
         self.output_key = output_key
@@ -187,6 +210,14 @@ class FinalTokenStreamingCallbackHandler(
         stream_prefix: bool = False,
         **kwargs,
     ) -> None:
+        """Constructor method.
+
+        Args:
+            answer_prefix_tokens: The answer prefix tokens to use.
+            strip_tokens: Whether to strip tokens.
+            stream_prefix: Whether to stream the answer prefix.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         super().__init__(output_key=None, **kwargs)
 
         FinalStreamingStdOutCallbackHandler.__init__(
@@ -197,6 +228,7 @@ class FinalTokenStreamingCallbackHandler(
         )
 
     async def on_llm_start(self, *args, **kwargs) -> None:
+        """Run when LLM starts running."""
         self.answer_reached = False
         self.streaming = False
 
@@ -236,6 +268,13 @@ class WebSocketCallbackHandler(LanarkyCallbackHandler):
         websocket: WebSocket = None,
         **kwargs,
     ) -> None:
+        """Constructor method.
+
+        Args:
+            mode: The stream mode.
+            websocket: The websocket to use.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         super().__init__(**kwargs)
 
         if mode not in list(TokenStreamMode):
@@ -259,7 +298,12 @@ class WebSocketCallbackHandler(LanarkyCallbackHandler):
     def _construct_message(
         self, data: Union[str, dict[str, Any]], event: Optional[str] = None
     ) -> Message:
-        """Constructs message payload"""
+        """Constructs message payload.
+
+        Args:
+            data: The data payload.
+            event: The event name.
+        """
         return dict(data=data, event=event)
 
 
@@ -267,6 +311,12 @@ class TokenWebSocketCallbackHandler(WebSocketCallbackHandler):
     """Callback handler for sending tokens in websocket sessions."""
 
     def __init__(self, *, output_key: str, **kwargs) -> None:
+        """Constructor method.
+
+        Args:
+            output_key: chain output key.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         super().__init__(**kwargs)
 
         self.output_key = output_key
@@ -344,6 +394,14 @@ class FinalTokenWebSocketCallbackHandler(
         stream_prefix: bool = False,
         **kwargs,
     ) -> None:
+        """Constructor method.
+
+        Args:
+            answer_prefix_tokens: The answer prefix tokens to use.
+            strip_tokens: Whether to strip tokens.
+            stream_prefix: Whether to stream the answer prefix.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         super().__init__(output_key=None, **kwargs)
 
         FinalStreamingStdOutCallbackHandler.__init__(
@@ -354,6 +412,7 @@ class FinalTokenWebSocketCallbackHandler(
         )
 
     async def on_llm_start(self, *args, **kwargs) -> None:
+        """Run when LLM starts running."""
         self.answer_reached = False
         self.streaming = False
 

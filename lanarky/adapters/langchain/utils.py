@@ -25,6 +25,12 @@ from lanarky.websockets import WebSocket, WebsocketSession
 def build_factory_api_endpoint(
     path: str, endpoint: Callable[..., Any]
 ) -> Callable[..., Awaitable[Any]]:
+    """Build a factory endpoint for API routes.
+
+    Args:
+        path: The path for the route.
+        endpoint: LangChain instance factory function.
+    """
     chain = compile_chain_factory(endpoint)
 
     # index 1 of `compile_path` contains path_format output
@@ -46,6 +52,12 @@ def build_factory_api_endpoint(
 def build_factory_websocket_endpoint(
     path: str, endpoint: Callable[..., Any]
 ) -> Callable[..., Awaitable[Any]]:
+    """Build a factory endpoint for WebSocket routes.
+
+    Args:
+        path: The path for the route.
+        endpoint: LangChain instance factory function.
+    """
     chain = compile_chain_factory(endpoint)
 
     # index 1 of `compile_path` contains path_format output
@@ -80,7 +92,12 @@ def build_factory_websocket_endpoint(
     return factory_endpoint
 
 
-def compile_chain_factory(endpoint):
+def compile_chain_factory(endpoint: Callable[..., Any]):
+    """Compile a LangChain instance factory function.
+
+    Args:
+        endpoint: LangChain instance factory function.
+    """
     try:
         chain = endpoint()
     except TypeError:
@@ -92,6 +109,12 @@ def compile_chain_factory(endpoint):
 
 
 def create_request_model(chain: Chain, prefix: str = "") -> BaseModel:
+    """Create a pydantic request model for a LangChain instance.
+
+    Args:
+        chain: A LangChain instance.
+        prefix: A prefix for the model name.
+    """
     request_fields = {}
 
     for key in chain.input_keys:
@@ -108,6 +131,12 @@ def create_request_model(chain: Chain, prefix: str = "") -> BaseModel:
 
 
 def create_response_model(chain: Chain, prefix: str = None) -> BaseModel:
+    """Create a pydantic response model for a LangChain instance.
+
+    Args:
+        chain: A LangChain instance.
+        prefix: A prefix for the model name.
+    """
     response_fields = {}
 
     for key in chain.output_keys:
@@ -124,6 +153,12 @@ def create_response_model(chain: Chain, prefix: str = None) -> BaseModel:
 
 
 def compile_model_prefix(path: str, chain: Chain) -> str:
+    """Compile a prefix for pydantic models.
+
+    Args:
+        path: The path for the route.
+        chain: A LangChain instance.
+    """
     # Remove placeholders like '{item}' using regex
     path_wo_params = re.sub(r"\{.*?\}", "", path)
     path_prefix = "".join([part.capitalize() for part in path_wo_params.split("/")])
@@ -134,6 +169,15 @@ def compile_model_prefix(path: str, chain: Chain) -> str:
 
 
 def get_streaming_callbacks(chain: Chain) -> list[Callable]:
+    """Get streaming callbacks for a LangChain instance.
+
+    Note: This function might not support all LangChain
+    chain and agent types. Please open an issue on GitHub to
+    request support for a specific type.
+
+    Args:
+        chain: A LangChain instance.
+    """
     callbacks = []
 
     if "source_documents" in chain.output_keys:
@@ -160,6 +204,16 @@ def get_streaming_callbacks(chain: Chain) -> list[Callable]:
 
 
 def get_websocket_callbacks(chain: Chain, websocket: WebSocket) -> list[Callable]:
+    """Get websocket callbacks for a LangChain instance.
+
+    Note: This function might not support all LangChain
+    chain and agent types. Please open an issue on GitHub to
+    request support for a specific type.
+
+    Args:
+        chain: A LangChain instance.
+        websocket: A WebSocket instance.
+    """
     callbacks = []
 
     if "source_documents" in chain.output_keys:

@@ -11,6 +11,8 @@ from lanarky.responses import StreamingResponse as _StreamingResponse
 
 
 class StreamingResponse(_StreamingResponse):
+    """StreamingResponse class for LangChain resources."""
+
     def __init__(
         self,
         chain: Chain,
@@ -18,12 +20,28 @@ class StreamingResponse(_StreamingResponse):
         *args,
         **kwargs,
     ) -> None:
+        """Constructor method.
+
+        Args:
+            chain: A LangChain instance.
+            config: A config dict.
+            *args: Positional arguments to pass to the parent constructor.
+            **kwargs: Keyword arguments to pass to the parent constructor.
+        """
         super().__init__(*args, **kwargs)
 
         self.chain = chain
         self.config = config
 
     async def stream_response(self, send: Send) -> None:
+        """Stream LangChain outputs.
+
+        If an exception occurs while iterating over the LangChain, an
+        internal server error is sent to the client.
+
+        Args:
+            send: The ASGI send callable.
+        """
         await send(
             {
                 "type": "http.response.start",
