@@ -1,3 +1,9 @@
+---
+hide:
+  - toc
+  - footer
+---
+
 # API Reference
 
 This is Lanarky's API reference documentation.

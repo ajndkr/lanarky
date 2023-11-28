@@ -1,6 +1,7 @@
 ---
 hide:
   - navigation
+  - footer
 ---
 
 Let's build our first LLM microservice with Lanarky!
