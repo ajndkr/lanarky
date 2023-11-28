@@ -22,6 +22,7 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -37,6 +38,7 @@ jobs:
           path: .cache
           restore-keys: |
             mkdocs-material-
+
       - name: Deploy GitHub Pages
         run: |
           pip install 'mkdocs-material[imaging]' mdx-include termynal 'mkdocstrings[python]'
