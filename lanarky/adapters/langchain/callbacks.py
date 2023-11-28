@@ -144,7 +144,6 @@ class TokenStreamingCallbackHandler(StreamingCallbackHandler):
         message = self._construct_message(
             data=get_token_data(token, self.mode), event=Events.COMPLETION
         )
-        print("message", message)
         await self.send(message)
 
     async def on_chain_end(
