@@ -5,7 +5,9 @@ import loguru
 
 
 def get_logger(handler: Any = sys.stderr, **kwargs: dict[str, Any]) -> loguru.Logger:
-    """Lanarky's base logger.
+    """Get a logger instance.
+
+    Lanarky uses `loguru` for logging.
 
     Args:
         handler: The handler to use for the logger.
