@@ -1,9 +1,9 @@
 import json
 from contextlib import contextmanager
-from typing import Any, Generator, Optional
+from typing import Any, Iterator, Optional
 
 import httpx
-from httpx_sse import connect_sse
+from httpx_sse import ServerSentEvent, connect_sse
 from websockets.sync.client import connect as websocket_connect
 
 from lanarky.websockets import DataMode
@@ -28,7 +28,7 @@ class StreamingClient:
 
     def stream_response(
         self, method: str, path: str, **kwargs: dict[str, Any]
-    ) -> Generator:
+    ) -> Iterator[ServerSentEvent]:
         """Stream data from the server.
 
         Args:
