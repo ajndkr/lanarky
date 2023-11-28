@@ -38,6 +38,7 @@ mkdocs = "^1.5.3"
 mkdocs-material = "^9.4.10"
 mdx-include = "^1.4.2"
 termynal = "^0.11.1"
+mkdocstrings = {extras = ["python"], version = "^0.24.0"}
 
 [tool.poetry.extras]
 openai = ["openai", "tiktoken"]
