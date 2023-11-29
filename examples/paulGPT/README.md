@@ -6,7 +6,7 @@ built with Lanarky.
 This example covers the following Lanarky features:
 
 - LangChain Adapter
-- Streaming source documents via server-sent events and websockets
+- Streaming source documents via server-sent events
 
 To learn more about Lanarky, check out Lanarky's [full documentation](https://lanarky.ajndkr.com/learn/).
 
