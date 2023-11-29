@@ -14,18 +14,40 @@ conda activate lanarky
 
 You can choose any other environment manager of your choice.
 
-### Install dependencies:
+### Install Poetry:
 
 ```bash
 pip install poetry
-poetry install
 ```
 
-## CI/CD
+### Install Lanarky:
 
-`lanarky` uses `pre-commit` to run code checks and tests before every commit. To install the pre-commit hooks,
-run the following commands:
+```bash
+poetry install --all-extras
+```
+
+## Pre-Commit
+
+`lanarky` uses `pre-commit` to run code checks and tests before every commit.
+
+To install the pre-commit hooks, run the following commands:
 
 ```bash
 poetry run pre-commit install
 ```
+
+To run the pre-commit hooks on all files, run the following command:
+
+```bash
+make pre-commit
+```
+
+## Bump Version
+
+Lanarky uses Makefile to bump versions:
+
+```bash
+make bump
+```
+
+Note: The make recipe bumps version and auto-commits the changes.

@@ -1,2 +1,4 @@
 [run]
-omit = lanarky/testing/*
+omit =
+    lanarky/clients.py
+    lanarky/adapters/*/__init__.py
