@@ -19,6 +19,7 @@ from lanarky.adapters.langchain.callbacks import (
 from lanarky.adapters.langchain.responses import HTTPStatusDetail, StreamingResponse
 from lanarky.events import Events
 from lanarky.logging import logger
+from lanarky.utils import model_dump
 from lanarky.websockets import WebSocket, WebsocketSession
 
 
@@ -43,7 +44,7 @@ def build_factory_api_endpoint(
         request: request_model, chain: Chain = Depends(endpoint)
     ):
         return StreamingResponse(
-            chain=chain, config={"inputs": request.model_dump(), "callbacks": callbacks}
+            chain=chain, config={"inputs": model_dump(request), "callbacks": callbacks}
         )
 
     return factory_endpoint
@@ -70,7 +71,7 @@ def build_factory_websocket_endpoint(
             async for data in session:
                 try:
                     await chain.acall(
-                        inputs=request_model(**data).model_dump(),
+                        inputs=model_dump(request_model(**data)),
                         callbacks=callbacks,
                     )
                 except Exception as e:

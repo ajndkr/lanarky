@@ -4,6 +4,7 @@ from fastapi import params
 from langchain.chains.base import Chain
 
 from lanarky.adapters.langchain.utils import create_request_model, create_response_model
+from lanarky.utils import model_dump
 
 
 def Depends(
@@ -34,6 +35,6 @@ def Depends(
         request: request_model,
         chain: Chain = params.Depends(dependency, use_cache=use_cache),
     ) -> response_model:
-        return await chain.acall(inputs=request.model_dump(), **dependency_kwargs)
+        return await chain.acall(inputs=model_dump(request), **dependency_kwargs)
 
     return params.Depends(chain_dependency, use_cache=use_cache)

@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "lanarky"
-version = "0.8.0"
+version = "0.8.1"
 description = "The web framework for building LLM microservices"
 authors = ["Ajinkya Indulkar <ajndkr@gmail.com>"]
-readme = "README.md"
-homepage = "https://github.com/ajndkr/lanarky"
+readme = "README.pypi.md"
+homepage = "https://lanarky.ajndkr.com/"
 repository = "https://github.com/ajndkr/lanarky"
+documentation = "https://lanarky.ajndkr.com/"
 license = "MIT"
 packages = [{include = "lanarky"}]
 
