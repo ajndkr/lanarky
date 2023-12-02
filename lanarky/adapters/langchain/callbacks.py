@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, Optional, Union
+from typing import Any, Optional
 
 from fastapi.websockets import WebSocket
 from langchain.callbacks.base import AsyncCallbackHandler
@@ -12,6 +12,7 @@ from pydantic import BaseModel
 from starlette.types import Message, Send
 
 from lanarky.events import Events, ServerSentEvent, ensure_bytes
+from lanarky.utils import model_dump_json
 
 
 class LangchainEvents(str, Enum):
@@ -88,7 +89,7 @@ class TokenEventData(BaseModel):
     token: str = ""
 
 
-def get_token_data(token: str, mode: TokenStreamMode) -> Union[str, dict[str, Any]]:
+def get_token_data(token: str, mode: TokenStreamMode) -> str:
     """Get token data based on mode.
 
     Args:
@@ -101,7 +102,7 @@ def get_token_data(token: str, mode: TokenStreamMode) -> Union[str, dict[str, An
     if mode == TokenStreamMode.TEXT:
         return token
     else:
-        return TokenEventData(token=token).model_dump_json()
+        return model_dump_json(TokenEventData(token=token))
 
 
 class TokenStreamingCallbackHandler(StreamingCallbackHandler):
@@ -188,9 +189,9 @@ class SourceDocumentsStreamingCallbackHandler(StreamingCallbackHandler):
                 document.dict() for document in outputs["source_documents"]
             ]
             message = self._construct_message(
-                data=SourceDocumentsEventData(
-                    source_documents=source_documents
-                ).model_dump_json(),
+                data=model_dump_json(
+                    SourceDocumentsEventData(source_documents=source_documents)
+                ),
                 event=LangchainEvents.SOURCE_DOCUMENTS,
             )
             await self.send(message)
@@ -374,9 +375,9 @@ class SourceDocumentsWebSocketCallbackHandler(WebSocketCallbackHandler):
                 document.dict() for document in outputs["source_documents"]
             ]
             message = self._construct_message(
-                data=SourceDocumentsEventData(
-                    source_documents=source_documents
-                ).model_dump_json(),
+                data=model_dump_json(
+                    SourceDocumentsEventData(source_documents=source_documents)
+                ),
                 event=LangchainEvents.SOURCE_DOCUMENTS,
             )
             await self.websocket.send_json(message)
