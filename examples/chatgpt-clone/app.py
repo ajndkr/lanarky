@@ -10,8 +10,7 @@ router = OpenAIAPIRouter()
 
 
 @router.post("/chat")
-def chat() -> ChatCompletionResource:
-    system = "You are a sassy assistant"
+def chat(system: str = "You are a sassy assistant") -> ChatCompletionResource:
     return ChatCompletionResource(system=system, stream=True)
 
 
@@ -22,7 +21,9 @@ def mount_playground(app: Lanarky) -> Lanarky:
     blocks = gr.Blocks(
         title="ChatGPT-clone",
         theme=gr.themes.Default(
-            primary_hue=gr.themes.colors.teal, secondary_hue=gr.themes.colors.teal
+            primary_hue=gr.themes.colors.teal,
+            secondary_hue=gr.themes.colors.teal,
+            text_size=gr.themes.sizes.text_lg,
         ),
         css="footer {visibility: hidden}",
     )
@@ -39,6 +40,9 @@ def mount_playground(app: Lanarky) -> Lanarky:
         gr.HTML(
             """<div align="center"><img src="https://lanarky.ajndkr.com/assets/logo-light-mode.png" width="350"></div>"""
         )
+        system_message = gr.Textbox(
+            value="You are a sassy assistant", label="System Prompt"
+        )
         chatbot = gr.Chatbot(height=500, show_label=False)
         with gr.Row():
             user_input = gr.Textbox(
@@ -46,7 +50,7 @@ def mount_playground(app: Lanarky) -> Lanarky:
             )
             clear_btn = gr.Button("Clear")
 
-        def chat(history):
+        def chat(history, system):
             messages = []
             for human, assistant in history:
                 if human:
@@ -56,7 +60,7 @@ def mount_playground(app: Lanarky) -> Lanarky:
 
             history[-1][1] = ""
             for event in StreamingClient().stream_response(
-                "POST", "/chat", json={"messages": messages}
+                "POST", "/chat", json={"messages": messages}, params={"system": system}
             ):
                 history[-1][1] += event.data
                 yield history
@@ -66,7 +70,7 @@ def mount_playground(app: Lanarky) -> Lanarky:
             [user_input, chatbot],
             [user_input, chatbot],
             queue=False,
-        ).then(chat, chatbot, chatbot)
+        ).then(chat, [chatbot, system_message], chatbot)
         clear_btn.click(lambda: None, None, chatbot, queue=False)
 
     return gr.mount_gradio_app(app, blocks.queue(), "/")
