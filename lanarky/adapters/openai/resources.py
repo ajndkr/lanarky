@@ -5,6 +5,8 @@ from openai import AsyncOpenAI
 from openai.types.chat import ChatCompletion, ChatCompletionChunk
 from pydantic import BaseModel, Field
 
+from lanarky.utils import model_dump
+
 
 class Message(BaseModel):
     role: str = Field(pattern=r"^(user|assistant)$")
@@ -105,5 +107,5 @@ class ChatCompletionResource(OpenAIResource):
 
     def _prepare_messages(self, messages: list[dict]) -> list[dict]:
         if self.system is not None:
-            messages = [self.system.model_dump()] + messages
+            messages = [model_dump(self.system)] + messages
         return messages

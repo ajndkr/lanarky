@@ -2,6 +2,8 @@ from typing import Any, Callable, Optional
 
 from fastapi import params
 
+from lanarky.utils import model_dump
+
 from .resources import OpenAIResource
 from .utils import create_request_model, create_response_model
 
@@ -34,7 +36,7 @@ def Depends(
         request: request_model,
         resource: OpenAIResource = params.Depends(dependency, use_cache=use_cache),
     ) -> response_model:
-        resource_kwargs = {**request.model_dump(), **dependency_kwargs}
+        resource_kwargs = {**model_dump(request), **dependency_kwargs}
 
         return await resource(**resource_kwargs)
 

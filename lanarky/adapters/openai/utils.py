@@ -7,6 +7,7 @@ from starlette.routing import compile_path
 
 from lanarky.events import Events
 from lanarky.logging import logger
+from lanarky.utils import model_dump, model_fields
 from lanarky.websockets import WebSocket, WebsocketSession
 
 from .resources import ChatCompletion, ChatCompletionResource, Message, OpenAIResource
@@ -31,7 +32,7 @@ def build_factory_api_endpoint(
     async def factory_endpoint(
         request: request_model, resource: OpenAIResource = Depends(endpoint)
     ):
-        return StreamingResponse(resource=resource, **request.model_dump())
+        return StreamingResponse(resource=resource, **model_dump(request))
 
     return factory_endpoint
 
@@ -58,7 +59,7 @@ def build_factory_websocket_endpoint(
             async for data in session:
                 try:
                     async for chunk in resource.stream_response(
-                        **request_model(**data).model_dump()
+                        **model_dump(request_model(**data))
                     ):
                         await websocket.send_json(
                             dict(
@@ -153,7 +154,7 @@ def create_response_model(
         raise TypeError("resource must be a ChatCompletion instance")
 
     response_fields = {
-        k: (v.annotation, ...) for k, v in ChatCompletion.model_fields.items()
+        k: (v.annotation, ...) for k, v in model_fields(ChatCompletion).items()
     }
 
     prefix = prefix or resource.__class__.__name__
