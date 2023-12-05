@@ -39,6 +39,34 @@ The library is available on PyPI and can be installed via `pip`:
 pip install lanarky
 ```
 
+## Getting Started
+
+Lanarky provides a powerful abstraction layer to allow developers to build
+simple LLM microservices in just a few lines of code.
+
+Here's an example to build a simple microservice that uses OpenAI's `ChatCompletion` service:
+
+```python
+from lanarky import Lanarky
+from lanarky.adapters.openai.resources import ChatCompletionResource
+from lanarky.adapters.openai.routing import OpenAIAPIRouter
+
+app = Lanarky()
+router = OpenAIAPIRouter()
+
+
+@router.post("/chat")
+def chat(stream: bool = True) -> ChatCompletionResource:
+    system = "You are a sassy assistant"
+    return ChatCompletionResource(stream=stream, system=system)
+
+
+app.include_router(router)
+```
+
+Visit [Getting Started](https://lanarky.ajndkr.com/getting-started) for the full tutorial on building
+and testing your first LLM microservice with Lanarky.
+
 ## Contributing
 
 [![Code check](https://github.com/ajndkr/lanarky/actions/workflows/code-check.yaml/badge.svg)](https://github.com/ajndkr/lanarky/actions/workflows/code-check.yaml)
