@@ -1,3 +1,6 @@
+import asyncio
+from enum import Enum
+from functools import partial
 from typing import Any
 
 from fastapi import status
@@ -10,6 +13,13 @@ from lanarky.responses import HTTPStatusDetail
 from lanarky.responses import StreamingResponse as _StreamingResponse
 
 
+class ChainRunMode(str, Enum):
+    """Enum for LangChain run modes."""
+
+    ASYNC = "async"
+    SYNC = "sync"
+
+
 class StreamingResponse(_StreamingResponse):
     """StreamingResponse class for LangChain resources."""
 
@@ -17,6 +27,7 @@ class StreamingResponse(_StreamingResponse):
         self,
         chain: Chain,
         config: dict[str, Any],
+        run_mode: ChainRunMode = ChainRunMode.ASYNC,
         *args: Any,
         **kwargs: dict[str, Any],
     ) -> None:
@@ -32,6 +43,13 @@ class StreamingResponse(_StreamingResponse):
 
         self.chain = chain
         self.config = config
+
+        if run_mode not in list(ChainRunMode):
+            raise ValueError(
+                f"Invalid run mode '{run_mode}'. Must be one of {list(ChainRunMode)}"
+            )
+
+        self.run_mode = run_mode
 
     async def stream_response(self, send: Send) -> None:
         """Stream LangChain outputs.
@@ -58,7 +76,13 @@ class StreamingResponse(_StreamingResponse):
         try:
             # TODO: migrate to `.ainvoke` when adding support
             # for LCEL
-            outputs = await self.chain.acall(**self.config)
+            if self.run_mode == ChainRunMode.ASYNC:
+                outputs = await self.chain.acall(**self.config)
+            else:
+                loop = asyncio.get_event_loop()
+                outputs = await loop.run_in_executor(
+                    None, partial(self.chain, **self.config)
+                )
             if self.background is not None:
                 self.background.kwargs.update({"outputs": outputs})
         except Exception as e:
