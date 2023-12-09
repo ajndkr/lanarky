@@ -7,6 +7,8 @@ on:
       - main
     paths:
       - .github/workflows/ci.yaml
+      - poetry.lock
+      - pyproject.toml
       - lanarky/**
       - tests/**
       - "!**.md"
@@ -14,6 +16,8 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - .github/workflows/ci.yaml
+      - poetry.lock
+      - pyproject.toml
       - lanarky/**
       - tests/**
       - "!**.md"
