@@ -3,6 +3,15 @@ from typing import Any
 import pydantic
 from pydantic.fields import FieldInfo
 
+try:
+    from enum import StrEnum  # type: ignore
+except ImportError:
+    from enum import Enum
+
+    class StrEnum(str, Enum):
+        ...
+
+
 PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 
