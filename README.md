@@ -77,6 +77,8 @@ please create an issue or submit a pull request on [GitHub](https://github.com/a
 
 See [CONTRIBUTING.md](https://github.com/ajndkr/lanarky/blob/main/CONTRIBUTING.md) for more information.
 
+See [Lanarky Roadmap](https://github.com/users/ajndkr/projects/6) for the list of new features and future milestones.
+
 ## License
 
 The library is released under the [MIT License](https://github.com/ajndkr/lanarky/blob/main/LICENSE).
