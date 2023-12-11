@@ -1,4 +1,3 @@
-from enum import Enum
 from typing import Any, Optional
 
 from fastapi.websockets import WebSocket
@@ -12,10 +11,10 @@ from pydantic import BaseModel
 from starlette.types import Message, Send
 
 from lanarky.events import Events, ServerSentEvent, ensure_bytes
-from lanarky.utils import model_dump_json
+from lanarky.utils import StrEnum, model_dump_json
 
 
-class LangchainEvents(str, Enum):
+class LangchainEvents(StrEnum):
     SOURCE_DOCUMENTS = "source_documents"
 
 
@@ -78,7 +77,7 @@ class StreamingCallbackHandler(LanarkyCallbackHandler):
         }
 
 
-class TokenStreamMode(str, Enum):
+class TokenStreamMode(StrEnum):
     TEXT = "text"
     JSON = "json"
 

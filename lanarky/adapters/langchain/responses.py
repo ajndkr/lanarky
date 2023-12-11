@@ -1,5 +1,4 @@
 import asyncio
-from enum import Enum
 from functools import partial
 from typing import Any
 
@@ -11,9 +10,10 @@ from lanarky.events import Events, ServerSentEvent, ensure_bytes
 from lanarky.logging import logger
 from lanarky.responses import HTTPStatusDetail
 from lanarky.responses import StreamingResponse as _StreamingResponse
+from lanarky.utils import StrEnum
 
 
-class ChainRunMode(str, Enum):
+class ChainRunMode(StrEnum):
     """Enum for LangChain run modes."""
 
     ASYNC = "async"

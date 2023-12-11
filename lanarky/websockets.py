@@ -1,13 +1,13 @@
 from contextlib import asynccontextmanager
-from enum import Enum
 from typing import Generator
 
 from fastapi.websockets import WebSocket, WebSocketDisconnect
 
 from lanarky.logging import logger
+from lanarky.utils import StrEnum
 
 
-class DataMode(str, Enum):
+class DataMode(StrEnum):
     JSON = "json"
     TEXT = "text"
     BYTES = "bytes"
