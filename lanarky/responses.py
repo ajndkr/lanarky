@@ -1,4 +1,3 @@
-from enum import Enum
 from typing import Any
 
 from fastapi import status
@@ -7,9 +6,10 @@ from starlette.types import Send
 
 from lanarky.events import Events, ServerSentEvent, ensure_bytes
 from lanarky.logging import logger
+from lanarky.utils import StrEnum
 
 
-class HTTPStatusDetail(str, Enum):
+class HTTPStatusDetail(StrEnum):
     INTERNAL_SERVER_ERROR = "Internal Server Error"
 
 
