@@ -1,4 +1,4 @@
-from unittest.mock import AsyncMock, MagicMock, call
+from unittest.mock import MagicMock, call
 
 import pytest
 from starlette.types import Send
@@ -52,7 +52,7 @@ async def test_stream_response_successful(send: Send):
 @pytest.mark.asyncio
 async def test_stream_response_error(send: Send):
     resource = MagicMock(spec=ChatCompletionResource)
-    resource.stream_response = AsyncMock(side_effect=Exception("Some error occurred"))
+    resource.stream_response = MagicMock(side_effect=Exception("Some error occurred"))
 
     response = StreamingResponse(
         resource=resource,
