@@ -8,8 +8,7 @@ try:
 except ImportError:
     from enum import Enum
 
-    class StrEnum(str, Enum):
-        ...
+    class StrEnum(str, Enum): ...
 
 
 PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
