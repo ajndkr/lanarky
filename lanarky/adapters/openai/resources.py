@@ -27,8 +27,7 @@ class OpenAIResource:
     @abstractmethod
     async def stream_response(
         self, *args: Any, **kwargs: dict[str, Any]
-    ) -> Generator[str, None, None]:
-        ...
+    ) -> Generator[str, None, None]: ...
 
 
 class ChatCompletionResource(OpenAIResource):
