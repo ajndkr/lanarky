@@ -3,8 +3,8 @@ name: Dependency Manager
 on:
   workflow_dispatch: # Allow running on-demand
   schedule:
-    # Every Sunday at 1PM UTC
-    - cron: 0 13 * * 6
+    # Every first day of the month at 1PM UTC
+    - cron: 0 13 1 * *
 
 env:
   PYTHON_VERSION: 3.9
