@@ -53,5 +53,5 @@ langchain = ["langchain"]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.ruff]
+[tool.ruff.lint]
 ignore = ["E501"]
