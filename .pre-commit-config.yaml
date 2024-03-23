@@ -41,8 +41,3 @@ repos:
     hooks:
       - id: isort
         args: [--profile, black]
-
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v4.0.0-alpha.8
-    hooks:
-      - id: prettier
