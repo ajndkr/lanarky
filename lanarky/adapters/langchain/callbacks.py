@@ -30,6 +30,8 @@ class LanarkyCallbackHandler(AsyncCallbackHandler):
         """Verbose mode is always enabled for Lanarky applications."""
         return True
 
+    async def on_chat_model_start(self, *args: Any, **kwargs: Any) -> Any: ...
+
 
 class StreamingCallbackHandler(LanarkyCallbackHandler):
     """Callback handler for streaming responses."""
