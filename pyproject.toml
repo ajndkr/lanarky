@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lanarky"
-version = "0.8.6"
+version = "0.8.7"
 description = "The web framework for building LLM microservices"
 authors = ["Ajinkya Indulkar <ajndkr@gmail.com>"]
 readme = "README.pypi.md"
