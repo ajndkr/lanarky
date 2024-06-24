@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lanarky"
-version = "0.8.6"
+version = "0.8.7"
 description = "The web framework for building LLM microservices"
 authors = ["Ajinkya Indulkar <ajndkr@gmail.com>"]
 readme = "README.pypi.md"
@@ -20,7 +20,8 @@ httpx-sse = "^0.3.1"
 websockets = "<12.0"
 openai = {version = "^1", optional = true}
 tiktoken = {version = "^0.4.0", optional = true}
-langchain = {version = "<0.2", optional = true}
+langchain = {version = "<0.3", optional = true}
+langchain-community = {version = "<0.3", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.3"
@@ -42,12 +43,12 @@ termynal = "^0.11.1"
 mkdocstrings = {extras = ["python"], version = "^0.24.0"}
 
 [tool.poetry.group.examples.dependencies]
-faiss-cpu = "^1.7.4"
+faiss-cpu = "<1.8"
 gradio = "^4.7.1"
 
 [tool.poetry.extras]
 openai = ["openai", "tiktoken"]
-langchain = ["langchain"]
+langchain = ["langchain", "langchain-community"]
 
 [build-system]
 requires = ["poetry-core"]

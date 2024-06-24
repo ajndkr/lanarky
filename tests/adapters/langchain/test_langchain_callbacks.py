@@ -24,7 +24,7 @@ def test_llm_cache_used():
     assert callback.llm_cache_used is False
 
     with patch("lanarky.adapters.langchain.callbacks.get_llm_cache") as get_llm_cache:
-        from langchain.cache import InMemoryCache
+        from langchain_community.cache import InMemoryCache
 
         get_llm_cache.return_value = InMemoryCache()
 
