@@ -16,6 +16,8 @@
 
 </div>
 
+> ⚠️ **Disclaimer**: This project is now in maintenance mode. I won't be adding new features or actively maintaining the project as I have moved on to other projects and priorities. While I will address critical bugs and security issues as needed, active development has ceased from my end. I do encourage the community to continue to contribute to the project if they find it useful. Thank you for using lanarky!
+
 Lanarky is a **python (3.9+)** web framework for developers who want to build microservices using LLMs.
 Here are some of its key features:
 
