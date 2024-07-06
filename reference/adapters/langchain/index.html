@@ -1,0 +1,5271 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The web framework for building LLM microservices">
+      
+      
+        <meta name="author" content="Ajinkya Indulkar">
+      
+      
+        <link rel="canonical" href="https://lanarky.ajndkr.com/reference/adapters/langchain/">
+      
+      
+        <link rel="prev" href="../openai/">
+      
+      
+        <link rel="next" href="../../misc/">
+      
+      
+      <link rel="icon" href="../../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.28">
+    
+    
+      
+        <title>LangChain - Lanarky</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../../../termynal.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+      
+        <meta  property="og:type"  content="website" >
+      
+        <meta  property="og:title"  content="LangChain - Lanarky" >
+      
+        <meta  property="og:description"  content="The web framework for building LLM microservices" >
+      
+        <meta  property="og:image"  content="https://lanarky.ajndkr.com/assets/images/social/reference/adapters/langchain.png" >
+      
+        <meta  property="og:image:type"  content="image/png" >
+      
+        <meta  property="og:image:width"  content="1200" >
+      
+        <meta  property="og:image:height"  content="630" >
+      
+        <meta  property="og:url"  content="https://lanarky.ajndkr.com/reference/adapters/langchain/" >
+      
+        <meta  name="twitter:card"  content="summary_large_image" >
+      
+        <meta  name="twitter:title"  content="LangChain - Lanarky" >
+      
+        <meta  name="twitter:description"  content="The web framework for building LLM microservices" >
+      
+        <meta  name="twitter:image"  content="https://lanarky.ajndkr.com/assets/images/social/reference/adapters/langchain.png" >
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="lanarky" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lanarky.adapters.langchain.routing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Lanarky" class="md-header__button md-logo" aria-label="Lanarky" data-md-component="logo">
+      
+  <img src="../../../assets/icon.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lanarky
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              LangChain
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="lanarky" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ajndkr/lanarky" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ajndkr/lanarky
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Lanarky
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../getting-started/" class="md-tabs__link">
+        
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../learn/" class="md-tabs__link">
+          
+  
+    
+  
+  Learn
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+    
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Lanarky" class="md-nav__button md-logo" aria-label="Lanarky" data-md-component="logo">
+      
+  <img src="../../../assets/icon.svg" alt="logo">
+
+    </a>
+    Lanarky
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ajndkr/lanarky" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    ajndkr/lanarky
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lanarky
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting-started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../learn/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Learn
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Learn
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learn/streaming/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Streaming
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learn/websockets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebSockets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../learn/adapters/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Adapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Adapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../learn/adapters/openai/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    OpenAI
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_4_2" id="__nav_3_4_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            OpenAI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learn/adapters/openai/router/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Router
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4_2_3" id="__nav_3_4_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Advanced
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_4_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learn/adapters/openai/dependency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dependency Injection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learn/adapters/openai/fastapi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FastAPI Backport
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../learn/adapters/langchain/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    LangChain
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_4_3" id="__nav_3_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            LangChain
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learn/adapters/langchain/router/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Router
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learn/adapters/langchain/callbacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Callbacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4_3_4" id="__nav_3_4_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Advanced
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_4_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learn/adapters/langchain/dependency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dependency Injection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../learn/adapters/langchain/fastapi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FastAPI Backport
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    API Reference
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lanarky/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lanarky
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../streaming/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Streaming
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../websockets/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WebSockets
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Adapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            Adapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openai/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenAI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    LangChain
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    LangChain
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      routing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.routing.LangchainAPIRoute" class="md-nav__link">
+    <span class="md-ellipsis">
+      LangchainAPIRoute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.routing.LangchainAPIWebSocketRoute" class="md-nav__link">
+    <span class="md-ellipsis">
+      LangchainAPIWebSocketRoute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.routing.LangchainAPIRouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      LangchainAPIRouter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      responses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.responses.ChainRunMode" class="md-nav__link">
+    <span class="md-ellipsis">
+      ChainRunMode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.responses.StreamingResponse" class="md-nav__link">
+    <span class="md-ellipsis">
+      StreamingResponse
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="StreamingResponse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.responses.StreamingResponse.stream_response" class="md-nav__link">
+    <span class="md-ellipsis">
+      stream_response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      callbacks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      LanarkyCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LanarkyCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.StreamingCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      StreamingCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="StreamingCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.StreamingCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenEventData" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenEventData
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenStreamingCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TokenStreamingCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_chain_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_llm_new_token" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_new_token
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsEventData" class="md-nav__link">
+    <span class="md-ellipsis">
+      SourceDocumentsEventData
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      SourceDocumentsStreamingCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SourceDocumentsStreamingCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      FinalTokenStreamingCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FinalTokenStreamingCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_chain_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_llm_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_llm_new_token" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_new_token
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      WebSocketCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WebSocketCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenWebSocketCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TokenWebSocketCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_chain_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_llm_new_token" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_new_token
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      SourceDocumentsWebSocketCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SourceDocumentsWebSocketCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      FinalTokenWebSocketCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FinalTokenWebSocketCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_chain_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_llm_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_llm_new_token" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_new_token
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.get_token_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_token_data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      dependencies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.dependencies.Depends" class="md-nav__link">
+    <span class="md-ellipsis">
+      Depends
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils" class="md-nav__link">
+    <span class="md-ellipsis">
+      utils
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.build_factory_api_endpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      build_factory_api_endpoint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.build_factory_websocket_endpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      build_factory_websocket_endpoint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.compile_chain_factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      compile_chain_factory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.create_request_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_request_model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.create_response_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_response_model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.compile_model_prefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      compile_model_prefix
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.get_streaming_callbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_streaming_callbacks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.get_websocket_callbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_websocket_callbacks
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../misc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Miscellaneous
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      routing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.routing.LangchainAPIRoute" class="md-nav__link">
+    <span class="md-ellipsis">
+      LangchainAPIRoute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.routing.LangchainAPIWebSocketRoute" class="md-nav__link">
+    <span class="md-ellipsis">
+      LangchainAPIWebSocketRoute
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.routing.LangchainAPIRouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      LangchainAPIRouter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      responses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.responses.ChainRunMode" class="md-nav__link">
+    <span class="md-ellipsis">
+      ChainRunMode
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.responses.StreamingResponse" class="md-nav__link">
+    <span class="md-ellipsis">
+      StreamingResponse
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="StreamingResponse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.responses.StreamingResponse.stream_response" class="md-nav__link">
+    <span class="md-ellipsis">
+      stream_response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      callbacks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      LanarkyCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LanarkyCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.StreamingCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      StreamingCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="StreamingCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.StreamingCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenEventData" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenEventData
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenStreamingCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TokenStreamingCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_chain_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_llm_new_token" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_new_token
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsEventData" class="md-nav__link">
+    <span class="md-ellipsis">
+      SourceDocumentsEventData
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      SourceDocumentsStreamingCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SourceDocumentsStreamingCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      FinalTokenStreamingCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FinalTokenStreamingCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_chain_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_llm_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_llm_new_token" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_new_token
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      WebSocketCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WebSocketCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      TokenWebSocketCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TokenWebSocketCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_chain_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_llm_new_token" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_new_token
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      SourceDocumentsWebSocketCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SourceDocumentsWebSocketCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      FinalTokenWebSocketCallbackHandler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FinalTokenWebSocketCallbackHandler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.always_verbose" class="md-nav__link">
+    <span class="md-ellipsis">
+      always_verbose
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_chain_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_chain_end" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_chain_end
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_llm_start" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_llm_new_token" class="md-nav__link">
+    <span class="md-ellipsis">
+      on_llm_new_token
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.callbacks.get_token_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_token_data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      dependencies
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.dependencies.Depends" class="md-nav__link">
+    <span class="md-ellipsis">
+      Depends
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils" class="md-nav__link">
+    <span class="md-ellipsis">
+      utils
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.build_factory_api_endpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      build_factory_api_endpoint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.build_factory_websocket_endpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      build_factory_websocket_endpoint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.compile_chain_factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      compile_chain_factory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.create_request_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_request_model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.create_response_model" class="md-nav__link">
+    <span class="md-ellipsis">
+      create_response_model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.compile_model_prefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      compile_model_prefix
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.get_streaming_callbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_streaming_callbacks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lanarky.adapters.langchain.utils.get_websocket_callbacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      get_websocket_callbacks
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>LangChain</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="lanarky.adapters.langchain.routing"></a>
+    <div class="doc doc-contents first">
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.routing.LangchainAPIRoute" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">LangchainAPIRoute</span>
+
+
+<a href="#lanarky.adapters.langchain.routing.LangchainAPIRoute" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">LangchainAPIRoute</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">Default</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="fastapi.routing.APIRoute">APIRoute</span></code></p>
+
+
+      <p>APIRoute class for LangChain.</p>
+
+      <p>Constructor method.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>path</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The path for the route.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>endpoint</code></td>
+            <td>
+                  <code><span title="typing.Callable">Callable</span>[..., <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The endpoint to call when the route is requested.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>response_model</code></td>
+            <td>
+                  <code><span title="typing.Any">Any</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The response model to use for the route.</p>
+              </div>
+            </td>
+            <td>
+                  <code><span title="fastapi.datastructures.Default">Default</span>(None)</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>**kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.routing.LangchainAPIWebSocketRoute" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">LangchainAPIWebSocketRoute</span>
+
+
+<a href="#lanarky.adapters.langchain.routing.LangchainAPIWebSocketRoute" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">LangchainAPIWebSocketRoute</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="fastapi.routing.APIWebSocketRoute">APIWebSocketRoute</span></code></p>
+
+
+      <p>APIWebSocketRoute class for LangChain.</p>
+
+      <p>Constructor method.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>path</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The path for the route.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>endpoint</code></td>
+            <td>
+                  <code><span title="typing.Callable">Callable</span>[..., <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The endpoint to call when the route is requested.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>name</code></td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[str]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The name of the route.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>**kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.routing.LangchainAPIRouter" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">LangchainAPIRouter</span>
+
+
+<a href="#lanarky.adapters.langchain.routing.LangchainAPIRouter" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">LangchainAPIRouter</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">route_class</span><span class="o">=</span><span class="n">LangchainAPIRoute</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="fastapi.routing.APIRouter">APIRouter</span></code></p>
+
+
+      <p>APIRouter class for LangChain.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="lanarky.adapters.langchain.responses"></a>
+    <div class="doc doc-contents first">
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.responses.ChainRunMode" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">ChainRunMode</span>
+
+
+<a href="#lanarky.adapters.langchain.responses.ChainRunMode" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="lanarky.utils.StrEnum">StrEnum</span></code></p>
+
+
+      <p>Enum for LangChain run modes.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.responses.StreamingResponse" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">StreamingResponse</span>
+
+
+<a href="#lanarky.adapters.langchain.responses.StreamingResponse" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">StreamingResponse</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">run_mode</span><span class="o">=</span><span class="n">ChainRunMode</span><span class="o">.</span><span class="n">ASYNC</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="lanarky.responses.StreamingResponse" href="../../streaming/#lanarky.responses.StreamingResponse">StreamingResponse</a></code></p>
+
+
+      <p>StreamingResponse class for LangChain resources.</p>
+
+      <p>Constructor method.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>chain</code></td>
+            <td>
+                  <code><span title="langchain.chains.base.Chain">Chain</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A LangChain instance.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>config</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A config dict.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>*args</code></td>
+            <td>
+                  <code><span title="typing.Any">Any</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Positional arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>()</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>**kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.responses.StreamingResponse.stream_response" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">stream_response</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.responses.StreamingResponse.stream_response" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">stream_response</span><span class="p">(</span><span class="n">send</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Stream LangChain outputs.</p>
+<p>If an exception occurs while iterating over the LangChain, an
+internal server error is sent to the client.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>send</code></td>
+            <td>
+                  <code><span title="starlette.types.Send">Send</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ASGI send callable.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="lanarky.adapters.langchain.callbacks"></a>
+    <div class="doc doc-contents first">
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">LanarkyCallbackHandler</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">LanarkyCallbackHandler</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="langchain.callbacks.base.AsyncCallbackHandler">AsyncCallbackHandler</span></code></p>
+
+
+      <p>Base callback handler for Lanarky applications.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler.always_verbose" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">always_verbose</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler.always_verbose" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="n">always_verbose</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Verbose mode is always enabled for Lanarky applications.</p>
+    </div>
+
+</div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.StreamingCallbackHandler" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">StreamingCallbackHandler</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.StreamingCallbackHandler" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">StreamingCallbackHandler</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">send</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler" href="#lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler">LanarkyCallbackHandler</a></code></p>
+
+
+      <p>Callback handler for streaming responses.</p>
+
+      <p>Constructor method.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>send</code></td>
+            <td>
+                  <code><span title="starlette.types.Send">Send</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ASGI send callable.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>**kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.StreamingCallbackHandler.always_verbose" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">always_verbose</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.StreamingCallbackHandler.always_verbose" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="n">always_verbose</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Verbose mode is always enabled for Lanarky applications.</p>
+    </div>
+
+</div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.TokenEventData" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">TokenEventData</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.TokenEventData" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+
+
+      <p>Event data payload for tokens.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">TokenStreamingCallbackHandler</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">TokenStreamingCallbackHandler</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">output_key</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">TokenStreamMode</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="lanarky.adapters.langchain.callbacks.StreamingCallbackHandler" href="#lanarky.adapters.langchain.callbacks.StreamingCallbackHandler">StreamingCallbackHandler</a></code></p>
+
+
+      <p>Callback handler for streaming tokens.</p>
+
+      <p>Constructor method.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>output_key</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>chain output key.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>mode</code></td>
+            <td>
+                  <code><span title="lanarky.adapters.langchain.callbacks.TokenStreamMode">TokenStreamMode</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The stream mode.</p>
+              </div>
+            </td>
+            <td>
+                  <code><span title="lanarky.adapters.langchain.callbacks.TokenStreamMode.JSON">JSON</span></code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>**kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.always_verbose" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">always_verbose</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.always_verbose" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="n">always_verbose</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Verbose mode is always enabled for Lanarky applications.</p>
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_chain_start" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_chain_start</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_chain_start" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_chain_start</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when chain starts running.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_llm_new_token" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_llm_new_token</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_llm_new_token" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_llm_new_token</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run on new LLM token. Only available when streaming is enabled.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_chain_end" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_chain_end</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler.on_chain_end" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_chain_end</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when chain ends running.</p>
+<p>Final output is streamed only if LLM cache is enabled.</p>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.SourceDocumentsEventData" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">SourceDocumentsEventData</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsEventData" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+
+
+      <p>Event data payload for source documents.</p>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">SourceDocumentsStreamingCallbackHandler</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">SourceDocumentsStreamingCallbackHandler</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">send</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="lanarky.adapters.langchain.callbacks.StreamingCallbackHandler" href="#lanarky.adapters.langchain.callbacks.StreamingCallbackHandler">StreamingCallbackHandler</a></code></p>
+
+
+      <p>Callback handler for streaming source documents.</p>
+
+      <p>Constructor method.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>send</code></td>
+            <td>
+                  <code><span title="starlette.types.Send">Send</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The ASGI send callable.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>**kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler.always_verbose" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">always_verbose</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler.always_verbose" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="n">always_verbose</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Verbose mode is always enabled for Lanarky applications.</p>
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler.on_chain_end" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_chain_end</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsStreamingCallbackHandler.on_chain_end" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_chain_end</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when chain ends running.</p>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">FinalTokenStreamingCallbackHandler</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">FinalTokenStreamingCallbackHandler</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">answer_prefix_tokens</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">strip_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stream_prefix</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler" href="#lanarky.adapters.langchain.callbacks.TokenStreamingCallbackHandler">TokenStreamingCallbackHandler</a></code>, <code><span title="langchain.callbacks.streaming_stdout_final_only.FinalStreamingStdOutCallbackHandler">FinalStreamingStdOutCallbackHandler</span></code></p>
+
+
+      <p>Callback handler for streaming final answer tokens.</p>
+<p>Useful for streaming responses from Langchain Agents.</p>
+
+      <p>Constructor method.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>answer_prefix_tokens</code></td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[list[str]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The answer prefix tokens to use.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>strip_tokens</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to strip tokens.</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>stream_prefix</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to stream the answer prefix.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>**kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.always_verbose" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">always_verbose</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.always_verbose" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="n">always_verbose</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Verbose mode is always enabled for Lanarky applications.</p>
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_chain_start" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_chain_start</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_chain_start" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_chain_start</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when chain starts running.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_chain_end" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_chain_end</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_chain_end" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_chain_end</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when chain ends running.</p>
+<p>Final output is streamed only if LLM cache is enabled.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_llm_start" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_llm_start</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_llm_start" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_llm_start</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when LLM starts running.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_llm_new_token" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_llm_new_token</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenStreamingCallbackHandler.on_llm_new_token" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_llm_new_token</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run on new LLM token. Only available when streaming is enabled.</p>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">WebSocketCallbackHandler</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">WebSocketCallbackHandler</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">TokenStreamMode</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">websocket</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler" href="#lanarky.adapters.langchain.callbacks.LanarkyCallbackHandler">LanarkyCallbackHandler</a></code></p>
+
+
+      <p>Callback handler for websocket sessions.</p>
+
+      <p>Constructor method.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>mode</code></td>
+            <td>
+                  <code><span title="lanarky.adapters.langchain.callbacks.TokenStreamMode">TokenStreamMode</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The stream mode.</p>
+              </div>
+            </td>
+            <td>
+                  <code><span title="lanarky.adapters.langchain.callbacks.TokenStreamMode.JSON">JSON</span></code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>websocket</code></td>
+            <td>
+                  <code><span title="fastapi.websockets.WebSocket">WebSocket</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The websocket to use.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>**kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler.always_verbose" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">always_verbose</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler.always_verbose" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="n">always_verbose</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Verbose mode is always enabled for Lanarky applications.</p>
+    </div>
+
+</div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">TokenWebSocketCallbackHandler</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">TokenWebSocketCallbackHandler</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">output_key</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler" href="#lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler">WebSocketCallbackHandler</a></code></p>
+
+
+      <p>Callback handler for sending tokens in websocket sessions.</p>
+
+      <p>Constructor method.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>output_key</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>chain output key.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>**kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.always_verbose" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">always_verbose</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.always_verbose" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="n">always_verbose</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Verbose mode is always enabled for Lanarky applications.</p>
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_chain_start" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_chain_start</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_chain_start" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_chain_start</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when chain starts running.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_llm_new_token" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_llm_new_token</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_llm_new_token" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_llm_new_token</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run on new LLM token. Only available when streaming is enabled.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_chain_end" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_chain_end</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler.on_chain_end" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_chain_end</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when chain ends running.</p>
+<p>Final output is streamed only if LLM cache is enabled.</p>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">SourceDocumentsWebSocketCallbackHandler</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">SourceDocumentsWebSocketCallbackHandler</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">TokenStreamMode</span><span class="o">.</span><span class="n">JSON</span><span class="p">,</span> <span class="n">websocket</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler" href="#lanarky.adapters.langchain.callbacks.WebSocketCallbackHandler">WebSocketCallbackHandler</a></code></p>
+
+
+      <p>Callback handler for sending source documents in websocket sessions.</p>
+
+      <p>Constructor method.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>mode</code></td>
+            <td>
+                  <code><span title="lanarky.adapters.langchain.callbacks.TokenStreamMode">TokenStreamMode</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The stream mode.</p>
+              </div>
+            </td>
+            <td>
+                  <code><span title="lanarky.adapters.langchain.callbacks.TokenStreamMode.JSON">JSON</span></code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>websocket</code></td>
+            <td>
+                  <code><span title="fastapi.websockets.WebSocket">WebSocket</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The websocket to use.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>**kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler.always_verbose" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">always_verbose</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler.always_verbose" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="n">always_verbose</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Verbose mode is always enabled for Lanarky applications.</p>
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler.on_chain_end" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_chain_end</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.SourceDocumentsWebSocketCallbackHandler.on_chain_end" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_chain_end</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when chain ends running.</p>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">FinalTokenWebSocketCallbackHandler</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">FinalTokenWebSocketCallbackHandler</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">answer_prefix_tokens</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">strip_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stream_prefix</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler" href="#lanarky.adapters.langchain.callbacks.TokenWebSocketCallbackHandler">TokenWebSocketCallbackHandler</a></code>, <code><span title="langchain.callbacks.streaming_stdout_final_only.FinalStreamingStdOutCallbackHandler">FinalStreamingStdOutCallbackHandler</span></code></p>
+
+
+      <p>Callback handler for sending final answer tokens in websocket sessions.</p>
+<p>Useful for streaming responses from Langchain Agents.</p>
+
+      <p>Constructor method.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>answer_prefix_tokens</code></td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[list[str]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The answer prefix tokens to use.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>strip_tokens</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to strip tokens.</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>stream_prefix</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Whether to stream the answer prefix.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>**kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Keyword arguments to pass to the parent constructor.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.always_verbose" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">always_verbose</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.always_verbose" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="n">always_verbose</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Verbose mode is always enabled for Lanarky applications.</p>
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_chain_start" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_chain_start</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_chain_start" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_chain_start</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when chain starts running.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_chain_end" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_chain_end</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_chain_end" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_chain_end</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when chain ends running.</p>
+<p>Final output is streamed only if LLM cache is enabled.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_llm_start" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_llm_start</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_llm_start" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_llm_start</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run when LLM starts running.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_llm_new_token" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">on_llm_new_token</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#lanarky.adapters.langchain.callbacks.FinalTokenWebSocketCallbackHandler.on_llm_new_token" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">on_llm_new_token</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Run on new LLM token. Only available when streaming is enabled.</p>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="lanarky.adapters.langchain.callbacks.get_token_data" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">get_token_data</span>
+
+
+<a href="#lanarky.adapters.langchain.callbacks.get_token_data" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_token_data</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Get token data based on mode.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>token</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The token to use.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>mode</code></td>
+            <td>
+                  <code><span title="lanarky.adapters.langchain.callbacks.TokenStreamMode">TokenStreamMode</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The stream mode.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="lanarky.adapters.langchain.dependencies"></a>
+    <div class="doc doc-contents first">
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="lanarky.adapters.langchain.dependencies.Depends" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">Depends</span>
+
+
+<a href="#lanarky.adapters.langchain.dependencies.Depends" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">Depends</span><span class="p">(</span><span class="n">dependency</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">dependency_kwargs</span><span class="o">=</span><span class="p">{},</span> <span class="n">use_cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Dependency injection for LangChain.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>dependency</code></td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="typing.Callable">Callable</span>[..., <span title="typing.Any">Any</span>]]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>a "dependable" chain factory callable.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>dependency_kwargs</code></td>
+            <td>
+                  <code>dict[str, <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>kwargs to pass to chain dependency.</p>
+              </div>
+            </td>
+            <td>
+                  <code>{}</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>use_cache</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>use_cache parameter of <code>fastapi.Depends</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="lanarky.adapters.langchain.utils"></a>
+    <div class="doc doc-contents first">
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="lanarky.adapters.langchain.utils.build_factory_api_endpoint" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">build_factory_api_endpoint</span>
+
+
+<a href="#lanarky.adapters.langchain.utils.build_factory_api_endpoint" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">build_factory_api_endpoint</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Build a factory endpoint for API routes.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>path</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The path for the route.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>endpoint</code></td>
+            <td>
+                  <code><span title="typing.Callable">Callable</span>[..., <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>LangChain instance factory function.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="lanarky.adapters.langchain.utils.build_factory_websocket_endpoint" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">build_factory_websocket_endpoint</span>
+
+
+<a href="#lanarky.adapters.langchain.utils.build_factory_websocket_endpoint" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">build_factory_websocket_endpoint</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Build a factory endpoint for WebSocket routes.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>path</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The path for the route.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>endpoint</code></td>
+            <td>
+                  <code><span title="typing.Callable">Callable</span>[..., <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>LangChain instance factory function.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="lanarky.adapters.langchain.utils.compile_chain_factory" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">compile_chain_factory</span>
+
+
+<a href="#lanarky.adapters.langchain.utils.compile_chain_factory" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">compile_chain_factory</span><span class="p">(</span><span class="n">endpoint</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Compile a LangChain instance factory function.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>endpoint</code></td>
+            <td>
+                  <code><span title="typing.Callable">Callable</span>[..., <span title="typing.Any">Any</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>LangChain instance factory function.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="lanarky.adapters.langchain.utils.create_request_model" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">create_request_model</span>
+
+
+<a href="#lanarky.adapters.langchain.utils.create_request_model" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">create_request_model</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Create a pydantic request model for a LangChain instance.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>chain</code></td>
+            <td>
+                  <code><span title="langchain.chains.base.Chain">Chain</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A LangChain instance.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>prefix</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A prefix for the model name.</p>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;&#39;</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="lanarky.adapters.langchain.utils.create_response_model" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">create_response_model</span>
+
+
+<a href="#lanarky.adapters.langchain.utils.create_response_model" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">create_response_model</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Create a pydantic response model for a LangChain instance.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>chain</code></td>
+            <td>
+                  <code><span title="langchain.chains.base.Chain">Chain</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A LangChain instance.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>prefix</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A prefix for the model name.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="lanarky.adapters.langchain.utils.compile_model_prefix" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">compile_model_prefix</span>
+
+
+<a href="#lanarky.adapters.langchain.utils.compile_model_prefix" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">compile_model_prefix</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">chain</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Compile a prefix for pydantic models.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>path</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The path for the route.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>chain</code></td>
+            <td>
+                  <code><span title="langchain.chains.base.Chain">Chain</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A LangChain instance.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="lanarky.adapters.langchain.utils.get_streaming_callbacks" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">get_streaming_callbacks</span>
+
+
+<a href="#lanarky.adapters.langchain.utils.get_streaming_callbacks" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_streaming_callbacks</span><span class="p">(</span><span class="n">chain</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Get streaming callbacks for a LangChain instance.</p>
+<p>Note: This function might not support all LangChain
+chain and agent types. Please open an issue on GitHub to
+request support for a specific type.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>chain</code></td>
+            <td>
+                  <code><span title="langchain.chains.base.Chain">Chain</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A LangChain instance.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="lanarky.adapters.langchain.utils.get_websocket_callbacks" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">get_websocket_callbacks</span>
+
+
+<a href="#lanarky.adapters.langchain.utils.get_websocket_callbacks" class="headerlink" title="Permanent link">&para;</a></h2>
+<div class="doc-signature codehilite"><pre><span></span><code><span class="nf">get_websocket_callbacks</span><span class="p">(</span><span class="n">chain</span><span class="p">,</span> <span class="n">websocket</span><span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+      <p>Get websocket callbacks for a LangChain instance.</p>
+<p>Note: This function might not support all LangChain
+chain and agent types. Please open an issue on GitHub to
+request support for a specific type.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>chain</code></td>
+            <td>
+                  <code><span title="langchain.chains.base.Chain">Chain</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A LangChain instance.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>websocket</code></td>
+            <td>
+                  <code><span title="lanarky.websockets.WebSocket">WebSocket</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A WebSocket instance.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../openai/" class="md-footer__link md-footer__link--prev" aria-label="Previous: OpenAI">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                OpenAI
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../misc/" class="md-footer__link md-footer__link--next" aria-label="Next: Miscellaneous">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Miscellaneous
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 Ajinkya Indulkar
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/ajndkr" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/lanarky/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/LanarkyAPI" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["search.suggest", "search.highlight", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.footer", "navigation.indexes", "navigation.tracking", "content.tabs.link", "content.tooltips", "content.code.annotate", "content.code.copy", "content.code.select"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="../../../termynal.js"></script>
+      
+    
+  </body>
+</html>
