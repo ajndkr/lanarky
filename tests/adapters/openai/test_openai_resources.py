@@ -13,8 +13,15 @@ from lanarky.adapters.openai.resources import (
 
 
 @pytest.mark.asyncio
-async def test_chat_completion_resource_stream_response():
+async def test_chat_completion_resource_stream_response_skips_empty_choices():
     async def mock_completion_chunk_stream():
+        yield ChatCompletionChunk(
+            id="chat-completion-id",
+            created=1700936386,
+            model="gpt-3.5-turbo-0613",
+            object="chat.completion.chunk",
+            choices=[],
+        )
         yield ChatCompletionChunk(
             id="chat-completion-id",
             created=1700936386,
